@@ -15,4 +15,12 @@ export const getCategoryIdList = (param) => {
   })
 }
 
-export default { getCategoryList, getCategoryIdList }
+
+export const getHotList = (param) => {
+  return get({
+    path: '/getHotList',
+    data: param
+  })
+}
+
+export default { getCategoryList, getCategoryIdList, getHotList }

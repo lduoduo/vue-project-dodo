@@ -2,7 +2,7 @@
  * @Author: lduoduo
  * @Date: 2020-07-21 22:19:36
  * @Last Modified by: zouhuan
- * @Last Modified time: 2020-07-22 17:24:28
+ * @Last Modified time: 2020-07-22 19:27:11
  * 网络请求基础类库
  */
 
@@ -20,7 +20,13 @@ const getUrl = (opts = {}) => {
 
   const prefix = /^http/.test(API[server]) ? '' : '//';
 
-  return `${prefix}${API[server]}${path}`
+  const url = `${prefix}${API[server]}${path}`;
+  if (!/get/i.test(method)) return url;
+
+  const pfix = qs.stringify(data);
+  if (!pfix) return url;
+
+  return /\?/.test(url) ? `${url}&${pfix}` : `${url}?${pfix}`;
 }
 
 const doFetch = (opts = {}) => {

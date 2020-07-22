@@ -538,7 +538,7 @@
     }
   },
   "getHotList": {
-    "code": 1000,
+    "code": 0,
     "result": {
       "totalcount": 2334,
       "list": [
@@ -1099,7 +1099,7 @@
     }
   },
   "getGoodDetail": {
-    "code": 1000,
+    "code": 0,
     "result": {
       "detail": {
         "goodsId": 58048440240,
