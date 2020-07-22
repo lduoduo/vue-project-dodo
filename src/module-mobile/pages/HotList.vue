@@ -8,7 +8,12 @@
       @cancel="onCancel"
     />
     <div class="page-body">
-      <CompItem class="body-item" v-for="item in list" :key="item.id" :data="item" />
+      <CompItem
+        class="body-item"
+        v-for="item in list"
+        :key="item.id"
+        :data="item"
+      />
     </div>
     <Menu />
   </div>
@@ -17,39 +22,42 @@
 .page-hotlist {
   .page-body {
     flex: 1;
+    padding: 1%;
     overflow: auto;
     background-color: #f5f5f9;
   }
 
   .body-item {
     background-color: #fff;
-    & + .body-item {
-      margin-top: 12px;
-    }
+    width: 48%;
+    display: inline-block;
+    vertical-align: top;
+    margin-bottom: 16px;
+    margin: 1%;
   }
 }
 </style>
 <script>
-import Search from "../components/Search.vue";
-import Menu from "../components/Menu.vue";
-import CompItem from "../components/Hot/Item.vue";
+import Search from '../components/Search.vue';
+import Menu from '../components/Menu.vue';
+import CompItem from '../components/Hot/Item.vue';
 
-import { getHotList } from "@/network/api";
+import { getHotList } from '@/network/api';
 
 export default {
-  name: "HotList",
+  name: 'HotList',
   components: {
     Search,
     Menu,
-    CompItem
+    CompItem,
   },
   data() {
     return {
-      search: "",
+      search: '',
       pageNo: 1,
       loading: false,
       finished: false,
-      list: []
+      list: [],
     };
   },
   beforeMount() {
@@ -57,17 +65,17 @@ export default {
   },
   methods: {
     onSearch(val) {
-      console.log("onSearch", val);
+      console.log('onSearch', val);
     },
     onCancel() {
-      console.log("onCancel");
+      console.log('onCancel');
     },
     fetchtHotList() {
-      getHotList().then(e => {
+      getHotList().then((e) => {
         const { list = [], totalcount = 0 } = e;
         this.list = list;
       });
-    }
-  }
+    },
+  },
 };
 </script>

@@ -13,13 +13,14 @@
 </template>
 
 <style lang="scss">
+@import '@/assets/css/mixin.scss';
 .mobile-menu {
   display: flex;
   align-items: center;
   box-shadow: 0 -10px 20px 0 rgba(0, 0, 0, 0.06), inset 0 0.5px 0 0 #ddd;
 
   .menu-item {
-    padding: 10px 0;
+    padding: 6px 0;
     flex: none;
     width: 25%;
     text-align: center;
@@ -31,10 +32,11 @@
       display: inline-block;
       font-size: 24px;
       margin-bottom: 4px;
+      font-weight: bold;
     }
 
     &.active {
-      color: #42b983;
+      color: $activeColor;
     }
   }
 }
