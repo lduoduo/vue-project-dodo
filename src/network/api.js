@@ -2,6 +2,7 @@ import { get, post, put } from './fetch';
 
 export const getCategoryList = (param) => {
   return get({
+    server: 'local',
     path: '/getCategoryList',
     data: param,
   })

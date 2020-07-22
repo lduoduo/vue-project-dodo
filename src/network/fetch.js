@@ -2,7 +2,7 @@
  * @Author: lduoduo
  * @Date: 2020-07-21 22:19:36
  * @Last Modified by: zouhuan
- * @Last Modified time: 2020-07-22 13:40:43
+ * @Last Modified time: 2020-07-22 17:24:28
  * 网络请求基础类库
  */
 
@@ -14,11 +14,13 @@ import ENV from '@/config/env';
 const { API } = ENV;
 
 const getUrl = (opts = {}) => {
-  const { method = 'get', server = 'dodo', path = '', data = {} } = opts;
+  const { method = 'get', server = 'local', path = '', data = {} } = opts;
 
   if (!API[server]) return;
 
-  return `//${API[server]}${path}`
+  const prefix = /^http/.test(API[server]) ? '' : '//';
+
+  return `${prefix}${API[server]}${path}`
 }
 
 const doFetch = (opts = {}) => {
@@ -38,10 +40,11 @@ const doFetch = (opts = {}) => {
   console.log('options', options);
 
   return axios(options).then(e => {
-    const { data: { code, result, message } = {}, status = 200 } = e;
+    /* eslint-disable @typescript-eslint/camelcase */
+    const { data: { code: c, result: d, message } = {}, status = 200 } = e;
     // console.log('axios', e);
 
-    if (status === 200 && code == 0) return Promise.resolve(result);
+    if (status === 200 && c == 0) return Promise.resolve(d);
     return Promise.reject({ message: message || '网络错误' })
   })
   // .catch(e => {

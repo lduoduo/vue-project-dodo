@@ -20,6 +20,6 @@ module.exports = {
       'components': resolve('src/components'),
     })
 
-    console.log('config', config.devServer, config);
+    // console.log('config', config.devServer, config);
   }
 }

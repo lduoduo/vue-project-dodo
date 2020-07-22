@@ -15,6 +15,7 @@ if (/^t-/.test(hostname)) {
 export default {
   prefix,
   API: {
-    dodo: 'localhost:10002'
+    local: 'localhost:10002',
+    dodo: 'https://1002.mp.duoduogai.com',
   }
 }
