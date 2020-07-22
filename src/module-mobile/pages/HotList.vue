@@ -1,0 +1,42 @@
+<template>
+  <div class="page page-hotlist">
+    <Search
+      v-model="search"
+      show-action
+      placeholder="请输入搜索关键词"
+      @search="onSearch"
+      @cancel="onCancel"
+    />
+    <Menu />
+  </div>
+</template>
+
+<script>
+import Search from '../components/Search.vue';
+import Menu from '../components/Menu.vue';
+
+export default {
+  name: "HotList",
+  components: {
+    Search,
+    Menu
+  },
+  data() {
+    return {
+      search: "",
+      pageNo: 1,
+      loading: false,
+      finished: false,
+      list: []
+    };
+  },
+  methods: {
+    onSearch(val) {
+      console.log("onSearch", val);
+    },
+    onCancel() {
+      console.log("onCancel");
+    }
+  }
+};
+</script>

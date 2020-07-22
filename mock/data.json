@@ -1,0 +1,174 @@
+{
+  "getCategoryIdList": {
+    "code": 0,
+    "result": [
+      {
+        "count": 512,
+        "value": "0"
+      },
+      {
+        "count": 362,
+        "label": "AAAAA",
+        "value": "123"
+      },
+      {
+        "count": 113,
+        "label": "BBBBB",
+        "value": "111"
+      },
+      {
+        "count": 106,
+        "label": "CCCCC",
+        "value": "134"
+      },
+      {
+        "count": 86,
+        "label": "DDDDD",
+        "value": "322"
+      },
+      {
+        "count": 40,
+        "label": "EEEEE",
+        "value": "432"
+      },
+      {
+        "count": 26,
+        "label": "FFFFF",
+        "value": "1435"
+      },
+      {
+        "count": 14,
+        "label": "GGGGG",
+        "value": "235436"
+      },
+      {
+        "count": 10,
+        "value": "2342"
+      },
+      {
+        "count": 8,
+        "label": "HHHH",
+        "value": "21423"
+      },
+      {
+        "count": 6,
+        "label": "AA",
+        "value": "1214"
+      },
+      {
+        "count": 5,
+        "label": "GGF",
+        "value": "657"
+      }
+    ]
+  },
+  "getCategoryList": {
+    "code": 0,
+    "result": {
+      "功能测试1": [
+        {
+          "id": "aaaa",
+          "name": "aaaa",
+          "description": "aaaa",
+          "key": "aaaa",
+          "iconUrl": "https://mimos.cn/webppt/img/bg.png"
+        }
+      ],
+      "功能测试2": [
+        {
+          "id": "bbbb",
+          "name": "bbbb",
+          "description": "bbbb",
+          "key": "bbbb",
+          "iconUrl": "https://mimos.cn/webppt/img/bg.png"
+        },
+        {
+          "id": "cccc",
+          "name": "cccc",
+          "description": "cccc",
+          "key": "cccc",
+          "iconUrl": "https://lduoduo.github.io/public/img/icon.png"
+        },
+        {
+          "id": "dddd",
+          "name": "dddd",
+          "description": "dddd~",
+          "key": "dddd",
+          "iconUrl": "https://lduoduo.github.io/public/img/music.png"
+        }
+      ],
+      "功能测试3": [
+        {
+          "id": "eeee",
+          "name": "eeee",
+          "description": "eeee",
+          "key": "eeee",
+          "iconUrl": "https://lduoduo.github.io/public/img/music.png"
+        },
+        {
+          "id": "gggg",
+          "name": "gggg",
+          "key": "gggg"
+        },
+        {
+          "id": "agaegaw",
+          "name": "fewaef",
+          "description": "aeawgewag",
+          "key": "ewagewagwa",
+          "iconUrl": "https://lduoduo.github.io/public/img/icon.png"
+        }
+      ],
+      "功能测试4": [
+        {
+          "id": "gewagwgea",
+          "name": "gewagewag",
+          "description": "gewageawgeaw",
+          "key": "agewaegag"
+        }
+      ],
+      "功能测试5": [
+        {
+          "id": "eherhewher",
+          "name": "herwhewhrew",
+          "description": "hehrewhewhre~",
+          "key": "whrewhreh",
+          "iconUrl": "https://lduoduo.github.io/public/img/music.png"
+        }
+      ],
+      "功能测试6": [
+        {
+          "id": "rthrejtre",
+          "name": "gesgrsgesg",
+          "key": "sgesgresgres"
+        }
+      ],
+      "功能测试7": [
+        {
+          "id": "agewagewger",
+          "name": "agewgergesg",
+          "key": "gerhtr"
+        },
+        {
+          "id": "hrtherheshre",
+          "name": "hrtdhthsr",
+          "description": "eshreherrhr",
+          "key": "shrehrth"
+        }
+      ],
+      "功能测试8": [
+        {
+          "id": "kyukyuky",
+          "name": "kkuykyuky",
+          "key": "yukyukykuyk",
+          "iconUrl": "https://lduoduo.github.io/public/img/icon.png"
+        },
+        {
+          "id": "ynerthr",
+          "name": "thtrhthr",
+          "key": "erherherh",
+          "iconUrl": "https://lduoduo.github.io/public/img/music.png"
+        }
+      ]
+    }
+  }
+}
