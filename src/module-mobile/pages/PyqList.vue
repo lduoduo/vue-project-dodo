@@ -22,18 +22,14 @@
 .page-pyqlist {
   .page-body {
     flex: 1;
-    padding: 1%;
     overflow: auto;
     background-color: #f5f5f9;
   }
 
   .body-item {
     background-color: #fff;
-    width: 48%;
-    display: inline-block;
     vertical-align: top;
-    margin-bottom: 16px;
-    margin: 1%;
+    margin: 12px 0;
   }
 }
 </style>
@@ -60,6 +56,9 @@ export default {
       list: [],
     };
   },
+  // beforeCreate() {
+
+  // },
   beforeMount() {
     this.fetchtHotList();
   },

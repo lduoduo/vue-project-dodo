@@ -1,11 +1,12 @@
 <template>
   <div class="comp-hot-item">
-    <div
+    <ImageLoad
       class="item-image"
-      :style="{ backgroundImage: `url(${data.goodsThumbnailUrl})` }"
+      :url="data.goodsThumbnailUrl"
+      style="{ backgroundImage: `url(${data.goodsThumbnailUrl})` }"
     >
       <span :class="['item-tip', vip ? 'vip' : '']">{{ data.mallName }}</span>
-    </div>
+    </ImageLoad>
     <div class="item-body">
       <div class="item-title">{{ data.goodsName }}</div>
       <div class="item-price flex">
@@ -26,7 +27,7 @@
         <p class="item-tip">{{ `销量${data.salesTip}件` }}</p>
         <p class="item-share">
           <span class="item-share-tip">分享赚￥</span>
-          <span class="item-share-price">{{ formatPrice }}</span>
+          <span class="item-share-price">{{ formatPrice(data.vipPromotionPrice) }}</span>
         </p>
       </div>
     </div>
@@ -145,13 +146,13 @@
 </style>
 
 <script>
-// import Iconfont from '@/components/Iconfont.vue';
+import ImageLoad from '@/components/ImageLoad.vue';
 import { format$Floor, formatFloor } from '@/utils/price';
 
 export default {
   name: 'CategoryItem',
   components: {
-    // Iconfont,
+    ImageLoad,
   },
   props: {
     data: {
@@ -168,9 +169,9 @@ export default {
     };
   },
   computed: {
-    formatPrice() {
-      return formatFloor(this.data.vipPromotionPrice);
-    },
+    // formatPrice() {
+    //   return formatFloor(this.data.vipPromotionPrice);
+    // },
   },
   beforeMount() {
     // console.log('this.data', this.data);
@@ -179,6 +180,9 @@ export default {
     onToggle() {
       this.expand = !this.expand;
     },
+    formatPrice(e){
+      return formatFloor(e);
+    }
   },
 };
 </script>

@@ -1,5 +1,7 @@
 # hello-dodo
 
+## node >= 10.13.0
+
 ## Project setup
 ```
 yarn install

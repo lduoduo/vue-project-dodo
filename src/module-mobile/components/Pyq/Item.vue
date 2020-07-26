@@ -1,33 +1,64 @@
 <template>
-  <div class="comp-hot-item">
-    <div
-      class="item-image"
-      :style="{ backgroundImage: `url(${data.goodsThumbnailUrl})` }"
-    >
-      <span :class="['item-tip', vip ? 'vip' : '']">{{ data.mallName }}</span>
-    </div>
-    <div class="item-body">
+  <div class="comp-pyq-item">
+    <ImageLoad class="item-image" :url="data.goodsThumbnailUrl" />
+
+    <div class="item-main">
+      <div class="item-head">精选商品</div>
+      <div class="item-date">{{ currDay }}</div>
       <div class="item-title">{{ data.goodsName }}</div>
-      <div class="item-price flex">
-        <div>
-          <span class="item-price-buy-tip">{{
-            `${data.couponDiscount ? '券后价' : ''}￥`
-          }}</span>
-          <span class="item-price-buy">{{ data.discountMinPrice }}</span>
-        </div>
-        <div class="flex discount" v-if="data.couponDiscount > 0">
-          <span class="item-discount-tip">券</span>
-          <span class="item-discount-price">{{
-            data.couponDiscount + '元'
-          }}</span>
-        </div>
+      <div class="item-price">
+        <span class="item-price-origin">{{
+          `${data.couponDiscount ? '【券后价】' : ''}￥${data.discountMinPrice}`
+        }}</span>
+
+        <span class="item-price-current" v-if="data.couponDiscount > 0">{{
+          `${data.couponDiscount ? '【原价】' : ''}￥${data.minPrice}`
+        }}</span>
       </div>
-      <div class="item-option flex ">
-        <p class="item-tip">{{ `销量${data.salesTip}件` }}</p>
-        <p class="item-share">
-          <span class="item-share-tip">分享赚￥</span>
-          <span class="item-share-price">{{ formatPrice }}</span>
-        </p>
+
+      <div class="item-banner">
+        <ImageLoad
+          class="item-banner-image"
+          v-for="(item, index) in imageArr"
+          :key="item"
+          :url="item"
+          @click="onIamgeClick(index)"
+        />
+      </div>
+
+      <div class="item-detail flex" @click="onDetailClick">
+        <div class="item-detail-info flex">
+          <ImageLoad class="item-detail-image" :url="data.goodsThumbnailUrl" />
+          <div class="item-info flex">
+            <p class="item-text">{{ data.goodsName }}</p>
+            <p class="item-price">
+              {{
+                `${data.couponDiscount ? '券后价' : ''}￥${
+                  data.discountMinPrice
+                }`
+              }}
+            </p>
+          </div>
+        </div>
+
+        <Iconfont type="icon-ddj-xiangyoujiantou" class="icon-right" />
+      </div>
+
+      <div class="flex item-share">
+        <p class="share-price">{{ `分享赚￥${data.myPromotionPrice}` }}</p>
+        <p class="share-count">{{ `${data.shareCount}人已分享` }}</p>
+      </div>
+
+      <div class="item-foot">
+        <div class="foot-btn btn-buy" @click="onShareText">
+          <div>分享文案</div>
+        </div>
+
+        <div class="foot-btn" type="goods">
+          <div class="foot-btn btn-share" @click="onSharePoster">
+            <div>分享海报</div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -36,122 +67,144 @@
 <style lang="scss">
 @import '@/assets/css/mixin.scss';
 
-.comp-hot-item {
+.comp-pyq-item {
   box-shadow: $boxShadow;
-  border-radius: 5px;
   overflow: hidden;
+  padding: 12px;
+
   p {
     margin: 0;
   }
+
+  .item-image,
+  .item-main {
+    text-align: left;
+    display: inline-block;
+    vertical-align: top;
+  }
+
   .item-image {
-    padding-bottom: 100%;
     position: relative;
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
-
-    .item-tip {
-      position: absolute;
-      left: 0;
-      bottom: 0;
-      background-color: #757575;
-      color: #fff;
-      padding: 2px 6px;
-      font-size: 12px;
-      &.vip {
-        background-color: rgba(139, 87, 42, 1);
-      }
-    }
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
   }
 
-  .item-body {
-    padding: 8px;
+  .item-main {
+    margin-left: 8px;
+    width: calc(100% - 48px);
+
+    .item-head,
+    .item-date {
+      font-size: 13px;
+    }
+
+    .item-date {
+      color: $subTxtColor;
+    }
 
     .item-title {
-      font-size: 13px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      font-size: 14px;
+      word-break: break-all;
+    }
+
+    .item-banner {
+      .item-banner-image {
+        width: 30%;
+        margin: 1%;
+        display: inline-block;
+        padding-bottom: 30%;
+        border: 1px solid #f1f1f1;
+        border-radius: 12px;
+        background-size: contain;
+      }
     }
 
     .item-price {
-      font-size: 10px;
+      font-size: 14px;
       margin: 8px 0;
-
-      &-buy,
-      &-buy-tip {
-        color: $colorRed;
-      }
-
-      &-buy {
-        font-size: 12px;
-        font-weight: bold;
-      }
 
       .discount {
         background-color: $activeColor;
         border-radius: 2px;
       }
+    }
 
-      .item-discount-price,
-      .item-discount-tip {
-        position: relative;
-        color: white;
+    .item-detail {
+      background-color: #f6f6f6;
+      padding: 8px;
+      border-radius: 6px;
+
+      .item-detail-info {
+        flex: none;
+        width: calc(100% - 20px);
       }
 
-      .item-discount-tip {
-        padding: 0 3px;
+      &-image {
+        width: 50px;
+        height: 50px;
       }
 
-      .item-discount-price {
-        padding: 0 4px;
+      .item-info {
+        height: 50px;
+        margin-left: 8px;
+        width: calc(100% - 58px);
+        font-size: 13px;
+        color: $subTxtColor;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: space-between;
 
-        &:after {
-          content: '...';
-          display: inline-block;
-          color: white;
-          position: absolute;
-          left: -1px;
-          transform: rotate(90deg);
+        .item-text {
+          width: 100%;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        .item-price {
+          font-size: inherit;
+          margin: 0;
         }
       }
     }
 
-    .item-option {
-      .item-tip {
-        font-size: 11px;
-        color: $tipColor;
-      }
+    .item-share {
+      margin: 8px;
 
-      .item-share {
-        font-size: 13px;
+      .share-price {
+        font-size: 15px;
         font-weight: bold;
-        color: white;
-        background-color: $mainColor;
-        padding: 4px 6px;
-        padding-right: 6px;
-        border-radius: 3px;
-        box-sizing: border-box;
-        width: 60%;
-        text-align: center;
-
-        .item-share-tip {
-          font-size: 11px;
-        }
+        color: $colorRed;
       }
+
+      .share-count {
+        font-size: 12px;
+        color: $mainTxtColor;
+      }
+    }
+    .item-foot {
+      text-align: right;
     }
   }
 }
 </style>
 
 <script>
-// import Iconfont from '@/components/Iconfont.vue';
+import { ImagePreview } from 'vant';
+import Iconfont from '@/components/Iconfont.vue';
+import ImageLoad from '@/components/ImageLoad.vue';
 import { format$Floor, formatFloor } from '@/utils/price';
 
 export default {
-  name: 'CategoryItem',
+  name: 'PyqItem',
   components: {
-    // Iconfont,
+    Iconfont,
+    ImageLoad,
   },
   props: {
     data: {
@@ -163,21 +216,42 @@ export default {
     },
   },
   data() {
+    const NOW = new Date();
+    const MONTH = NOW.getMonth() + 1;
+    const DAY = NOW.getDate();
+
     return {
       vip: /(5|3)/.test(this.data.merchantType),
+      currDay: `${MONTH}-${DAY}`,
+      imageArr: this.data.imageList.slice(0, 3),
     };
   },
-  computed: {
-    formatPrice() {
-      return formatFloor(this.data.vipPromotionPrice);
-    },
-  },
+  computed: {},
   beforeMount() {
     // console.log('this.data', this.data);
   },
   methods: {
-    onToggle() {
-      this.expand = !this.expand;
+    formatPrice(e) {
+      return formatFloor(e);
+    },
+    onIamgeClick(i) {
+      console.log('onIamgeClick', i);
+      ImagePreview({
+        images: this.data.imageList,
+        startPosition: i,
+        onClose() {
+          // do something
+        },
+      });
+    },
+    onDetailClick() {
+      console.log('onDetailClick');
+    },
+    onShareText() {
+      console.log('onShareText');
+    },
+    onSharePoster() {
+      console.log('onSharePoster');
     },
   },
 };
