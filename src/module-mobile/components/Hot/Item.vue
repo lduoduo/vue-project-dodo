@@ -27,7 +27,7 @@
         <p class="item-tip">{{ `销量${data.salesTip}件` }}</p>
         <p class="item-share">
           <span class="item-share-tip">分享赚￥</span>
-          <span class="item-share-price">{{ formatPrice(data.vipPromotionPrice) }}</span>
+          <span class="item-share-price">{{ data.vipPromotionPrice | formatPrice }}</span>
         </p>
       </div>
     </div>
@@ -169,20 +169,19 @@ export default {
     };
   },
   computed: {
-    // formatPrice() {
-    //   return formatFloor(this.data.vipPromotionPrice);
-    // },
   },
   beforeMount() {
     // console.log('this.data', this.data);
+  },
+  filters: {
+    formatPrice(e) {
+      return formatFloor(e);
+    },
   },
   methods: {
     onToggle() {
       this.expand = !this.expand;
     },
-    formatPrice(e){
-      return formatFloor(e);
-    }
   },
 };
 </script>

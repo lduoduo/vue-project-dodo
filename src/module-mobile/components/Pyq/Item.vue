@@ -45,7 +45,7 @@
       </div>
 
       <div class="flex item-share">
-        <p class="share-price">{{ `分享赚￥${data.myPromotionPrice}` }}</p>
+        <p class="share-price">{{ `分享赚￥${formatPrice(data.myPromotionPrice)}` }}</p>
         <p class="share-count">{{ `${data.shareCount}人已分享` }}</p>
       </div>
 
@@ -229,6 +229,8 @@ export default {
   computed: {},
   beforeMount() {
     // console.log('this.data', this.data);
+  },
+  filters: {
   },
   methods: {
     formatPrice(e) {
