@@ -1,5 +1,7 @@
 <template>
-  <div class="comp-pyq-item">
+  <div
+    :class="['comp-pyq-item', activeGoodsId === data.goodsId ? 'active' : '']"
+  >
     <ImageLoad class="item-image" :url="data.goodsThumbnailUrl" />
 
     <div class="item-main">
@@ -45,7 +47,9 @@
       </div>
 
       <div class="flex item-share">
-        <p class="share-price">{{ `分享赚￥${formatPrice(data.myPromotionPrice)}` }}</p>
+        <p class="share-price">
+          {{ `分享赚￥${formatPrice(data.myPromotionPrice)}` }}
+        </p>
         <p class="share-count">{{ `${data.shareCount}人已分享` }}</p>
       </div>
 
@@ -195,6 +199,7 @@
 </style>
 
 <script>
+import { mapState, mapActions } from 'vuex';
 import { ImagePreview } from 'vant';
 import Iconfont from '@/components/Iconfont.vue';
 import ImageLoad from '@/components/ImageLoad.vue';
@@ -226,12 +231,16 @@ export default {
       imageArr: this.data.imageList.slice(0, 3),
     };
   },
-  computed: {},
+  computed: {
+    activeGoodsId() {
+      console.log('this.$store', this.$store);
+      return this.$store.getters.dataGoods.goodsId;
+    },
+  },
   beforeMount() {
     // console.log('this.data', this.data);
   },
-  filters: {
-  },
+  filters: {},
   methods: {
     formatPrice(e) {
       return formatFloor(e);

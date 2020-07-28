@@ -1,5 +1,9 @@
 <template>
-  <div class="comp-hot-item">
+  <div
+    :class="['comp-hot-item', activeGoodsId === data.goodsId ? 'active' : '']"
+    @click="onDetailClick"
+  >
+    <p>{{ activeGoodsId2 }}</p>
     <ImageLoad
       class="item-image"
       :url="data.goodsThumbnailUrl"
@@ -27,7 +31,9 @@
         <p class="item-tip">{{ `销量${data.salesTip}件` }}</p>
         <p class="item-share">
           <span class="item-share-tip">分享赚￥</span>
-          <span class="item-share-price">{{ data.vipPromotionPrice | formatPrice }}</span>
+          <span class="item-share-price">{{
+            data.vipPromotionPrice | formatPrice
+          }}</span>
         </p>
       </div>
     </div>
@@ -146,6 +152,7 @@
 </style>
 
 <script>
+import { mapState, mapActions } from 'vuex';
 import ImageLoad from '@/components/ImageLoad.vue';
 import { format$Floor, formatFloor } from '@/utils/price';
 
@@ -169,6 +176,25 @@ export default {
     };
   },
   computed: {
+    activeGoodsId() {
+      console.log('this.$store', this.$store);
+      return this.$store.getters.dataGoods.goodsId;
+    },
+    ...mapState({
+      // 箭头函数可使代码更简练
+      activeGoodsId2: (state) => {
+        console.log('activeGoodsId', state);
+        return state.count;
+      },
+      activeGoodsId3: 'dataGoods',
+      // 传字符串参数 'count' 等同于 `state => state.count`
+      countAlias: 'count',
+
+      // 为了能够使用 `this` 获取局部状态，必须使用常规函数
+      countPlusLocalState(state) {
+        return state.count + this.localCount;
+      },
+    }),
   },
   beforeMount() {
     // console.log('this.data', this.data);
@@ -179,8 +205,12 @@ export default {
     },
   },
   methods: {
+    ...mapActions(['setGoods']),
     onToggle() {
       this.expand = !this.expand;
+    },
+    onDetailClick() {
+      this.setGoods(this.data);
     },
   },
 };

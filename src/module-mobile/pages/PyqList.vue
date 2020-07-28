@@ -13,6 +13,9 @@
         v-for="item in list"
         :key="item.id"
         :data="item"
+        @hook:mounted="onCompMounted"
+        @hook:beforeUpdated="onCompBeforeUpdated"
+        @hook:updated="onCompUpdated"
       />
     </div>
     <Menu />
@@ -74,6 +77,15 @@ export default {
         const { list = [], totalcount = 0 } = e;
         this.list = list;
       });
+    },
+    onCompMounted(e){
+      console.log('onCompMounted', e);
+    },
+    onCompBeforeUpdated(e){
+      console.log('onCompBeforeUpdated', e);
+    },
+    onCompUpdated(e){
+      console.log('onCompUpdated', e);
     },
   },
 };

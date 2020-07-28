@@ -43,6 +43,7 @@
 </style>
 
 <script>
+import { mapActions } from 'vuex';
 import Iconfont from '@/components/Iconfont.vue';
 
 export default {
@@ -85,12 +86,16 @@ export default {
   beforeMount() {
     // console.log("this router", this.$route, this);
   },
+  mounted() {
+    console.log('this.store', this.$store, this);
+  },
   watch: {
     $route: 'onRouteChange',
   },
   methods: {
-    onRouteChange(e) {
-      console.log('onRouteChange', e, this.$route);
+    ...mapActions(['setMenu']),
+    onRouteChange(e, a) {
+      console.log('onRouteChange', e, a);
     },
     onClick(e) {
       const { path } = e;
