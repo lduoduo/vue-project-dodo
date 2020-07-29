@@ -7,6 +7,7 @@
       @search="onSearch"
       @cancel="onCancel"
     />
+    <Loading />
     <Menu />
   </div>
 </template>
@@ -14,12 +15,14 @@
 <script>
 import Search from '../components/Search.vue';
 import Menu from '../components/Menu.vue';
+import Loading from '@/components/Loading.vue';
 
 export default {
   name: "HotList",
   components: {
     Search,
-    Menu
+    Menu,
+    Loading
   },
   data() {
     return {

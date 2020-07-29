@@ -1,9 +1,12 @@
 <template>
   <div
-    :class="['comp-hot-item', activeGoodsId === data.goodsId ? 'active' : '']"
+    :class="[
+      'comp-hot-item',
+      activeGoods.goodsId === data.goodsId ? 'active' : '',
+    ]"
     @click="onDetailClick"
   >
-    <p>{{ activeGoodsId2 }}</p>
+    <!-- <p>{{ JSON.stringify(activeGoods) }}</p> -->
     <ImageLoad
       class="item-image"
       :url="data.goodsThumbnailUrl"
@@ -15,25 +18,19 @@
       <div class="item-title">{{ data.goodsName }}</div>
       <div class="item-price flex">
         <div>
-          <span class="item-price-buy-tip">{{
-            `${data.couponDiscount ? '券后价' : ''}￥`
-          }}</span>
+          <span class="item-price-buy-tip">{{ `${data.couponDiscount ? '券后价' : ''}￥` }}</span>
           <span class="item-price-buy">{{ data.discountMinPrice }}</span>
         </div>
         <div class="flex discount" v-if="data.couponDiscount > 0">
           <span class="item-discount-tip">券</span>
-          <span class="item-discount-price">{{
-            data.couponDiscount + '元'
-          }}</span>
+          <span class="item-discount-price">{{ data.couponDiscount + '元' }}</span>
         </div>
       </div>
-      <div class="item-option flex ">
+      <div class="item-option flex">
         <p class="item-tip">{{ `销量${data.salesTip}件` }}</p>
         <p class="item-share">
           <span class="item-share-tip">分享赚￥</span>
-          <span class="item-share-price">{{
-            data.vipPromotionPrice | formatPrice
-          }}</span>
+          <span class="item-share-price">{{ data.vipPromotionPrice | formatPrice }}</span>
         </p>
       </div>
     </div>
@@ -41,15 +38,22 @@
 </template>
 
 <style lang="scss">
-@import '@/assets/css/mixin.scss';
+@import "@/assets/css/mixin.scss";
 
 .comp-hot-item {
   box-shadow: $boxShadow;
   border-radius: 5px;
   overflow: hidden;
+  box-sizing: border-box;
+
+  &.active {
+    border: 1px dashed pink;
+  }
+
   p {
     margin: 0;
   }
+
   .item-image {
     padding-bottom: 100%;
     position: relative;
@@ -114,7 +118,7 @@
         padding: 0 4px;
 
         &:after {
-          content: '...';
+          content: "...";
           display: inline-block;
           color: white;
           position: absolute;
@@ -152,14 +156,14 @@
 </style>
 
 <script>
-import { mapState, mapActions } from 'vuex';
-import ImageLoad from '@/components/ImageLoad.vue';
-import { format$Floor, formatFloor } from '@/utils/price';
+import { mapState, mapGetters, mapActions } from "vuex";
+import ImageLoad from "@/components/ImageLoad.vue";
+import { format$Floor, formatFloor } from "@/utils/price";
 
 export default {
-  name: 'CategoryItem',
+  name: "CategoryItem",
   components: {
-    ImageLoad,
+    ImageLoad
   },
   props: {
     data: {
@@ -167,34 +171,38 @@ export default {
       // 对象或数组默认值必须从一个工厂函数获取
       default: () => {
         return {};
-      },
-    },
+      }
+    }
   },
   data() {
     return {
-      vip: /(5|3)/.test(this.data.merchantType),
+      vip: /(5|3)/.test(this.data.merchantType)
     };
   },
   computed: {
     activeGoodsId() {
-      console.log('this.$store', this.$store);
+      console.log("this.$store", this.$store);
       return this.$store.getters.dataGoods.goodsId;
     },
-    ...mapState({
-      // 箭头函数可使代码更简练
-      activeGoodsId2: (state) => {
-        console.log('activeGoodsId', state);
-        return state.count;
-      },
-      activeGoodsId3: 'dataGoods',
-      // 传字符串参数 'count' 等同于 `state => state.count`
-      countAlias: 'count',
+    ...mapGetters({
+      // 把 `this.activeGoods` 映射为 `this.$store.getters.dataGoods`
+      activeGoods: "dataGoods"
+    })
+    // ...mapState({
+    //   // 箭头函数可使代码更简练
+    //   activeGoodsId2: state => {
+    //     console.log("activeGoodsId", state);
+    //     return state.count;
+    //   },
+    //   activeGoodsId3: "dataGoods",
+    //   // 传字符串参数 'count' 等同于 `state => state.count`
+    //   countAlias: "count",
 
-      // 为了能够使用 `this` 获取局部状态，必须使用常规函数
-      countPlusLocalState(state) {
-        return state.count + this.localCount;
-      },
-    }),
+    //   // 为了能够使用 `this` 获取局部状态，必须使用常规函数
+    //   countPlusLocalState(state) {
+    //     return state.count + this.localCount;
+    //   }
+    // })
   },
   beforeMount() {
     // console.log('this.data', this.data);
@@ -202,16 +210,26 @@ export default {
   filters: {
     formatPrice(e) {
       return formatFloor(e);
-    },
+    }
   },
   methods: {
-    ...mapActions(['setGoods']),
+    ...mapActions(["setGoods", 'asSetGoods', 'actionB']),
     onToggle() {
       this.expand = !this.expand;
     },
     onDetailClick() {
-      this.setGoods(this.data);
-    },
-  },
+      console.log('onDetailClick', this);
+      // 方式一，同步提交事务
+      // this.$store.commit("SET_GOODS", this.data);
+      // 方式二，异步提交action
+      // this.$store.dispatch('setGoods', this.data);
+      // 方式三，通过mapActions映射store的dispatch方法到自己身上
+      // this.setGoods(this.data);
+      // 方式四，通过mapActions映射，返回Promise, 处理回调
+      this.actionB(this.data).then(() => {
+        console.log('设置商品成功');
+      })
+    }
+  }
 };
 </script>

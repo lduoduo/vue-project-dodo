@@ -1,7 +1,5 @@
 <template>
-  <div
-    :class="['comp-pyq-item', activeGoodsId === data.goodsId ? 'active' : '']"
-  >
+  <div :class="['comp-pyq-item', activeGoodsId === data.goodsId ? 'active' : '']">
     <ImageLoad class="item-image" :url="data.goodsThumbnailUrl" />
 
     <div class="item-main">
@@ -9,13 +7,17 @@
       <div class="item-date">{{ currDay }}</div>
       <div class="item-title">{{ data.goodsName }}</div>
       <div class="item-price">
-        <span class="item-price-origin">{{
+        <span class="item-price-origin">
+          {{
           `${data.couponDiscount ? '【券后价】' : ''}￥${data.discountMinPrice}`
-        }}</span>
+          }}
+        </span>
 
-        <span class="item-price-current" v-if="data.couponDiscount > 0">{{
+        <span class="item-price-current" v-if="data.couponDiscount > 0">
+          {{
           `${data.couponDiscount ? '【原价】' : ''}￥${data.minPrice}`
-        }}</span>
+          }}
+        </span>
       </div>
 
       <div class="item-banner">
@@ -35,9 +37,9 @@
             <p class="item-text">{{ data.goodsName }}</p>
             <p class="item-price">
               {{
-                `${data.couponDiscount ? '券后价' : ''}￥${
-                  data.discountMinPrice
-                }`
+              `${data.couponDiscount ? '券后价' : ''}￥${
+              data.discountMinPrice
+              }`
               }}
             </p>
           </div>
@@ -47,9 +49,7 @@
       </div>
 
       <div class="flex item-share">
-        <p class="share-price">
-          {{ `分享赚￥${formatPrice(data.myPromotionPrice)}` }}
-        </p>
+        <p class="share-price">{{ `分享赚￥${formatPrice(data.myPromotionPrice)}` }}</p>
         <p class="share-count">{{ `${data.shareCount}人已分享` }}</p>
       </div>
 
@@ -69,12 +69,17 @@
 </template>
 
 <style lang="scss">
-@import '@/assets/css/mixin.scss';
+@import "@/assets/css/mixin.scss";
 
 .comp-pyq-item {
   box-shadow: $boxShadow;
   overflow: hidden;
   padding: 12px;
+  box-sizing: border-box;
+
+  &.active {
+    border: 1px dashed pink;
+  }
 
   p {
     margin: 0;
@@ -199,17 +204,17 @@
 </style>
 
 <script>
-import { mapState, mapActions } from 'vuex';
-import { ImagePreview } from 'vant';
-import Iconfont from '@/components/Iconfont.vue';
-import ImageLoad from '@/components/ImageLoad.vue';
-import { format$Floor, formatFloor } from '@/utils/price';
+import { mapState, mapGetters, mapActions } from "vuex";
+import { ImagePreview } from "vant";
+import Iconfont from "@/components/Iconfont.vue";
+import ImageLoad from "@/components/ImageLoad.vue";
+import { format$Floor, formatFloor } from "@/utils/price";
 
 export default {
-  name: 'PyqItem',
+  name: "PyqItem",
   components: {
     Iconfont,
-    ImageLoad,
+    ImageLoad
   },
   props: {
     data: {
@@ -217,8 +222,8 @@ export default {
       // 对象或数组默认值必须从一个工厂函数获取
       default: () => {
         return {};
-      },
-    },
+      }
+    }
   },
   data() {
     const NOW = new Date();
@@ -228,14 +233,14 @@ export default {
     return {
       vip: /(5|3)/.test(this.data.merchantType),
       currDay: `${MONTH}-${DAY}`,
-      imageArr: this.data.imageList.slice(0, 3),
+      imageArr: this.data.imageList.slice(0, 3)
     };
   },
   computed: {
     activeGoodsId() {
-      console.log('this.$store', this.$store);
+      console.log("this.$store", this.$store);
       return this.$store.getters.dataGoods.goodsId;
-    },
+    }
   },
   beforeMount() {
     // console.log('this.data', this.data);
@@ -246,24 +251,24 @@ export default {
       return formatFloor(e);
     },
     onIamgeClick(i) {
-      console.log('onIamgeClick', i);
+      console.log("onIamgeClick", i);
       ImagePreview({
         images: this.data.imageList,
         startPosition: i,
         onClose() {
           // do something
-        },
+        }
       });
     },
     onDetailClick() {
-      console.log('onDetailClick');
+      console.log("onDetailClick");
     },
     onShareText() {
-      console.log('onShareText');
+      console.log("onShareText");
     },
     onSharePoster() {
-      console.log('onSharePoster');
-    },
-  },
+      console.log("onSharePoster");
+    }
+  }
 };
 </script>
