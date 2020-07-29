@@ -228,7 +228,8 @@ export default {
       // 方式四，通过mapActions映射，返回Promise, 处理回调
       this.actionB(this.data).then(() => {
         console.log('设置商品成功');
-      })
+      });
+      this.$emit('click', this.data);
     }
   }
 };
