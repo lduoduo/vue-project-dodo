@@ -47,14 +47,14 @@ const GOODS = {
     async actionA($store: any, d: any) {
       const { commit, state } = $store;
       const tmp = await fetchData(d);
-      console.log('tmp', tmp, $store);
+      console.log('tmp', d, tmp, $store);
 
-      commit('SET_GOODS', await fetchData(d));
+      commit('SET_GOODS', d);
     },
     async actionB($store: any, d: any) {
       const { commit, dispatch } = $store;
-      await dispatch('actionA'); // 等待 actionA 完成
-      commit('SET_GOODS', await fetchData(d));
+      await dispatch('actionA', d); // 等待 actionA 完成
+      // commit('SET_GOODS', d);
     },
   },
   getters: {

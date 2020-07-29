@@ -13,9 +13,9 @@
 </template>
 
 <script>
-import Search from '../components/Search.vue';
-import Menu from '../components/Menu.vue';
-import Loading from '@/components/Loading.vue';
+import Search from "../components/Search.vue";
+import Menu from "../components/Menu.vue";
+import Loading from "@/components/Loading.vue";
 
 export default {
   name: "HotList",
@@ -33,9 +33,16 @@ export default {
       list: []
     };
   },
+  mounted() {
+    //
+  },
   methods: {
     onSearch(val) {
       console.log("onSearch", val);
+      console.warn("警告!");
+      setTimeout(function() {
+        console.log("dodo", this.dodo());
+      }, 3000);
     },
     onCancel() {
       console.log("onCancel");

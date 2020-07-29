@@ -13,7 +13,7 @@
     </div>
     <transition name="fade">
       <div class="item-body" v-if="expand">
-        <div class="body-child" v-for="item in data.list" :key="item.id">
+        <div class="body-child" v-for="item in data.list" :key="item.id" :data-item="item" @mousedown="onMouseDown" @mousemove="onMouseMove" @mouseover="onMouseOver" @mouseup="onMouseUp">
           <div class="child-bg-wrapper">
             <div class="child-bg" :style="{ backgroundImage: `url(${item.iconUrl})` }" />
           </div>
@@ -76,6 +76,7 @@
 
 <script>
 // import Iconfont from '@/components/Iconfont.vue';
+import MoveEvent from '@/utils/movevent';
 
 export default {
   name: "CategoryItem",
@@ -99,6 +100,19 @@ export default {
   methods: {
     onToggle() {
       this.expand = !this.expand;
+    },
+    onMouseDown(e) {
+      console.log('onMouseDown', e);
+      // MoveEvent.on()
+    },
+    onMouseMove(e) {
+      console.log('onMouseMove', e);
+    },
+    onMouseOver(e) {
+      console.log('onMouseOver', e);
+    },
+    onMouseUp(e) {
+      console.log('onMouseUp', e);
     }
   }
 };

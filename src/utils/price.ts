@@ -1,14 +1,14 @@
 /*
  * @Author: zouhuan
  * @Date: 2019-08-11 22:38:17
- * @Last Modified by: zouhuan
- * @Last Modified time: 2019-08-15 22:21:03
+ * @Last Modified by: lduoduo
+ * @Last Modified time: 2020-07-29 22:26:08
  * 价格格式化
  */
 
 // price: 价格，num: 保留位数
 export const format = (price = 0, num = 2) => {
-  return Number(price).toFixed(num)
+  return Number(price).toFixed(num);
 }
 
 // 超过一百不展示小数

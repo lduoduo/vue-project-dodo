@@ -9,7 +9,9 @@
       <div class="item-price">
         <span class="item-price-origin">
           {{
-          `${data.couponDiscount ? '【券后价】' : ''}￥${data.discountMinPrice}`
+          `${data.couponDiscount ? '【券后价】' : ''}￥${
+          data.discountMinPrice
+          }`
           }}
         </span>
 
@@ -204,71 +206,28 @@
 </style>
 
 <script>
+import Vue from "vue";
+import Component from "vue-class-component";
 import { mapState, mapGetters, mapActions } from "vuex";
 import { ImagePreview } from "vant";
+
+import { Observer } from "mobx-vue";
+import StoreGoods from "@/store-mobx/goods";
+
 import Iconfont from "@/components/Iconfont.vue";
 import ImageLoad from "@/components/ImageLoad.vue";
 import { format$Floor, formatFloor } from "@/utils/price";
 
-export default {
-  name: "PyqItem",
-  components: {
-    Iconfont,
-    ImageLoad
-  },
-  props: {
-    data: {
-      type: Object,
-      // 对象或数组默认值必须从一个工厂函数获取
-      default: () => {
-        return {};
-      }
-    }
-  },
-  data() {
-    const NOW = new Date();
-    const MONTH = NOW.getMonth() + 1;
-    const DAY = NOW.getDate();
+@Observer
+@Component
+export default class App extends Vue {
+  state = {
+    activeGoods: StoreGoods,
+  };
 
-    return {
-      vip: /(5|3)/.test(this.data.merchantType),
-      currDay: `${MONTH}-${DAY}`,
-      imageArr: this.data.imageList.slice(0, 3)
-    };
-  },
-  computed: {
-    activeGoodsId() {
-      console.log("this.$store", this.$store);
-      return this.$store.getters.dataGoods.goodsId;
-    }
-  },
-  beforeMount() {
-    // console.log('this.data', this.data);
-  },
-  filters: {},
-  methods: {
-    formatPrice(e) {
-      return formatFloor(e);
-    },
-    onIamgeClick(i) {
-      console.log("onIamgeClick", i);
-      ImagePreview({
-        images: this.data.imageList,
-        startPosition: i,
-        onClose() {
-          // do something
-        }
-      });
-    },
-    onDetailClick() {
-      console.log("onDetailClick");
-    },
-    onShareText() {
-      console.log("onShareText");
-    },
-    onSharePoster() {
-      console.log("onSharePoster");
-    }
+  mounted() {
+    this.state.fetchUsers();
   }
-};
+}
+
 </script>

@@ -1,7 +1,12 @@
 <template>
   <div class="heart-loading flex-ct-x">
     <ul style="--line-count: 9">
-      <li v-for="v in 9" :key="v" :class="`line-${v}`" :style="`--line-index: ${v}`"></li>
+      <li
+        v-for="v in 9"
+        :key="v"
+        :class="`line-${v}`"
+        :style="`--line-index: ${v}`"
+      ></li>
     </ul>
   </div>
 </template>
@@ -9,8 +14,10 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 .heart-loading {
-  width: 200px;
-  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   ul {
     display: flex;
     justify-content: space-between;
@@ -19,7 +26,7 @@
   }
   li {
     --Θ: calc(var(--line-index) / var(--line-count) * 0.5turn);
-    --time: calc((var(--line-index) - 1) *120ms);
+    --time: calc((var(--line-index) - 1) * 120ms);
     border-radius: 5px;
     width: 10px;
     height: 10px;
@@ -116,9 +123,8 @@
 }
 </style>
 
-
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+import { Component, Prop, Vue } from 'vue-property-decorator';
 
 @Component
 export default class Loading extends Vue {

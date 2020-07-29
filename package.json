@@ -11,6 +11,8 @@
   "dependencies": {
     "axios": "^0.19.2",
     "core-js": "^3.6.5",
+    "mobx": "^5.15.4",
+    "mobx-vue": "^2.0.10",
     "postcss-pxtorem": "^5.1.1",
     "vant": "^2.9.3",
     "vue": "^2.6.11",
