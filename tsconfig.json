@@ -5,6 +5,7 @@
     "exclude": ["node_modules/**"]
   },
   "compilerOptions": {
+    "allowJs": true,
     "target": "esnext",
     "module": "esnext",
     "strict": true,
@@ -21,7 +22,10 @@
     "paths": {
       "@/*": ["src/*"],
       "@/components/*": [".src/components/*"],
-      "@/assets/*": [".src/assets/*"]
+      "@/utils/*": [".src/utils/*"],
+      "@/store-mobx/*": [".src/store-mobx/*"],
+      "@/assets/*": [".src/assets/*"],
+      "utils/*": [".src/utils/*"]
     },
     "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
   },
@@ -32,7 +36,7 @@
     "tests/**/*.ts",
     "tests/**/*.tsx"
   ],
-  "exclude": ["node_modules"],
+  "exclude": ["node_modules", ".vscode", ".history"],
   "rules": {
     "quotemark": true, // 字符串文字需要单引号或双引号。
     "indent": true, // 使用制表符或空格强制缩进。

@@ -18,6 +18,7 @@ module.exports = {
     config.resolve.alias = Object.assign(config.resolve.alias, {
       'assets': resolve('src/assets'),
       'components': resolve('src/components'),
+      'utils': resolve('src/utils'),
     })
 
     // console.log('config', config.devServer, config);

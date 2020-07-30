@@ -10,7 +10,7 @@
     <ImageLoad
       class="item-image"
       :url="data.goodsThumbnailUrl"
-      style="{ backgroundImage: `url(${data.goodsThumbnailUrl})` }"
+      style="{ backgroundImage1: `url(${data.goodsThumbnailUrl})` }"
     >
       <span :class="['item-tip', vip ? 'vip' : '']">{{ data.mallName }}</span>
     </ImageLoad>

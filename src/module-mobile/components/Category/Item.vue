@@ -87,15 +87,18 @@ export default {
     data: {
       type: Object,
       // 对象或数组默认值必须从一个工厂函数获取
-      default: () => {
-        return {};
-      }
+      // default: () => {
+      //   return {};
+      // }
     }
   },
   data() {
     return {
       expand: true
     };
+  },
+  created() {
+    console.log('this.props.data', this.data);
   },
   methods: {
     onToggle() {

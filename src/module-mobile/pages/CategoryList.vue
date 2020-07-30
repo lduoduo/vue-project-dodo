@@ -76,6 +76,8 @@ export default {
             list: e[k]
           };
         });
+
+        console.log('arr', arr);
         this.list = arr;
       });
     },
