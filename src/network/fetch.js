@@ -2,7 +2,7 @@
  * @Author: lduoduo
  * @Date: 2020-07-21 22:19:36
  * @Last Modified by: zouhuan
- * @Last Modified time: 2020-07-30 19:11:46
+ * @Last Modified time: 2020-07-30 20:12:55
  * 网络请求基础类库
  * https://github.com/axios/axios
  */
@@ -50,13 +50,13 @@ const doFetch = (opts = {}) => {
     transformResponse: [ResponseMiddwareBigInt],
   };
 
-  return axios(options).then(e => BigIntParse(JSON.stringify(e))).then(e => {
+  return axios(options).then(e => {
     /* eslint-disable @typescript-eslint/camelcase */
     const { data: { code: c, result: d, message } = {}, status = 200 } = e;
     console.log('axios', e);
 
     if (status === 200 && c == 0) return Promise.resolve(d);
-    return Promise.reject({ message: message || '网络错误' })
+    return Promise.reject({ message: message || '网络错误' });
   })
   // .catch(e => {
   //   console.log('e', e.message)

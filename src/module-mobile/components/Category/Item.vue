@@ -13,7 +13,8 @@
     </div>
     <transition name="fade">
       <div class="item-body" v-if="expand">
-        <div class="body-child" v-for="item in data.list" :key="item.id" :data-item="item" @mousedown="onMouseDown" @mousemove="onMouseMove" @mouseover="onMouseOver" @mouseup="onMouseUp">
+        <div class="body-child" v-for="item in data.list" :key="item.id" :data-item="JSON.stringify(item)" draggable="true" @mousedown="onMouseDown" @mousemove="onMouseMove" @mouseover="onMouseOver" @mouseup="onMouseUp">
+        <!-- <div class="body-child" v-for="item in data.list" :key="item.id" :data-item="JSON.stringify(item)" > -->
           <div class="child-bg-wrapper">
             <div class="child-bg" :style="{ backgroundImage: `url(${item.iconUrl})` }" />
           </div>
