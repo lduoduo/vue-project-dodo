@@ -2,16 +2,22 @@
  * @Author: lduoduo
  * @Date: 2020-07-21 22:19:36
  * @Last Modified by: zouhuan
- * @Last Modified time: 2020-07-22 19:27:11
+ * @Last Modified time: 2020-07-30 20:12:55
  * 网络请求基础类库
+ * https://github.com/axios/axios
  */
 
 import axios from 'axios';
 import qs from 'qs';
+import JSONbig from 'json-bigint';
 
 import ENV from '@/config/env';
 
 const { API } = ENV;
+
+const BigIntParse = JSONbig({ storeAsString: true }).parse;
+
+const ResponseMiddwareBigInt = (e) => BigIntParse(e);
 
 const getUrl = (opts = {}) => {
   const { method = 'get', server = 'local', path = '', data = {} } = opts;
@@ -41,17 +47,16 @@ const doFetch = (opts = {}) => {
     headers: { 'content-type': 'application/x-www-form-urlencoded' },
     data: qs.stringify(data),
     url,
+    transformResponse: [ResponseMiddwareBigInt],
   };
-
-  console.log('options', options);
 
   return axios(options).then(e => {
     /* eslint-disable @typescript-eslint/camelcase */
     const { data: { code: c, result: d, message } = {}, status = 200 } = e;
-    // console.log('axios', e);
+    console.log('axios', e);
 
     if (status === 200 && c == 0) return Promise.resolve(d);
-    return Promise.reject({ message: message || '网络错误' })
+    return Promise.reject({ message: message || '网络错误' });
   })
   // .catch(e => {
   //   console.log('e', e.message)

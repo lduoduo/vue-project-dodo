@@ -1,5 +1,5 @@
 <template>
-  <div class="component-image-load" :style="styleObj" @click="onImageClick">
+  <div class="component-image-load" :style="styleObj" @click.stop.prevent="onImageClick">
     <Iconfont
       v-if="!loading && !loadedUrl"
       type="icon-ddj-sousuo"

@@ -2,7 +2,7 @@
   <div
     :class="[
       'comp-hot-item',
-      activeGoods.goodsId === data.goodsId ? 'active' : '',
+      activeGoodsId === data.goodsId ? 'active' : '',
     ]"
     @click="onDetailClick"
   >
@@ -30,7 +30,7 @@
         <p class="item-tip">{{ `销量${data.salesTip}件` }}</p>
         <p class="item-share">
           <span class="item-share-tip">分享赚￥</span>
-          <span class="item-share-price">{{ data.vipPromotionPrice | formatPrice }}</span>
+          <span class="item-share-price">{{ formatPrice(data.vipPromotionPrice) }}</span>
         </p>
       </div>
     </div>
@@ -155,82 +155,86 @@
 }
 </style>
 
-<script>
+<script lang="ts">
+import { Component, Prop, Vue } from "vue-property-decorator";
 import { mapState, mapGetters, mapActions } from "vuex";
+import { ImagePreview } from "vant";
+
+
+import Iconfont from "@/components/Iconfont.vue";
 import ImageLoad from "@/components/ImageLoad.vue";
+
+import { GoodsModule } from "@/store-vuex-ts/modules/goods";
 import { format$Floor, formatFloor } from "@/utils/price";
 
-export default {
-  name: "CategoryItem",
-  components: {
-    ImageLoad
-  },
-  props: {
-    data: {
-      type: Object,
-      // 对象或数组默认值必须从一个工厂函数获取
-      default: () => {
-        return {};
-      }
-    }
-  },
-  data() {
-    return {
-      vip: /(5|3)/.test(this.data.merchantType)
-    };
-  },
-  computed: {
-    activeGoodsId() {
-      // console.log("this.$store", this.$store);
-      return this.$store.getters.currGoods.goodsId;
-    },
-    ...mapGetters({
-      // 把 `this.activeGoods` 映射为 `this.$store.getters.currGoods`
-      activeGoods: "currGoods"
-    })
-    // ...mapState({
-    //   // 箭头函数可使代码更简练
-    //   activeGoodsId2: state => {
-    //     console.log("activeGoodsId", state);
-    //     return state.count;
-    //   },
-    //   activeGoodsId3: "currGoods",
-    //   // 传字符串参数 'count' 等同于 `state => state.count`
-    //   countAlias: "count",
+import { GoodsItemData } from "../../interface";
 
-    //   // 为了能够使用 `this` 获取局部状态，必须使用常规函数
-    //   countPlusLocalState(state) {
-    //     return state.count + this.localCount;
-    //   }
-    // })
-  },
-  beforeMount() {
-    // console.log('this.data', this.data);
-  },
-  filters: {
-    formatPrice(e) {
-      return formatFloor(e);
-    }
-  },
-  methods: {
-    ...mapActions(["setGoods", 'asSetGoods', 'actionB']),
-    onToggle() {
-      this.expand = !this.expand;
-    },
-    onDetailClick() {
-      console.log('onDetailClick', this);
-      // 方式一，同步提交事务
-      // this.$store.commit("SET_GOODS", this.data);
-      // 方式二，异步提交action
-      // this.$store.dispatch('setGoods', this.data);
-      // 方式三，通过mapActions映射store的dispatch方法到自己身上
-      // this.setGoods(this.data);
-      // 方式四，通过mapActions映射，返回Promise, 处理回调
-      this.actionB(this.data).then(() => {
-        console.log('设置商品成功');
-      });
-      this.$emit('click', this.data);
-    }
+@Component({
+  name: "HotItemTs",
+  components: {
+    ImageLoad,
+    Iconfont
   }
-};
+})
+export default class App extends Vue {
+  @Prop({ default: {}, required: true })
+  private data!: GoodsItemData;
+
+  get activeGoodsId() {
+    // console.log("activeGoodsId GoodsModule", GoodsModule);
+    return GoodsModule.data.goodsId;
+  }
+
+  get currDay() {
+    const NOW = new Date();
+    const MONTH = NOW.getMonth() + 1;
+    const DAY = NOW.getDate();
+
+    return `${MONTH}-${DAY}`;
+  }
+
+  get vip() {
+    return /(5|3)/.test(`${this.data.merchantType}`);
+  }
+
+  get imageArr() {
+    return this.data.imageList.slice(0, 3);
+  }
+
+  mounted() {
+    // this.state.fetchUsers();
+    // console.log("this.state store, GoodsModule", this.data, this.$store, GoodsModule);
+  }
+
+  private formatPrice(e: number) {
+    return formatFloor(e);
+  }
+
+  private onDetailClick() {
+    console.log("onDetailClick", this);
+    GoodsModule.actionB(this.data).then(() => {
+      console.log("设置商品成功");
+    });
+    this.$emit("click", this.data);
+  }
+
+  private onIamgeClick(i) {
+    console.log("onIamgeClick", i);
+    ImagePreview({
+      images: this.data.imageList,
+      startPosition: i,
+      onClose() {
+        // do something
+      }
+    });
+  }
+
+  private onShareText() {
+    console.log("onShareText");
+  }
+
+  private onSharePoster() {
+    console.log("onSharePoster");
+  }
+}
 </script>

@@ -9,7 +9,7 @@
       @cancel="onCancel"
     />
     <div class="page-body">
-      <CompItem class="body-item" v-for="item in list" :key="item.id" :data="item" />
+      <CompItem class="body-item" v-for="item in list" :key="item.title" :data="item" />
     </div>
     <Menu />
   </div>
@@ -76,6 +76,8 @@ export default {
             list: e[k]
           };
         });
+
+        console.log('arr', arr);
         this.list = arr;
       });
     },

@@ -1,13 +1,16 @@
 <template>
-  <div class="page page-pyqlist">
-    <Search
-      v-model="search"
-      show-action
-      placeholder="请输入搜索关键词"
-      @search="onSearch"
-      @cancel="onCancel"
-    />
-    <div class="page-body">
+  <Layout class="page page-pyqlist">
+    <template #header>
+      <Search
+        v-model="search"
+        show-action
+        placeholder="请输入搜索关键词"
+        @search="onSearch"
+        @cancel="onCancel"
+      />
+    </template>
+
+    <template>
       <CompItem
         class="body-item"
         v-for="item in list"
@@ -17,46 +20,50 @@
         @hook:beforeUpdated="onCompBeforeUpdated"
         @hook:updated="onCompUpdated"
       />
-    </div>
-    <Menu />
-  </div>
+    </template>
+
+    <template #footer>
+      <Menu />
+    </template>
+  </Layout>
 </template>
 <style lang="scss">
 .page-pyqlist {
   .page-body {
-    flex: 1;
-    overflow: auto;
-    background-color: #f5f5f9;
-  }
-
-  .body-item {
-    background-color: #fff;
-    vertical-align: top;
-    margin: 12px 0;
+    .body-item {
+      background-color: #fff;
+      vertical-align: top;
+      & + .body-item {
+        margin-top: 12px;
+      }
+    }
   }
 }
 </style>
 <script>
-import Search from '../components/Search.vue';
-import Menu from '../components/Menu.vue';
-import CompItem from '../components/Pyq/Item.vue';
+import Layout from "@/components/Layout.vue";
 
-import { getHotList } from '@/network/api';
+import Search from "../components/Search.vue";
+import Menu from "../components/Menu.vue";
+import CompItem from "../components/Pyq/Item.vue";
+
+import { getHotList } from "@/network/api";
 
 export default {
-  name: 'PyqList',
+  name: "PyqList",
   components: {
     Search,
     Menu,
     CompItem,
+    Layout
   },
   data() {
     return {
-      search: '',
+      search: "",
       pageNo: 1,
       loading: false,
       finished: false,
-      list: [],
+      list: []
     };
   },
   // beforeCreate() {
@@ -67,26 +74,26 @@ export default {
   },
   methods: {
     onSearch(val) {
-      console.log('onSearch', val);
+      console.log("onSearch", val);
     },
     onCancel() {
-      console.log('onCancel');
+      console.log("onCancel");
     },
     fetchtHotList() {
-      getHotList().then((e) => {
+      getHotList().then(e => {
         const { list = [], totalcount = 0 } = e;
         this.list = list;
       });
     },
-    onCompMounted(e){
-      console.log('onCompMounted', e);
+    onCompMounted(e) {
+      console.log("onCompMounted", e);
     },
-    onCompBeforeUpdated(e){
-      console.log('onCompBeforeUpdated', e);
+    onCompBeforeUpdated(e) {
+      console.log("onCompBeforeUpdated", e);
     },
-    onCompUpdated(e){
-      console.log('onCompUpdated', e);
-    },
-  },
+    onCompUpdated(e) {
+      console.log("onCompUpdated", e);
+    }
+  }
 };
 </script>

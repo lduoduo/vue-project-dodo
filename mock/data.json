@@ -215,7 +215,7 @@
       "totalcount": 10000,
       "list": [
         {
-          "goodsId": 5986847587,
+          "goodsId": 9223372036854775807,
           "goodsName": "电动牙刷成人非充电式声波超自动软毛防水美白情侣智能家用",
           "goodsThumbnailUrl": "https://t00img.yangkeduo.com/goods/images/2019-08-16/368c3d731c80b188197f783d7096f0dc.jpeg@300w_1l_90Q.JP2",
           "salesTip": "2.4万",
@@ -543,7 +543,7 @@
       "totalcount": 2334,
       "list": [
         {
-          "goodsId": 146781826562,
+          "goodsId": 9223372036854775807,
           "goodsName": "认养一头牛常温原味酸奶200g*12盒*2箱风味酸牛奶整箱批特价",
           "goodsThumbnailUrl": "https://t00img.yangkeduo.com/goods/images/2020-07-22/d5e1d1e082b1fe0b59edaaf6b46b5404.jpeg",
           "salesTip": "7273",

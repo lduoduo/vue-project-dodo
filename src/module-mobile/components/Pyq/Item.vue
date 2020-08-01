@@ -1,5 +1,8 @@
 <template>
-  <div :class="['comp-pyq-item', activeGoodsId === data.goodsId ? 'active' : '']">
+  <div
+    :class="['comp-pyq-item', store.data.goodsId === data.goodsId ? 'active' : '']"
+    @click="onDetailClick"
+  >
     <ImageLoad class="item-image" :url="data.goodsThumbnailUrl" />
 
     <div class="item-main">
@@ -80,7 +83,7 @@
   box-sizing: border-box;
 
   &.active {
-    border: 1px dashed pink;
+    border: 2px dashed pink;
   }
 
   p {
@@ -205,9 +208,8 @@
 }
 </style>
 
-<script>
-import Vue from "vue";
-import Component from "vue-class-component";
+<script lang="ts">
+import { Component, Prop, Vue } from "vue-property-decorator";
 import { mapState, mapGetters, mapActions } from "vuex";
 import { ImagePreview } from "vant";
 
@@ -218,16 +220,79 @@ import Iconfont from "@/components/Iconfont.vue";
 import ImageLoad from "@/components/ImageLoad.vue";
 import { format$Floor, formatFloor } from "@/utils/price";
 
+import { GoodsItemData } from "../../interface";
+
 @Observer
-@Component
+@Component({
+  name: "PyqItem",
+  components: {
+    ImageLoad,
+    Iconfont
+  }
+})
 export default class App extends Vue {
-  state = {
-    activeGoods: StoreGoods,
-  };
+  @Prop({ default: {}, required: true })
+  private data!: GoodsItemData;
+
+  store = StoreGoods;
+
+  // get activeGoodsId() {
+  //   console.log("activeGoodsId", this.data, StoreGoods);
+  //   // return this.store.data.goodsId;
+  //   return StoreGoods.data.goodsId;
+  // }
+
+  get currDay() {
+    const NOW = new Date();
+    const MONTH = NOW.getMonth() + 1;
+    const DAY = NOW.getDate();
+
+    return `${MONTH}-${DAY}`;
+  }
+
+  get vip() {
+    return /(5|3)/.test(`${this.data.merchantType}`);
+  }
+
+  get imageArr() {
+    return this.data.imageList.slice(0, 3);
+  }
 
   mounted() {
-    this.state.fetchUsers();
+    // this.state.fetchUsers();
+    console.log("this.state", this.data, this.store);
+  }
+
+  private formatPrice(e: number) {
+    return formatFloor(e);
+  }
+
+  private onDetailClick() {
+    if (StoreGoods.data.goodsId === this.data.goodsId) return;
+
+    console.log("StoreGoods", this.data, StoreGoods);
+
+    // this.store.setGoods(this.data);
+    StoreGoods.setGoods(this.data);
+  }
+
+  private onIamgeClick(i) {
+    console.log("onIamgeClick", i);
+    ImagePreview({
+      images: this.data.imageList,
+      startPosition: i,
+      onClose() {
+        // do something
+      }
+    });
+  }
+
+  private onShareText() {
+    console.log("onShareText");
+  }
+
+  private onSharePoster() {
+    console.log("onSharePoster");
   }
 }
-
 </script>

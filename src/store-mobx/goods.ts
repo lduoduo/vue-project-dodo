@@ -7,6 +7,11 @@ const fetchData = (d: any) =>
     }, 1000);
   });
 
+interface GoodsItemData {
+  goodsId: [number, string];
+  goodsName: string;
+}
+
 class MobxGoods {
   @observable data = {
     goodsName: '',
@@ -21,10 +26,18 @@ class MobxGoods {
   }
 
   @action.bound setAge() {
+    console.log('setAge')
     this.count++;
   }
 
+  @action.bound setGoods(d: GoodsItemData) {
+    const { goodsId, goodsName } = d;
+    console.log('setGoods', d);
+    this.data = { ...this.data, goodsId, goodsName };
+  }
+
   @action.bound async fetchUsers() {
+    console.log('fetchUsers');
     this.text = await fetchData('users');
   }
 }
