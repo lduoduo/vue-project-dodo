@@ -24,12 +24,6 @@ const GOODS = {
   },
   // 提交mutations, 可以加入异步操作
   actions: {
-    // setMenu(opt: any, a: any, b: any) {
-    //   console.log('opt a b', opt, a, b);
-    //   // commit('SET_MENU', data ? data : { unit: 'E豆', ratio: 100 })
-    //   // commit('SET_MENU', 'aaa');
-    // },
-
     setGoods($store: any, d: any) {
       const { commit, state } = $store;
       console.log('actions setGoods', d, $store);
@@ -37,7 +31,7 @@ const GOODS = {
         setTimeout(() => {
           commit('SET_GOODS', d);
           resolve();
-        }, 1000);
+        }, 300);
       });
     },
     asSetGoods($store: any, d: any) {
