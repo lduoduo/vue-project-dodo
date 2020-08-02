@@ -2,7 +2,8 @@
   <div
     :class="[
       'comp-hot-item',
-      activeGoods.goodsId === data.goodsId ? 'active' : '',
+      activeGoods && activeGoods.goodsId === data.goodsId ? 'active' : '',
+      // activeGoodsId === data.goodsId ? 'active' : '',
     ]"
     @click="onDetailClick"
   >
@@ -181,8 +182,9 @@ export default {
   },
   computed: {
     activeGoodsId() {
-      // console.log("this.$store", this.$store);
-      return this.$store.getters.currGoods.goodsId;
+      console.log("this.$store", this.$store);
+      // return this.$store.getters.currGoods.goodsId;
+      return this.$store.getters?.currGoods?.goodsId;
     },
     ...mapGetters({
       // 把 `this.activeGoods` 映射为 `this.$store.getters.currGoods`
@@ -205,7 +207,7 @@ export default {
     // })
   },
   beforeMount() {
-    // console.log('this.data', this.data);
+    console.log('this.$store', this.$store);
   },
   filters: {
     formatPrice(e) {
