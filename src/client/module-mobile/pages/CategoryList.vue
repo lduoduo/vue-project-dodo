@@ -58,6 +58,33 @@ export default {
   beforeMount() {
     this.fetchCategoryList();
     this.fetchCategoryIdList();
+    console.log('this.getInitialProps', this.getInitialProps);
+  },
+  getInitialProps: async ctx => {
+    const e = await getCategoryList();
+    const ids = await getCategoryIdList();
+
+    const arr = Object.keys(e).map(k => {
+      return {
+        title: k,
+        count: e[k].length,
+        list: e[k]
+      };
+    });
+
+    return {
+      propsData: {
+        list: arr,
+        idList: ids
+      },
+      page: {
+        tdk: {
+          title: "dodo首页",
+          keywords: "dododoododod",
+          description: "描述"
+        }
+      }
+    };
   },
   methods: {
     onSearch(d) {
@@ -77,7 +104,7 @@ export default {
           };
         });
 
-        console.log('arr', arr);
+        console.log("arr", arr);
         this.list = arr;
       });
     },

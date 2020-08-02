@@ -1,4 +1,4 @@
-import Vue from 'vue';
+
 import VueRouter, { RouteConfig } from 'vue-router';
 
 import routeMobile from '../module-mobile/router';
@@ -7,8 +7,6 @@ import routeMobile from '../module-mobile/router';
 import Home from '../views/Home.vue';
 import Other from '../views/Other.vue';
 import Person from '../views/Person.vue';
-
-Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [
   {
@@ -48,10 +46,4 @@ const routes: Array<RouteConfig> = [
   },
 ];
 
-const router = new VueRouter({
-  mode: 'history',
-  base: process.env.BASE_URL,
-  routes,
-});
-
-export default router;
+export default routes;

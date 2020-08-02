@@ -16,6 +16,7 @@ pnpm-debug.log*
 .idea
 .vscode
 .history
+*.bk
 *.bk.*
 *.suo
 *.ntvs*
