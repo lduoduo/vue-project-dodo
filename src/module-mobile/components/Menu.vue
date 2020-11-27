@@ -16,13 +16,14 @@
 @import '@/assets/css/mixin.scss';
 .mobile-menu {
   display: flex;
+  justify-content: space-around;
   align-items: center;
   box-shadow: 0 -10px 20px 0 rgba(0, 0, 0, 0.06), inset 0 0.5px 0 0 #ddd;
 
   .menu-item {
     padding: 6px 0;
     flex: none;
-    width: 25%;
+    width: 20%;
     text-align: center;
     font-size: 10px;
     p {
@@ -63,9 +64,15 @@ export default {
         },
         {
           icon: 'icon-ddj-shezhi',
-          value: 'szrd',
-          label: '时政热点',
+          value: 'rd',
+          label: '热点',
           path: '/m/hotlist',
+        },
+        {
+          icon: 'icon-ddj-shezhi',
+          value: 'rdts',
+          label: '热点ts',
+          path: '/m/hotlist-ts',
         },
         {
           icon: 'icon-ddj-shouhuodizhi',

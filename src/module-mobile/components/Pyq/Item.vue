@@ -1,6 +1,6 @@
 <template>
   <div
-    :class="['comp-pyq-item', activeGoodsId === data.goodsId ? 'active' : '']"
+    :class="['comp-pyq-item', store.data.goodsId === data.goodsId ? 'active' : '']"
     @click="onDetailClick"
   >
     <ImageLoad class="item-image" :url="data.goodsThumbnailUrl" />
@@ -83,7 +83,7 @@
   box-sizing: border-box;
 
   &.active {
-    border: 1px dashed pink;
+    border: 2px dashed pink;
   }
 
   p {
@@ -231,15 +231,16 @@ import { GoodsItemData } from "../../interface";
   }
 })
 export default class App extends Vue {
-  @Prop()
+  @Prop({ default: {}, required: true })
   private data!: GoodsItemData;
 
   store = StoreGoods;
 
-  get activeGoodsId() {
-    console.log("activeGoodsId", this.store.data);
-    return this.store.data.goodsId;
-  }
+  // get activeGoodsId() {
+  //   console.log("activeGoodsId", this.data, StoreGoods);
+  //   // return this.store.data.goodsId;
+  //   return StoreGoods.data.goodsId;
+  // }
 
   get currDay() {
     const NOW = new Date();
@@ -267,7 +268,7 @@ export default class App extends Vue {
   }
 
   private onDetailClick() {
-    if (this.store.data.goodsId === this.data.goodsId) return;
+    if (StoreGoods.data.goodsId === this.data.goodsId) return;
 
     console.log("StoreGoods", this.data, StoreGoods);
 

@@ -35,6 +35,20 @@ const routes: Array<RouteConfig> = [
     },
   },
   {
+    path: 'hotlist-ts',
+    name: 'hotlist-ts',
+    component: () =>
+      import(/* webpackChunkName: "module-mobile" */ './pages/HotListTs.vue'),
+    meta: {
+      title: '热点ts',
+      navShow: true,
+      tabShow: true,
+      navLeftShow: false,
+      navRightShow: true,
+      type: 'bbb',
+    },
+  },
+  {
     path: 'pyqlist',
     name: 'pyqlist',
     component: () =>
