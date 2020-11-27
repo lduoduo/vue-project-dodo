@@ -8,7 +8,7 @@ const fetchData = (d: any) =>
   });
 
 interface GoodsItemData {
-  goodsId: [number, string];
+  goodsId: number | string;
   goodsName: string;
 }
 
@@ -26,7 +26,7 @@ class MobxGoods {
   }
 
   @action.bound setAge() {
-    console.log('setAge')
+    console.log('setAge');
     this.count++;
   }
 

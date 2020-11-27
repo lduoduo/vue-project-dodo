@@ -46,6 +46,12 @@ const routes: Array<RouteConfig> = [
     component: () =>
       import(/* webpackChunkName: "module-mobile" */ './pages/Mine.vue'),
   },
+  {
+    path: '',
+    name: 'mobileDefault',
+    component: () =>
+      import(/* webpackChunkName: "module-mobile" */ './pages/CategoryList.vue'),
+  },
 ];
 
 export default {
