@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<head>
+  <style>
+    .page {
+      border: 1px solid #aaa;
+      height: 300px;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="nav">
+    <ol id="nav">
+      <a href="/page1">第一页</a>
+      <a href="/page2">第二页</a>
+      <a href="/page3">第三页</a>
+      <a href="/page4">第四页</a>
+      <a href="/page5">第五页</a>
+    </ol>
+    <ol id="nav-hash">
+      <a href="#/page1">hash第一页</a>
+      <a href="#/page2">hash第二页</a>
+      <a href="#/page3">hash第三页</a>
+      <a href="#/page4">hash第四页</a>
+      <a href="#/page5">hash第五页</a>
+    </ol>
+  </nav>
+
+  <div id="app"></div>
+
+  <script>
+    const PageMap = {
+      page1: '<div class="page" id="page1">第一页</div>',
+      page2: '<div class="page" id="page2">第二页</div>',
+      page3: '<div class="page" id="page3">第三页</div>',
+      page4: '<div class="page" id="page4">第四页</div>',
+      page5: '<div class="page" id="page5">第五页</div>',
+      current: 'page1',
+    };
+
+    const onNav = (page, e) => {
+      console.log('page', page, e);
+    };
+
+    window.onload = () => {
+      const app = document.querySelector('#app');
+      app.innerHTML = PageMap['page1'];
+
+      const nav = document.querySelector('#nav');
+
+      nav.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (e.target.tagName !== 'A') return;
+
+        const newPath = e.target.getAttribute('href').replace('/', '');
+
+        history.pushState(newPath, 'tab' + PageMap.current, newPath);
+
+        historyChange();
+        console.log('e', e);
+      });
+
+      const updatePage = (page) => {
+        app.innerHTML = PageMap[page];
+        PageMap.current = page;
+      };
+
+      const hashChange = (e) => {
+        const { hash } = window.location;
+
+        const tmp = hash.replace('#/', '');
+        updatePage(tmp);
+      };
+
+      const historyChange = (e) => {
+        const { pathname } = window.location;
+        console.log('historyChange', pathname);
+
+        const tmp = pathname.replace('/', '');
+        updatePage(tmp);
+      };
+
+      const popState = (e) => {
+        const { state: page } = e;
+        console.log('popState', e);
+        updatePage(page);
+      };
+
+      window.addEventListener('hashchange', hashChange);
+      window.addEventListener('popstate', popState);
+
+      historyChange();
+    };
+  </script>
+</body>
