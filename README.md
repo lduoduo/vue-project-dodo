@@ -36,3 +36,8 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 ### BUG
 1. vue  Cannot convert object to primitive value
   - template上设置本该为string的值为对象
+
+### 其他
+1. ERROR: Failed to download Chromium r686378! Set "PUPPETEER_SKIP_CHROMIUM_DOWNLOAD" env variable to skip download.
+  - npm config set puppeteer_download_host=https://npm.taobao.org/mirrors
+  - node node_modules/puppeteer/install.js
