@@ -3,40 +3,44 @@ import Vue from 'vue';
 import { sync } from 'vuex-router-sync';
 
 import App from './App.vue';
+
 import { createStore } from './store-vuex-ts';
 import { createRouter } from './router';
+
 import titleMixin from './utils/title';
 import * as filters from './filters/filters';
-
-import axios from 'axios'
-import conf from '../../scripts/config'
 
 // Vue.prototype.$request = axios.create({
 //   baseURL: 'http://' + conf.app.devHost + ':' + conf.app.port,
 //   timeout: 1000
 // })
 
-Vue.prototype.$isProd = process.env.NODE_ENV === 'production'
+Vue.prototype.$isProd = process.env.NODE_ENV === 'production';
 
-Vue.mixin(titleMixin)
+Vue.mixin(titleMixin);
 
-Object.keys(filters).forEach(key => {
-  Vue.filter(key, filters[key])
-})
+Object.keys(filters).forEach((key) => {
+  Vue.filter(key, filters[key]);
+});
 
-export function createApp () {
-  const store = createStore()
-  const router = createRouter()
+export function createApp(context?) {
+  const router = createRouter();
+  const store = createStore();
 
-  // sync the router with the vuex store.
-  // this registers `store.state.route`
-  sync(store, router)
+  // 同步路由状态(route state)到 store
+  sync(store, router);
 
   const app = new Vue({
     router,
     store,
-    render: h => h(App)
-  })
+    render: (h) => h(App),
+  });
 
-  return { app, router, store }
+  return {
+    app,
+    router,
+    store,
+  };
 }
+
+export default createApp;

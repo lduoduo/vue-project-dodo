@@ -5,6 +5,8 @@ import menu from './modules/menu';
 import goods from './modules/goods';
 import getters from './getters'
 
+import api from '../network/api';
+
 Vue.use(Vuex);
 
 //不是在生产环境debug为true

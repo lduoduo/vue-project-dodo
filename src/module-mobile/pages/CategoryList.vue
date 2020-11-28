@@ -45,6 +45,10 @@ export default {
     Menu,
     CompItem
   },
+  asyncData ({ store, route }) {
+    // 触发 action 后，会返回 Promise
+    return store.dispatch('fetchItem', route.params.id)
+  },
   data() {
     return {
       search: "",
@@ -58,34 +62,33 @@ export default {
   beforeMount() {
     this.fetchCategoryList();
     this.fetchCategoryIdList();
-    console.log('this.getInitialProps', this.getInitialProps);
   },
-  getInitialProps: async ctx => {
-    const e = await getCategoryList();
-    const ids = await getCategoryIdList();
+  // getInitialProps: async ctx => {
+  //   const e = await getCategoryList();
+  //   const ids = await getCategoryIdList();
 
-    const arr = Object.keys(e).map(k => {
-      return {
-        title: k,
-        count: e[k].length,
-        list: e[k]
-      };
-    });
+  //   const arr = Object.keys(e).map(k => {
+  //     return {
+  //       title: k,
+  //       count: e[k].length,
+  //       list: e[k]
+  //     };
+  //   });
 
-    return {
-      propsData: {
-        list: arr,
-        idList: ids
-      },
-      page: {
-        tdk: {
-          title: "dodo首页",
-          keywords: "dododoododod",
-          description: "描述"
-        }
-      }
-    };
-  },
+  //   return {
+  //     propsData: {
+  //       list: arr,
+  //       idList: ids
+  //     },
+  //     page: {
+  //       tdk: {
+  //         title: "dodo首页",
+  //         keywords: "dododoododod",
+  //         description: "描述"
+  //       }
+  //     }
+  //   };
+  // },
   methods: {
     onSearch(d) {
       console.log("onSearch", d);
