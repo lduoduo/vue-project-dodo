@@ -12,6 +12,7 @@
     "axios": "^0.19.2",
     "core-js": "^3.6.5",
     "json-bigint": "^1.0.0",
+    "koa": "^2.13.0",
     "mobx": "^5.15.4",
     "mobx-vue": "^2.0.10",
     "postcss-pxtorem": "^5.1.1",
