@@ -39,7 +39,7 @@
 </style>
 <script>
 // 在这里导入模块，而不是在 `store/index.js` 中
-import hotStoreModule from '@/store-vuex-ts/modules/hotList';
+import hotStoreModule from '@/store-vuex/modules/hotList';
 
 import Search from '../components/Search.vue';
 import Menu from '../components/Menu.vue';
@@ -52,18 +52,18 @@ export default {
   components: {
     Search,
     Menu,
-    CompItem,
+    CompItem
   },
-  asyncData ({ store, route }) {
+  asyncData({ store, route }) {
     // 触发 action 后，会返回 Promise
     console.log('asyncData store', store);
 
-    store.registerModule('hotList', fooStoreModule);
+    store.registerModule('hotList', hotStoreModule);
     return store.dispatch('fetchtHotList');
   },
-   // 重要信息：当多次访问路由时，
+  // 重要信息：当多次访问路由时，
   // 避免在客户端重复注册模块。
-  destroyed () {
+  destroyed() {
     // this.$store.unregisterModule('hotList');
   },
   data() {
@@ -72,7 +72,7 @@ export default {
       pageNo: 1,
       loading: false,
       finished: false,
-      list: [],
+      list: []
     };
   },
   beforeMount() {
@@ -86,11 +86,11 @@ export default {
       console.log('onCancel');
     },
     fetchtHotList() {
-      getHotList().then((e) => {
+      getHotList().then(e => {
         const { list = [], totalcount = 0 } = e;
         this.list = list;
       });
-    },
-  },
+    }
+  }
 };
 </script>

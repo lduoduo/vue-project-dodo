@@ -4,11 +4,11 @@ import { sync } from 'vuex-router-sync';
 
 import App from './App.vue';
 
-import { createStore } from './store-vuex-ts';
-import { createRouter } from './router';
+import { createStore } from './store-vuex';
+import { createRouter } from './createRouter';
 
-import titleMixin from './utils/title';
-import * as filters from './filters/filters';
+// import titleMixin from './utils/title';
+// import * as filters from './filters/filters';
 
 // Vue.prototype.$request = axios.create({
 //   baseURL: 'http://' + conf.app.devHost + ':' + conf.app.port,
@@ -17,11 +17,11 @@ import * as filters from './filters/filters';
 
 Vue.prototype.$isProd = process.env.NODE_ENV === 'production';
 
-Vue.mixin(titleMixin);
+// Vue.mixin(titleMixin);
 
-Object.keys(filters).forEach((key) => {
-  Vue.filter(key, filters[key]);
-});
+// Object.keys(filters).forEach(key => {
+//   Vue.filter(key, filters[key]);
+// });
 
 export function createApp(context?: any) {
   const router = createRouter();
@@ -33,13 +33,13 @@ export function createApp(context?: any) {
   const app = new Vue({
     router,
     store,
-    render: (h) => h(App),
+    render: h => h(App)
   });
 
   return {
     app,
     router,
-    store,
+    store
   };
 }
 

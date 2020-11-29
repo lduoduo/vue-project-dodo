@@ -3,7 +3,7 @@ import {
   Module,
   Mutation,
   Action,
-  getModule,
+  getModule
 } from 'vuex-module-decorators';
 import store from '@/store-vuex-ts';
 
@@ -18,12 +18,12 @@ const fetchData = (d: any) =>
 
 export enum DeviceType { // 定义设备枚举类型
   Mobile,
-  Desktop,
+  Desktop
 }
 
 export interface IstateHotList {
   data: {
-    list: Array<object>,
+    list: Array<object>;
   };
 }
 
@@ -37,7 +37,7 @@ export interface IstateHotList {
 @Module({ dynamic: true, store, name: 'hotList' })
 class App extends VuexModule implements IstateHotList {
   public data = {
-    list: [],
+    list: []
   };
 
   @Mutation
@@ -47,7 +47,7 @@ class App extends VuexModule implements IstateHotList {
 
   @Action
   public setHotList(d: any) {
-    return fetchData(d).then((e) => {
+    return fetchData(d).then(e => {
       this.SET_HOTLIST(d);
     });
   }
@@ -64,12 +64,12 @@ class App extends VuexModule implements IstateHotList {
   }
 
   @Action
-  public async fetchtHotList(d: any) {
-    await this.actionA(d);
-    const tmp = await getHotList();
-    console.log('await getHotList', tmp);
-
-    this.SET_HOTLIST(tmp);
+  public fetchtHotList(d: any) {
+    // `store.dispatch()` 会返回 Promise，
+    // 以便我们能够知道数据在何时更新
+    return getHotList().then(e => {
+      this.SET_HOTLIST(e);
+    });
   }
 
   get currHostList() {

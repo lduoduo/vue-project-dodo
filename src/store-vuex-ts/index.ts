@@ -2,15 +2,17 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios';
 
+import ENV from '@/config/env';
+
 import { IstateGoods } from './modules/goods';
 import { IStateUser } from './modules/user';
 import { IstateHotList } from './modules/hotList';
 
-const baseURL = '';
+const baseURL = ENV.API.local;
 
 Vuex.Store.prototype.$request = axios.create({
   baseURL: baseURL,
-  timeout: 1000,
+  timeout: 1000
 });
 
 Vue.use(Vuex);
@@ -26,6 +28,8 @@ export interface IstateRoot {
 // Declare empty store first, dynamically register all modules later.
 export function createStore() {
   return new Vuex.Store<IstateRoot>({
-    strict: debug,
+    strict: debug
   });
 }
+
+export default createStore;

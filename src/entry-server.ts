@@ -1,6 +1,6 @@
 import createApp from './createApp';
 
-export default (context) => {
+export default context => {
   // 因为有可能会是异步路由钩子函数或组件，所以我们将返回一个 Promise，
   // 以便服务器能够等待所有的内容在渲染前，
   // 就已经准备就绪。
@@ -21,21 +21,26 @@ export default (context) => {
       // Promise 应该 resolve 应用程序实例，以便它可以渲染
       // resolve(app);
 
+      console.log('matchedComponents', matchedComponents);
+
       // 对所有匹配的路由组件调用 `asyncData()`
       Promise.all(
-        matchedComponents.map((Component) => {
-          if (Component.asyncData) {
+        matchedComponents.map(Component => {
+          console.log('Component', Component);
+          if (Component?.asyncData) {
             return Component.asyncData({
               store,
-              route: router.currentRoute,
+              route: router.currentRoute
             });
+          } else {
+            return Promise.resolve();
           }
         })
       )
         .then(() => {
           context.renderState({
             contextKey: 'myCustomState',
-            windowKey: '__INITIAL_STATE__',
+            windowKey: '__INITIAL_STATE__'
           });
 
           // 在所有预取钩子(preFetch hook) resolve 后，

@@ -11,6 +11,6 @@ export function createRouter() {
     base: process.env.BASE_URL,
     fallback: false,
     // scrollBehavior: () => ({ y: 0 }),
-    routes,
+    routes
   });
 }

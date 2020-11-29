@@ -9,7 +9,12 @@
       @cancel="onCancel"
     />
     <div class="page-body">
-      <CompItem class="body-item" v-for="item in list" :key="item.title" :data="item" />
+      <CompItem
+        class="body-item"
+        v-for="item in list"
+        :key="item.title"
+        :data="item"
+      />
     </div>
     <Menu />
   </div>
@@ -32,26 +37,26 @@
 }
 </style>
 <script>
-import Menu from "../components/Menu.vue";
-import Search from "../components/Search.vue";
-import CompItem from "../components/Category/Item.vue";
+import Menu from '../components/Menu.vue';
+import Search from '../components/Search.vue';
+import CompItem from '../components/Category/Item.vue';
 
-import { getCategoryList, getCategoryIdList } from "@/network/api";
+import { getCategoryList, getCategoryIdList } from '@/network/api';
 
 export default {
-  name: "CategoryList",
+  name: 'CategoryList',
   components: {
     Search,
     Menu,
     CompItem
   },
-  asyncData ({ store, route }) {
+  asyncData({ store, route }) {
     // 触发 action 后，会返回 Promise
-    return store.dispatch('fetchItem', route.params.id)
+    return store.dispatch('fetchtHotList');
   },
   data() {
     return {
-      search: "",
+      search: '',
       pageNo: 1,
       loading: false,
       finished: false,
@@ -63,39 +68,13 @@ export default {
     this.fetchCategoryList();
     this.fetchCategoryIdList();
   },
-  // getInitialProps: async ctx => {
-  //   const e = await getCategoryList();
-  //   const ids = await getCategoryIdList();
-
-  //   const arr = Object.keys(e).map(k => {
-  //     return {
-  //       title: k,
-  //       count: e[k].length,
-  //       list: e[k]
-  //     };
-  //   });
-
-  //   return {
-  //     propsData: {
-  //       list: arr,
-  //       idList: ids
-  //     },
-  //     page: {
-  //       tdk: {
-  //         title: "dodo首页",
-  //         keywords: "dododoododod",
-  //         description: "描述"
-  //       }
-  //     }
-  //   };
-  // },
   methods: {
     onSearch(d) {
-      console.log("onSearch", d);
+      console.log('onSearch', d);
       this.fetchCategoryList(d);
     },
     onCancel() {
-      console.log("onCancel");
+      console.log('onCancel');
     },
     fetchCategoryList(param) {
       getCategoryList(param).then(e => {
@@ -107,7 +86,7 @@ export default {
           };
         });
 
-        console.log("arr", arr);
+        console.log('arr', arr);
         this.list = arr;
       });
     },

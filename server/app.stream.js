@@ -5,9 +5,9 @@ const Readable = require('stream').Readable;
 const { createBundleRenderer } = require('vue-server-renderer');
 
 const template = require('fs').readFileSync('./template.html', 'utf-8');
-const template = require('fs').readFileSync('/path/to/template.html', 'utf-8');
-const serverBundle = require('./dist/vue-ssr-server-bundle.json');
-const clientManifest = require('./dist/vue-ssr-client-manifest.json');
+
+const serverBundle = require('../dist/vue-ssr-server-bundle.json');
+const clientManifest = require('../dist/vue-ssr-client-manifest.json');
 
 const renderer = createBundleRenderer(serverBundle, {
   runInNewContext: false, // 推荐
@@ -18,6 +18,8 @@ const renderer = createBundleRenderer(serverBundle, {
 const app = new Koa();
 
 const port = process.env.PORT || 10001;
+
+global.env = process.env.NODE_ENV || 'production';
 
 //ssr 中间件
 app.use(async (ctx, next) => {
@@ -47,9 +49,10 @@ app.use(async (ctx, next) => {
   });
 
   stream.on('error', (err) => {
-    // handle error...
+    console.log('stream error', err);
     //全部写完后，结束掉http response
     view.push(`<div style="color: red;">${err.message}</div>`);
+    view.push(null);
   });
 
   await next();
