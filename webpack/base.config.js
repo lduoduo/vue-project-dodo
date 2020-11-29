@@ -7,21 +7,32 @@ const { VueLoaderPlugin } = require('vue-loader');
 
 const isProd = process.env.NODE_ENV === 'production';
 
+const resolve = (pn) => path.resolve(__dirname, `../${pn}`);
+
+console.log('isProd', isProd);
+
 module.exports = {
   devtool: isProd ? false : '#cheap-module-source-map',
   output: {
-    path: path.resolve(__dirname, '../dist'),
+    path: resolve('dist'),
     publicPath: '/dist/',
     filename: '[name].[chunkhash].js',
   },
   resolve: {
     alias: {
-      public: path.resolve(__dirname, '../public'),
-      '@': path.resolve(__dirname, '../src'),
+      public: resolve('public'),
+      '@': resolve('src'),
       assets: resolve('src/assets'),
       components: resolve('src/components'),
       utils: resolve('src/utils'),
     },
+    extensions: ['.js', '.ts', '.vue', '.scss', '.css'], // 省略后缀名
+  },
+  externals : {
+    vue: "Vue",
+    "vue-router": "VueRouter",
+    vant: "vant",
+    _: "lodash",
   },
   module: {
     noParse: /es6-promise\.js$/, // avoid webpack shimming process
@@ -49,24 +60,50 @@ module.exports = {
         },
       },
       {
-        test: /\.(sa|sc|c)ss$/,
-        use: isProd
-          ? MiniCssExtractPlugin.loader
-          : [
-              'vue-style-loader',
-              'css-loader',
-              {
-                loader: 'postcss-loader',
-              },
-              {
-                loader: 'sass-loader',
-              },
-            ],
+        test: /\.(sa|sc)ss$/,
+        use: [
+          isProd ? MiniCssExtractPlugin.loader : 'vue-style-loader',
+          'css-loader',
+          {
+            loader: 'postcss-loader',
+          },
+          {
+            loader: 'sass-loader',
+          },
+        ],
+      },
+      {
+        test: /\.css$/,
+        use: [
+          isProd ? MiniCssExtractPlugin.loader : 'vue-style-loader',
+          'css-loader',
+        ],
       },
     ],
   },
   performance: {
     hints: false,
+  },
+  optimization: {
+    splitChunks: {
+      name: false,
+      cacheGroups: {
+        common: {
+          name: 'common',
+          chunks: 'all',
+          minChunks: 2,
+        },
+        vendor: {
+          name: 'vendor',
+          test: /[\\/]node_modules[\\/]/,
+          chunks: 'all',
+          priority: 10,
+        },
+      },
+    },
+    runtimeChunk: {
+      name: 'runtime',
+    },
   },
   plugins: isProd
     ? [

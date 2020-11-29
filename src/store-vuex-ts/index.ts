@@ -2,14 +2,14 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios';
 
-import conf from '../../../scripts/config';
-
 import { IstateGoods } from './modules/goods';
 import { IStateUser } from './modules/user';
 import { IstateHotList } from './modules/hotList';
 
+const baseURL = '';
+
 Vuex.Store.prototype.$request = axios.create({
-  baseURL: 'http://' + conf.app.devHost + ':' + conf.app.port,
+  baseURL: baseURL,
   timeout: 1000,
 });
 

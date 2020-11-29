@@ -23,7 +23,7 @@ Object.keys(filters).forEach((key) => {
   Vue.filter(key, filters[key]);
 });
 
-export function createApp(context?) {
+export function createApp(context?: any) {
   const router = createRouter();
   const store = createStore();
 
