@@ -12,7 +12,7 @@ console.log('isProd', isProd);
 
 module.exports = {
   devtool: isProd ? false : '#cheap-module-source-map',
-  // stats: isProd ? 'errors-only' : 'minimal',
+  stats: 'minimal',
   resolve: {
     alias: {
       public: resolve('public'),

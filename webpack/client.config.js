@@ -14,7 +14,7 @@ const isProd = process.env.NODE_ENV === 'production';
 module.exports = merge(baseConfig, {
   mode: 'development',
   devtool: isProd ? 'cheap-module-source-map' : false,
-  entry: path.resolve(__dirname, '../src/entry-client-before-page.ts'),
+  entry: resolve('ssr/entry-client-before-page.ts'),
   output: {
     path: resolve('dist'),
     publicPath: '/dist/',

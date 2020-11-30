@@ -1,4 +1,4 @@
-# hello-dodo
+# vue-project
 
 ## node >= 10.13.0
 
@@ -17,8 +17,14 @@ yarn install
 
 ### Compiles and minifies for production
 
+- SSR
 ```
-yarn build
+yarn build:ssr
+```
+
+- CSR
+```
+yarn build:csr
 ```
 
 ### Lints and fixes files

@@ -81,10 +81,12 @@ export default {
     };
   },
   beforeCreate() {
+    // console.log()
   },
   beforeMount() {
-      console.log("this.$store", this.$store);
-    // this.fetchtHotList();
+    console.log('this.$store', this.$store);
+    console.log('this.hotList', this.hotList);
+    if (!this.hotList || this.hotList.length === 0) this.fetchtHotList();
   },
   computed: {
     hotList() {

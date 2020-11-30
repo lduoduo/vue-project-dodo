@@ -2,10 +2,10 @@
 import Vue from 'vue';
 import { sync } from 'vuex-router-sync';
 
-import App from './App.vue';
+import App from '@/App.vue';
 
 // import { createStore } from './store-demo';
-import { createStore } from './store-vuex-ts';
+import { createStore } from '@/store-vuex-ts';
 import { createRouter } from './createRouter';
 
 // import titleMixin from './utils/title';
@@ -24,7 +24,7 @@ Vue.prototype.$isProd = process.env.NODE_ENV === 'production';
 //   Vue.filter(key, filters[key]);
 // });
 
-export function createApp(context?: any) {
+export function createApp() {
   const router = createRouter();
   const store = createStore();
 

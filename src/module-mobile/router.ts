@@ -51,12 +51,28 @@ const routes: Array<RouteConfig> = [
   {
     path: 'pyqlist',
     name: 'pyqlist',
+    meta: {
+      title: '朋友圈',
+      navShow: true,
+      tabShow: true,
+      navLeftShow: false,
+      navRightShow: true,
+      type: 'bbb'
+    },
     component: () =>
       import(/* webpackChunkName: "module-mobile" */ './pages/PyqList.vue')
   },
   {
     path: 'mine',
     name: 'mine',
+    meta: {
+      title: '个人中心',
+      navShow: true,
+      tabShow: true,
+      navLeftShow: false,
+      navRightShow: true,
+      type: 'bbb'
+    },
     component: () =>
       import(/* webpackChunkName: "module-mobile" */ './pages/Mine.vue')
   },

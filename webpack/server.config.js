@@ -10,8 +10,7 @@ const resolve = pn => path.resolve(__dirname, `../${pn}`);
 
 module.exports = merge(baseConfig, {
   // 将 entry 指向应用程序的 server entry 文件
-  entry: path.resolve(__dirname, '../src/entry-server.ts'),
-
+  entry: resolve('ssr/entry-server.ts'),
   output: {
     path: resolve('dist'),
     publicPath: '/dist/',

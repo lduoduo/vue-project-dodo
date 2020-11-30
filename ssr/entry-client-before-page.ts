@@ -2,7 +2,7 @@
  * @Author: lduoduo
  * @Date: 2020-11-28 21:09:29
  * @Last Modified by: zouhuan
- * @Last Modified time: 2020-11-30 15:40:46
+ * @Last Modified time: 2020-11-30 17:11:29
  * 切换路由时，数据预取发生在切换路由时，进入匹配路由之前
  */
 import { Toast } from 'vant';
@@ -41,11 +41,11 @@ router.onReady(() => {
     // 这里如果有加载指示器 (loading indicator)，就触发
     Toast.loading({
       message: '加载中...',
-      forbidClick: true,
+      forbidClick: true
     });
 
     Promise.all(
-      activated.map((c) => {
+      activated.map(c => {
         if (c?.asyncData) {
           return c.asyncData({ store, route: to });
         }
@@ -55,7 +55,7 @@ router.onReady(() => {
         // 停止加载指示器(loading indicator)
         Toast.clear();
 
-        console.log('停止loading')
+        console.log('停止loading');
         next();
       })
       .catch(next);

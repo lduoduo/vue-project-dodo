@@ -11,8 +11,7 @@ export default context => {
     router.push(context.url);
 
     // 等到 router 将可能的异步组件和钩子函数解析完
-    router.onReady((ExaComp) => {
-
+    router.onReady(ExaComp => {
       const matchedComponents = router.getMatchedComponents();
       // 匹配不到的路由，执行 reject 函数，并返回 404
       if (!matchedComponents.length) {
@@ -40,12 +39,14 @@ export default context => {
         })
       )
         .then(() => {
-          console.log('context renderState', context);
+          console.log('context renderState', context, ExaComp);
 
           Object.assign(context, ExaComp?.meta || {});
 
-          // context.title = 'dodo';
-          context.meta = ExaComp?.meta?.meta || '<meta name="apple-touch-fullscreen" content="yes">';
+          context.title = ExaComp?.meta?.title;
+          context.meta =
+            ExaComp?.meta?.meta ||
+            '<meta name="apple-touch-fullscreen" content="yes">';
 
           // context.renderState({
           //   contextKey: 'myCustomState',
