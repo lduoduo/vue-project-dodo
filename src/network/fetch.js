@@ -2,7 +2,7 @@
  * @Author: lduoduo
  * @Date: 2020-07-21 22:19:36
  * @Last Modified by: zouhuan
- * @Last Modified time: 2020-11-30 15:13:22
+ * @Last Modified time: 2020-11-30 16:54:41
  * 网络请求基础类库
  * https://github.com/axios/axios
  */
@@ -17,7 +17,7 @@ const { API } = ENV;
 
 const BigIntParse = JSONbig({ storeAsString: true }).parse;
 
-const ResponseMiddwareBigInt = (e) => BigIntParse(e);
+const ResponseMiddwareBigInt = e => BigIntParse(e);
 
 const getUrl = (opts = {}) => {
   const { method = 'get', server = 'local', path = '', data = {} } = opts;
@@ -33,7 +33,7 @@ const getUrl = (opts = {}) => {
   if (!pfix) return url;
 
   return /\?/.test(url) ? `${url}&${pfix}` : `${url}?${pfix}`;
-}
+};
 
 const doFetch = (opts = {}) => {
   const { method = 'get', server = '', path = '', data = {} } = opts;
@@ -47,7 +47,7 @@ const doFetch = (opts = {}) => {
     headers: { 'content-type': 'application/x-www-form-urlencoded' },
     data: qs.stringify(data),
     url,
-    transformResponse: [ResponseMiddwareBigInt],
+    transformResponse: [ResponseMiddwareBigInt]
   };
 
   console.log('axios options', options);
@@ -59,25 +59,26 @@ const doFetch = (opts = {}) => {
 
     if (status === 200 && c == 0) return Promise.resolve(d);
     return Promise.reject({ message: message || '网络错误' });
-  })
+  });
   // .catch(e => {
   //   console.log('e', e.message)
   // });
-}
-
+};
 
 export const get = (opts = {}) => {
-  return doFetch({ ...opts, method: 'GET' })
-}
+  return doFetch({ ...opts, method: 'GET' });
+};
 
 export const post = (opts = {}) => {
-  return doFetch({ ...opts, method: 'POST' })
-}
+  return doFetch({ ...opts, method: 'POST' });
+};
 
 export const put = (opts = {}) => {
-  return doFetch({ ...opts, method: 'PUT' })
-}
+  return doFetch({ ...opts, method: 'PUT' });
+};
 
 export default {
-  get, post, put
-}
+  get,
+  post,
+  put
+};

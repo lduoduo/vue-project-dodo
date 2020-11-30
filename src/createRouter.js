@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import VueRouter, { RouteConfig } from 'vue-router';
+import VueRouter from 'vue-router';
 
 import routes from './router/routes';
 
@@ -14,19 +14,3 @@ export function createRouter() {
     routes
   });
 }
-
-// export function createRouter() {
-//   return new VueRouter({
-//     mode: 'history',
-//     routes: [
-//       {
-//         path: '/m',
-//         component: () => import('./module-mobile/pages/HotList.vue')
-//       },
-//       {
-//         path: '/m/hotlist',
-//         component: () => import('./module-mobile/pages/HotList.vue')
-//       }
-//     ]
-//   });
-// }

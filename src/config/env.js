@@ -3,7 +3,7 @@ let prefix = '';
 if (typeof global !== undefined) {
   prefix = global.env === 'test' ? 't-' : global.env === 'uat' ? 'u-' : '';
 } else {
-  const { hostname, pathname } = window.location;
+  const { hostname } = window.location;
 
   if (/^t-/.test(hostname)) {
     prefix = 't-';
