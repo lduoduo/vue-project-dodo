@@ -1,8 +1,8 @@
 /*
  * @Author: lduoduo
  * @Date: 2020-07-29 22:32:53
- * @Last Modified by: lduoduo
- * @Last Modified time: 2020-07-29 22:51:09
+ * @Last Modified by: zouhuan
+ * @Last Modified time: 2020-11-30 18:12:43
  * 拖拽事件发布订阅总线H5端用MOVE
  */
 
@@ -18,7 +18,7 @@ class MoveEvent {
     this.cbMap = {
       md: [], // 开始移动
       mm: [], // 移动中
-      mu: [], // 停止移动
+      mu: [] // 停止移动
     };
     this.data = undefined;
   }

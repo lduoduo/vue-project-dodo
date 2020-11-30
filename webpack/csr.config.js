@@ -1,8 +1,9 @@
 const path = require('path');
 const webpack = require('webpack');
-const VueSSRClientPlugin = require('vue-server-renderer/client-plugin');
+const PrerenderSPAPlugin = require('prerender-spa-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { merge } = require('webpack-merge');
 
 const baseConfig = require('./base.config.js');
@@ -16,8 +17,8 @@ module.exports = merge(baseConfig, {
   devtool: isProd ? false : 'cheap-module-source-map',
   entry: resolve('ssr/entry-client-before-page.ts'),
   output: {
-    path: resolve('dist'),
-    publicPath: '/dist/',
+    path: resolve('dist-csr'),
+    publicPath: '/dist-csr/',
     filename: '[name].[chunkhash].js'
   },
   module: {
@@ -77,9 +78,37 @@ module.exports = merge(baseConfig, {
     new MiniCssExtractPlugin({
       filename: '[name].[chunkhash].css' //设置名称
     }),
-    // new TerserPlugin(),
-    // 此插件在输出目录中
-    // 生成 `vue-ssr-client-manifest.json`。
-    new VueSSRClientPlugin()
+    new TerserPlugin(),
+    new HtmlWebpackPlugin(
+      Object.assign(
+        {
+          filename: 'index.html',
+          inject: true,
+          // chunks: [srcModule, 'vendor', 'common', 'runtime']
+        },
+        isProd
+          ? {
+              minify: {
+                removeComments: true,
+                collapseWhitespace: true,
+                removeRedundantAttributes: true,
+                useShortDoctype: true,
+                removeEmptyAttributes: true,
+                removeStyleLinkTypeAttributes: true,
+                keepClosingSlash: true,
+                minifyJS: true,
+                minifyCSS: true,
+                minifyURLs: true
+              }
+            }
+          : undefined
+      )
+    ),
+    new PrerenderSPAPlugin({
+      // Required - The path to the webpack-outputted app to prerender.
+      staticDir: resolve('dist-csr'),
+      // Required - Routes to render.
+      routes: ['/m', '/m/categorylist', '/m/hotlist']
+    })
   ]
 });
