@@ -6,7 +6,7 @@
     "mock": "json-server --watch ./mock/data.json --port 10002",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "build:csr": "rm -rf dist && cross-env NODE_ENV=production webpack --config webpack/csr.config.js --progress",
+    "build:csr": "rm -rf dist-csr && cross-env NODE_ENV=production webpack --config webpack/csr.config.js --progress",
     "build:ssr": "rm -rf dist && npm run build:ssr:server && npm run build:ssr:client",
     "build:ssr:client-a": "cross-env NODE_ENV=production webpack --config webpack/client.config.js --json stats.json --progress --hide-modules --analyze",
     "build:ssr:client": "cross-env NODE_ENV=production webpack --config webpack/client.config.js --progress",

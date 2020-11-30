@@ -83,7 +83,7 @@ module.exports = merge(baseConfig, {
       Object.assign(
         {
           filename: 'index.html',
-          inject: true,
+          inject: true
           // chunks: [srcModule, 'vendor', 'common', 'runtime']
         },
         isProd
@@ -108,7 +108,40 @@ module.exports = merge(baseConfig, {
       // Required - The path to the webpack-outputted app to prerender.
       staticDir: resolve('dist-csr'),
       // Required - Routes to render.
-      routes: ['/m', '/m/categorylist', '/m/hotlist']
+      routes: ['/m', '/m/categorylist', '/m/hotlist'],
+      // routes: [ '/', '/course', '/to-class', '/declare', '/agreement', '/user'],
+      postProcess(renderedRoute) {
+        // add CDN
+        // 由于CDN是以"/"结尾的，所以资源开头的“/”去掉
+        // renderedRoute.html = renderedRoute.html
+        //   .replace(
+        //     /(<script[^<>]*src=\")(?!http|https|\/{2})\/([^<>\"]*)(\"[^<>]*>[^<>]*<\/script>)/gi,
+        //     `$1${config[env].assetsPublicPath}$2$3`
+        //   )
+        //   .replace(
+        //     /(<link[^<>]*href=\")(?!http|https|\/{2})\/([^<>\"]*)(\"[^<>]*>)/gi,
+        //     `$1${config[env].assetsPublicPath}$2$3`
+        //   )
+        //   .replace(
+        //     /(<img[^<>]*src=\")(?!http|https|data:image|\/{2})\/([^<>\"]*)(\"[^<>]*>)/gi,
+        //     `$1${config[env].assetsPublicPath}$2$3`
+        //   )
+        //   .replace(
+        //     /(:url\()(?!http|https|data:image|\/{2})\/([^\)]*)(\))/gi, // 样式内联,格式必须是":url(/xxx)"，其他格式都不行【用来剔除js代码中类似的字段】
+        //     `$1${config[env].assetsPublicPath}$2$3`
+        //   )
+        //   .replace(
+        //     /(<div class="dialog_mask_\w+">)[\s\S]*<\/div>(<\/body>)/gi,
+        //     `$2`
+        //   ); // 去掉警告弹窗(因为部分调用比较早的ajax会报错导致多出了弹出框)
+
+        return renderedRoute;
+      },
+      // renderer: new Renderer({
+      //   injectProperty: '__PRERENDER_INJECTED__',
+      //   inject: 'prerender',
+      //   renderAfterDocumentEvent: 'render-event' // vue可能需要使用预渲染何时开始的事件
+      // })
     })
   ]
 });

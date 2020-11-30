@@ -72,3 +72,6 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 5. stream error Error: connect ECONNREFUSED 127.0.0.1:80
 - axios 请求头一定要写全： http:// 这种 [参考地址](https://stackoverflow.com/questions/61530897/axios-error-connect-econnrefused-127-0-0-180)
+
+
+6. CSR https://www.cnblogs.com/chuaWeb/p/prerender-plugin.html
