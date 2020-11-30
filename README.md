@@ -53,3 +53,6 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 3. SSR modOpt.store.registerModule is not a function
 - 注册的模块代码格式不对
+
+4. Must use import to load ES Module:
+- https://github.com/shuidi-fed/vapper/issues/107

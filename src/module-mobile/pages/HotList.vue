@@ -52,14 +52,14 @@ export default {
   components: {
     Search,
     Menu,
-    CompItem
+    CompItem,
   },
   asyncData({ store, route }) {
     // 触发 action 后，会返回 Promise
     console.log('asyncData store', store);
 
-    store.registerModule('hotList', hotStoreModule);
-    return store.dispatch('fetchtHotList');
+    // store.registerModule('hotList', hotStoreModule);
+    return store.dispatch('fetchtHotList', {type: 1});
   },
   // 重要信息：当多次访问路由时，
   // 避免在客户端重复注册模块。
@@ -72,11 +72,13 @@ export default {
       pageNo: 1,
       loading: false,
       finished: false,
-      list: []
+      list: [],
     };
   },
   beforeMount() {
     this.fetchtHotList();
+    const { lists } = this.$store.state;
+    console.log('lists', lists);
   },
   methods: {
     onSearch(val) {
@@ -86,11 +88,11 @@ export default {
       console.log('onCancel');
     },
     fetchtHotList() {
-      getHotList().then(e => {
+      getHotList().then((e) => {
         const { list = [], totalcount = 0 } = e;
         this.list = list;
       });
-    }
-  }
+    },
+  },
 };
 </script>

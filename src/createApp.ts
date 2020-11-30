@@ -4,7 +4,7 @@ import { sync } from 'vuex-router-sync';
 
 import App from './App.vue';
 
-import { createStore } from './store-vuex';
+import { createStore } from './store-demo';
 import { createRouter } from './createRouter';
 
 // import titleMixin from './utils/title';

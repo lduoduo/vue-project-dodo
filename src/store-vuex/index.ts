@@ -3,7 +3,7 @@ import Vuex from 'vuex';
 
 import menu from './modules/menu';
 import goods from './modules/goods';
-// import hotList from './modules/hotList';
+import hotList from './modules/hotList';
 import getters from './getters';
 
 import api from '../network/api';
@@ -22,8 +22,8 @@ export function createStore() {
     actions: {},
     modules: {
       menu,
-      goods
-      // hotList
+      goods,
+      hotList
     },
     getters
   });
@@ -36,8 +36,8 @@ export default new Vuex.Store({
   actions: {},
   modules: {
     menu,
-    goods
-    // hotList
+    goods,
+    hotList
   },
   getters
 });

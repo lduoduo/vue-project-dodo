@@ -1,18 +1,22 @@
+const path = require('path');
 const Vue = require('vue');
 const Koa = require('koa2');
 const Readable = require('stream').Readable;
 
 const { createBundleRenderer } = require('vue-server-renderer');
 
-const template = require('fs').readFileSync('./template.html', 'utf-8');
-
 const serverBundle = require('../dist/vue-ssr-server-bundle.json');
 const clientManifest = require('../dist/vue-ssr-client-manifest.json');
+
+const resolve = file => path.resolve(__dirname, file)
+
+const template = require('fs').readFileSync(resolve('./template.html'), 'utf-8');
 
 const renderer = createBundleRenderer(serverBundle, {
   runInNewContext: false, // 推荐
   template, // （可选）页面模板
   clientManifest, // （可选）客户端构建 manifest
+  basedir: resolve('./dist')
 });
 
 const app = new Koa();
