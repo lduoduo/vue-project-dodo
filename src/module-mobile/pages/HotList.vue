@@ -56,7 +56,7 @@ export default {
   },
   asyncData({ store, route }) {
     // 触发 action 后，会返回 Promise
-    console.log('asyncData store', store);
+    // console.log('asyncData store', store);
 
     // store.registerModule('hotList', hotStoreModule);
     return store.dispatch('fetchtHotList', {type: 1});
@@ -75,10 +75,12 @@ export default {
       list: [],
     };
   },
-  beforeMount() {
-    this.fetchtHotList();
+  beforeCreate(){
     const { lists } = this.$store.state;
     console.log('lists', lists);
+  },
+  beforeMount() {
+    this.fetchtHotList();
   },
   methods: {
     onSearch(val) {

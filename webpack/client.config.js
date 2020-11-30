@@ -65,7 +65,7 @@ module.exports = merge(baseConfig, {
   },
   plugins: [
     new webpack.DefinePlugin({
-      'process.env': { NODE_ENV: '"production"' },
+      'process.env': { NODE_ENV: '"production"', VUE_ENV: '"client"' },
       __IS_PROD__: !!isProd,
       __SERVER__: false
     }),

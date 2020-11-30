@@ -56,3 +56,6 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 4. Must use import to load ES Module:
 - https://github.com/shuidi-fed/vapper/issues/107
+
+5. stream error Error: connect ECONNREFUSED 127.0.0.1:80
+- axios 请求头一定要写全： http:// 这种 [参考地址](https://stackoverflow.com/questions/61530897/axios-error-connect-econnrefused-127-0-0-180)

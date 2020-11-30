@@ -19,7 +19,7 @@ if (typeof global !== undefined) {
 export default {
   prefix,
   API: {
-    local: 'localhost:10002',
+    local: 'http://localhost:10002',
     dodo: 'https://1002.mp.duoduogai.com'
   }
 };
