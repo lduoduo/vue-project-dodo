@@ -94,7 +94,7 @@ export default {
     // console.log("this router", this.$route, this);
   },
   mounted() {
-    console.log('this.store', this.$store, this);
+    // console.log('this.store', this.$store, this);
   },
   watch: {
     $route: 'onRouteChange',

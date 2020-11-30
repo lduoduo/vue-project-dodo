@@ -23,7 +23,7 @@ export default {
     console.log('this router', this.$route, this);
   },
   watch: {
-    $route: 'onRouteChange',
+    $route: 'onRouteChange'
   },
   methods: {
     onRouteChange(e) {
@@ -32,9 +32,11 @@ export default {
       this.setTitle(title);
     },
     setTitle(e) {
+      if (typeof document === undefined) return;
+
       if (document.title === e) return;
       document.title = e;
-    },
-  },
+    }
+  }
 };
 </script>

@@ -31,6 +31,6 @@ module.exports = {
       utils: resolve('src/utils'),
     });
 
-    // console.log('config', config.devServer, config);
-  },
-};
+    console.log('config', config.module && JSON.stringify(config.module.rules));
+  }
+}

@@ -1,5 +1,5 @@
 export interface GoodsItemData {
-  goodsId: BigInt;
+  goodsId: string;
   goodsName: string;
   merchantType: number;
   imageList: string[];

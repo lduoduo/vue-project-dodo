@@ -1,9 +1,6 @@
 <template>
   <div
-    :class="[
-      'comp-hot-item',
-      activeGoodsId === data.goodsId ? 'active' : '',
-    ]"
+    :class="['comp-hot-item', activeGoodsId === data.goodsId ? 'active' : '']"
     @click="onDetailClick"
   >
     <!-- <p>{{ JSON.stringify(activeGoods) }}</p> -->
@@ -18,19 +15,25 @@
       <div class="item-title">{{ data.goodsName }}</div>
       <div class="item-price flex">
         <div>
-          <span class="item-price-buy-tip">{{ `${data.couponDiscount ? '券后价' : ''}￥` }}</span>
+          <span class="item-price-buy-tip">{{
+            `${data.couponDiscount ? '券后价' : ''}￥`
+          }}</span>
           <span class="item-price-buy">{{ data.discountMinPrice }}</span>
         </div>
         <div class="flex discount" v-if="data.couponDiscount > 0">
           <span class="item-discount-tip">券</span>
-          <span class="item-discount-price">{{ data.couponDiscount + '元' }}</span>
+          <span class="item-discount-price">{{
+            data.couponDiscount + '元'
+          }}</span>
         </div>
       </div>
       <div class="item-option flex">
         <p class="item-tip">{{ `销量${data.salesTip}件` }}</p>
         <p class="item-share">
           <span class="item-share-tip">分享赚￥</span>
-          <span class="item-share-price">{{ formatPrice(data.vipPromotionPrice) }}</span>
+          <span class="item-share-price">{{
+            formatPrice(data.vipPromotionPrice)
+          }}</span>
         </p>
       </div>
     </div>
@@ -38,7 +41,7 @@
 </template>
 
 <style lang="scss">
-@import "@/assets/css/mixin.scss";
+@import '@/assets/css/mixin.scss';
 
 .comp-hot-item {
   box-shadow: $boxShadow;
@@ -118,7 +121,7 @@
         padding: 0 4px;
 
         &:after {
-          content: "...";
+          content: '...';
           display: inline-block;
           color: white;
           position: absolute;
@@ -156,21 +159,20 @@
 </style>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
-import { mapState, mapGetters, mapActions } from "vuex";
-import { ImagePreview } from "vant";
+import { Component, Prop, Vue } from 'vue-property-decorator';
+import { mapState, mapGetters, mapActions } from 'vuex';
+import { ImagePreview } from 'vant';
 
+import Iconfont from '@/components/Iconfont.vue';
+import ImageLoad from '@/components/ImageLoad.vue';
 
-import Iconfont from "@/components/Iconfont.vue";
-import ImageLoad from "@/components/ImageLoad.vue";
+import { GoodsModule } from '@/store-vuex-ts/modules/goods';
+import { format$Floor, formatFloor } from '@/utils/price';
 
-import { GoodsModule } from "@/store-vuex-ts/modules/goods";
-import { format$Floor, formatFloor } from "@/utils/price";
-
-import { GoodsItemData } from "../../interface";
+import { GoodsItemData } from '../../interface';
 
 @Component({
-  name: "HotItemTs",
+  name: 'HotItemTs',
   components: {
     ImageLoad,
     Iconfont
@@ -211,15 +213,15 @@ export default class App extends Vue {
   }
 
   private onDetailClick() {
-    console.log("onDetailClick", this);
+    console.log('onDetailClick', this);
     GoodsModule.actionB(this.data).then(() => {
-      console.log("设置商品成功");
+      console.log('设置商品成功');
     });
-    this.$emit("click", this.data);
+    this.$emit('click', this.data);
   }
 
-  private onIamgeClick(i) {
-    console.log("onIamgeClick", i);
+  private onIamgeClick(i: number) {
+    console.log('onIamgeClick', i);
     ImagePreview({
       images: this.data.imageList,
       startPosition: i,
@@ -230,11 +232,11 @@ export default class App extends Vue {
   }
 
   private onShareText() {
-    console.log("onShareText");
+    console.log('onShareText');
   }
 
   private onSharePoster() {
-    console.log("onSharePoster");
+    console.log('onSharePoster');
   }
 }
 </script>
