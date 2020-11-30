@@ -5,28 +5,28 @@ import routes from './router/routes';
 
 Vue.use(VueRouter);
 
-// export function createRouter() {
-//   return new VueRouter({
-//     mode: 'history',
-//     base: process.env.BASE_URL,
-//     fallback: false,
-//     // scrollBehavior: () => ({ y: 0 }),
-//     routes
-//   });
-// }
-
 export function createRouter() {
   return new VueRouter({
     mode: 'history',
-    routes: [
-      {
-        path: '/m',
-        component: () => import('./module-mobile/pages/HotList.vue')
-      },
-      {
-        path: '/m/hotlist',
-        component: () => import('./module-mobile/pages/HotList.vue')
-      }
-    ]
+    base: process.env.BASE_URL,
+    fallback: false,
+    // scrollBehavior: () => ({ y: 0 }),
+    routes
   });
 }
+
+// export function createRouter() {
+//   return new VueRouter({
+//     mode: 'history',
+//     routes: [
+//       {
+//         path: '/m',
+//         component: () => import('./module-mobile/pages/HotList.vue')
+//       },
+//       {
+//         path: '/m/hotlist',
+//         component: () => import('./module-mobile/pages/HotList.vue')
+//       }
+//     ]
+//   });
+// }

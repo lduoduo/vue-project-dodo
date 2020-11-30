@@ -11,18 +11,19 @@ export default context => {
     router.push(context.url);
 
     // 等到 router 将可能的异步组件和钩子函数解析完
-    router.onReady((e) => {
+    router.onReady((ExaComp) => {
 
       const matchedComponents = router.getMatchedComponents();
       // 匹配不到的路由，执行 reject 函数，并返回 404
       if (!matchedComponents.length) {
+        console.log('404', context.url);
         return reject({ code: 404 });
       }
 
       // Promise 应该 resolve 应用程序实例，以便它可以渲染
       // resolve(app);
 
-      console.log('matchedComponents context', e, matchedComponents, context);
+      console.log('matchedComponents context', ExaComp);
 
       // 对所有匹配的路由组件调用 `asyncData()`
       Promise.all(
@@ -41,6 +42,11 @@ export default context => {
         .then(() => {
           console.log('context renderState', context);
 
+          Object.assign(context, ExaComp?.meta || {});
+
+          // context.title = 'dodo';
+          context.meta = ExaComp?.meta?.meta || '<meta name="apple-touch-fullscreen" content="yes">';
+
           // context.renderState({
           //   contextKey: 'myCustomState',
           //   windowKey: '__INITIAL_STATE__'
@@ -52,8 +58,8 @@ export default context => {
           // 并且 `template` 选项用于 renderer 时，
           // 状态将自动序列化为 `window.__INITIAL_STATE__`，并注入 HTML。
           context.state = store.state;
-          context.title = 'dodo';
-          context.meta = 'meta';
+
+          console.log('context', context);
 
           resolve(app);
         })

@@ -1,8 +1,8 @@
 /*
  * @Author: lduoduo
  * @Date: 2020-11-28 21:09:29
- * @Last Modified by: lduoduo
- * @Last Modified time: 2020-11-28 21:25:26
+ * @Last Modified by: zouhuan
+ * @Last Modified time: 2020-11-30 15:40:46
  * 切换路由时，数据预取发生在切换路由时，进入匹配路由之前
  */
 import { Toast } from 'vant';
@@ -46,7 +46,7 @@ router.onReady(() => {
 
     Promise.all(
       activated.map((c) => {
-        if (c.asyncData) {
+        if (c?.asyncData) {
           return c.asyncData({ store, route: to });
         }
       })
@@ -55,6 +55,7 @@ router.onReady(() => {
         // 停止加载指示器(loading indicator)
         Toast.clear();
 
+        console.log('停止loading')
         next();
       })
       .catch(next);

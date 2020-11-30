@@ -31,6 +31,10 @@ app.use(staticCache(resolve('../dist'), {
   maxAge: 365 * 24 * 60 * 60
 }))
 
+app.use(staticCache(resolve('../public'), {
+  maxAge: 365 * 24 * 60 * 60
+}))
+
 //ssr 中间件
 app.use(async (ctx, next) => {
   const context = { url: ctx.req.url };
@@ -47,7 +51,7 @@ app.use(async (ctx, next) => {
   const stream = renderer.renderToStream(context);
 
   stream.on('data', (data) => {
-    console.log('onData', data.toString());
+    // console.log('onData', data.toString());
     //全部写完后，结束掉http response
     view.push(data.toString());
   });

@@ -10,7 +10,7 @@
     <div class="page-body">
       <CompItem
         class="body-item"
-        v-for="item in list"
+        v-for="item in hotList"
         :key="item.id"
         :data="item"
       />
@@ -38,6 +38,7 @@
 }
 </style>
 <script>
+import { mapState, mapGetters, mapActions } from 'vuex';
 // 在这里导入模块，而不是在 `store/index.js` 中
 import hotStoreModule from '@/store-vuex/modules/hotList';
 
@@ -55,11 +56,15 @@ export default {
     CompItem,
   },
   asyncData({ store, route }) {
-    // 触发 action 后，会返回 Promise
-    // console.log('asyncData store', store);
+    console.log('asyncData store', store);
 
-    // store.registerModule('hotList', hotStoreModule);
-    return store.dispatch('fetchtHotList', {type: 1});
+    if (!store.hasModule('hotList')) {
+      console.log('注册store');
+      store.registerModule('hotList', hotStoreModule);
+    }
+
+    // 触发 action 后，会返回 Promise
+    return store.dispatch('hotList/fetchtHotList', { type: 1 });
   },
   // 重要信息：当多次访问路由时，
   // 避免在客户端重复注册模块。
@@ -75,12 +80,16 @@ export default {
       list: [],
     };
   },
-  beforeCreate(){
-    const { lists } = this.$store.state;
-    console.log('lists', lists);
+  beforeCreate() {
   },
   beforeMount() {
-    this.fetchtHotList();
+      console.log("this.$store", this.$store);
+    // this.fetchtHotList();
+  },
+  computed: {
+    hotList() {
+      return this.$store.state?.hotList?.list || [];
+    },
   },
   methods: {
     onSearch(val) {

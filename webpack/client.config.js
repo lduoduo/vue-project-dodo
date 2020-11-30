@@ -12,6 +12,8 @@ const resolve = pn => path.resolve(__dirname, `../${pn}`);
 const isProd = process.env.NODE_ENV === 'production';
 
 module.exports = merge(baseConfig, {
+  mode: 'development',
+  devtool: isProd ? 'cheap-module-source-map' : false,
   entry: path.resolve(__dirname, '../src/entry-client-before-page.ts'),
   output: {
     path: resolve('dist'),
@@ -42,6 +44,9 @@ module.exports = merge(baseConfig, {
       }
     ]
   },
+  // 重要信息：这将 webpack 运行时分离到一个引导 chunk 中，
+  // 以便可以在之后正确注入异步 chunk。
+  // 这也为你的 应用程序/vendor 代码提供了更好的缓存。
   optimization: {
     splitChunks: {
       name: false,
@@ -72,14 +77,7 @@ module.exports = merge(baseConfig, {
     new MiniCssExtractPlugin({
       filename: '[name].[chunkhash].css' //设置名称
     }),
-    // 重要信息：这将 webpack 运行时分离到一个引导 chunk 中，
-    // 以便可以在之后正确注入异步 chunk。
-    // 这也为你的 应用程序/vendor 代码提供了更好的缓存。
-    // new webpack.optimize.CommonsChunkPlugin({
-    //   name: 'manifest',
-    //   minChunks: Infinity,
-    // }),
-    new TerserPlugin(),
+    // new TerserPlugin(),
     // 此插件在输出目录中
     // 生成 `vue-ssr-client-manifest.json`。
     new VueSSRClientPlugin()

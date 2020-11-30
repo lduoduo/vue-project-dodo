@@ -1,22 +1,36 @@
-const Vue = require('vue');
 const Koa = require('koa2');
+const staticCache = require('koa-static-cache');
 
 const { createBundleRenderer } = require('vue-server-renderer');
 
-const template = require('fs').readFileSync('./template.html', 'utf-8');
-
 const serverBundle = require('../dist/vue-ssr-server-bundle.json');
 const clientManifest = require('../dist/vue-ssr-client-manifest.json');
+
+const resolve = pn => path.resolve(__dirname, pn);
+
+const template = require('fs').readFileSync(resolve('./template.html'), 'utf-8');
 
 const renderer = createBundleRenderer(serverBundle, {
   runInNewContext: false, // 推荐
   template, // （可选）页面模板
   clientManifest, // （可选）客户端构建 manifest
+  basedir: resolve('../dist') // 显式地声明 server bundle 的运行目录。运行时将会以此目录为基准来解析 node_modules 中的依赖模块。只有在所生成的 bundle 文件与外部的 NPM 依赖模块放置在不同位置，或者 vue-server-renderer 是通过 NPM link 链接到当前项目中时，才需要配置此选项
 });
 
 const app = new Koa();
 
 const port = process.env.PORT || 10001;
+
+global.env = process.env.NODE_ENV || 'production';
+
+app.use(staticCache(resolve('../dist'), {
+  prefix: '/dist',
+  maxAge: 365 * 24 * 60 * 60
+}))
+
+app.use(staticCache(resolve('../public'), {
+  maxAge: 365 * 24 * 60 * 60
+}))
 
 //ssr 中间件
 app.use(async (ctx, next) => {
