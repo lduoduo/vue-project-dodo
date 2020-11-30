@@ -17,8 +17,8 @@ const routes: Array<RouteConfig> = [
       tabShow: true,
       navLeftShow: false,
       navRightShow: true,
-      type: 'aaa',
-    },
+      type: 'aaa'
+    }
   },
   {
     path: 'hotlist',
@@ -31,8 +31,8 @@ const routes: Array<RouteConfig> = [
       tabShow: true,
       navLeftShow: false,
       navRightShow: true,
-      type: 'bbb',
-    },
+      type: 'bbb'
+    }
   },
   {
     path: 'hotlist-ts',
@@ -45,32 +45,48 @@ const routes: Array<RouteConfig> = [
       tabShow: true,
       navLeftShow: false,
       navRightShow: true,
-      type: 'bbb',
-    },
+      type: 'bbb'
+    }
   },
   {
     path: 'pyqlist',
     name: 'pyqlist',
+    meta: {
+      title: '朋友圈',
+      navShow: true,
+      tabShow: true,
+      navLeftShow: false,
+      navRightShow: true,
+      type: 'bbb'
+    },
     component: () =>
-      import(/* webpackChunkName: "module-mobile" */ './pages/PyqList.vue'),
+      import(/* webpackChunkName: "module-mobile" */ './pages/PyqList.vue')
   },
   {
     path: 'mine',
     name: 'mine',
+    meta: {
+      title: '个人中心',
+      navShow: true,
+      tabShow: true,
+      navLeftShow: false,
+      navRightShow: true,
+      type: 'bbb'
+    },
     component: () =>
-      import(/* webpackChunkName: "module-mobile" */ './pages/Mine.vue'),
+      import(/* webpackChunkName: "module-mobile" */ './pages/Mine.vue')
   },
   {
     path: '',
     name: 'mobileDefault',
     component: () =>
-      import(/* webpackChunkName: "module-mobile" */ './pages/CategoryList.vue'),
-  },
+      import(/* webpackChunkName: "module-mobile" */ './pages/CategoryList.vue')
+  }
 ];
 
 export default {
   path: '/m',
   name: 'mobile',
   component: ComApp,
-  children: routes,
+  children: routes
 };

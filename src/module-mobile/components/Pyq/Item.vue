@@ -1,6 +1,9 @@
 <template>
   <div
-    :class="['comp-pyq-item', store.data.goodsId === data.goodsId ? 'active' : '']"
+    :class="[
+      'comp-pyq-item',
+      store.data.goodsId === data.goodsId ? 'active' : ''
+    ]"
     @click="onDetailClick"
   >
     <ImageLoad class="item-image" :url="data.goodsThumbnailUrl" />
@@ -12,16 +15,14 @@
       <div class="item-price">
         <span class="item-price-origin">
           {{
-          `${data.couponDiscount ? '【券后价】' : ''}￥${
-          data.discountMinPrice
-          }`
+            `${data.couponDiscount ? '【券后价】' : ''}￥${
+              data.discountMinPrice
+            }`
           }}
         </span>
 
         <span class="item-price-current" v-if="data.couponDiscount > 0">
-          {{
-          `${data.couponDiscount ? '【原价】' : ''}￥${data.minPrice}`
-          }}
+          {{ `${data.couponDiscount ? '【原价】' : ''}￥${data.minPrice}` }}
         </span>
       </div>
 
@@ -42,9 +43,9 @@
             <p class="item-text">{{ data.goodsName }}</p>
             <p class="item-price">
               {{
-              `${data.couponDiscount ? '券后价' : ''}￥${
-              data.discountMinPrice
-              }`
+                `${data.couponDiscount ? '券后价' : ''}￥${
+                  data.discountMinPrice
+                }`
               }}
             </p>
           </div>
@@ -54,7 +55,9 @@
       </div>
 
       <div class="flex item-share">
-        <p class="share-price">{{ `分享赚￥${formatPrice(data.myPromotionPrice)}` }}</p>
+        <p class="share-price">
+          {{ `分享赚￥${formatPrice(data.myPromotionPrice)}` }}
+        </p>
         <p class="share-count">{{ `${data.shareCount}人已分享` }}</p>
       </div>
 
@@ -74,7 +77,7 @@
 </template>
 
 <style lang="scss">
-@import "@/assets/css/mixin.scss";
+@import '@/assets/css/mixin.scss';
 
 .comp-pyq-item {
   box-shadow: $boxShadow;
@@ -209,22 +212,22 @@
 </style>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
-import { mapState, mapGetters, mapActions } from "vuex";
-import { ImagePreview } from "vant";
+import { Component, Prop, Vue } from 'vue-property-decorator';
+import { mapState, mapGetters, mapActions } from 'vuex';
+import { ImagePreview } from 'vant';
 
-import { Observer } from "mobx-vue";
-import StoreGoods from "@/store-mobx/goods";
+import { Observer } from 'mobx-vue';
+import StoreGoods from '@/store-mobx/goods';
 
-import Iconfont from "@/components/Iconfont.vue";
-import ImageLoad from "@/components/ImageLoad.vue";
-import { format$Floor, formatFloor } from "@/utils/price";
+import Iconfont from '@/components/Iconfont.vue';
+import ImageLoad from '@/components/ImageLoad.vue';
+import { format$Floor, formatFloor } from '@/utils/price';
 
-import { GoodsItemData } from "../../interface";
+import { GoodsItemData } from '../../interface';
 
 @Observer
 @Component({
-  name: "PyqItem",
+  name: 'PyqItem',
   components: {
     ImageLoad,
     Iconfont
@@ -260,7 +263,7 @@ export default class App extends Vue {
 
   mounted() {
     // this.state.fetchUsers();
-    console.log("this.state", this.data, this.store);
+    console.log('this.state', this.data, this.store);
   }
 
   private formatPrice(e: number) {
@@ -270,14 +273,14 @@ export default class App extends Vue {
   private onDetailClick() {
     if (StoreGoods.data.goodsId === this.data.goodsId) return;
 
-    console.log("StoreGoods", this.data, StoreGoods);
+    console.log('StoreGoods', this.data, StoreGoods);
 
     // this.store.setGoods(this.data);
     StoreGoods.setGoods(this.data);
   }
 
   private onIamgeClick(i) {
-    console.log("onIamgeClick", i);
+    console.log('onIamgeClick', i);
     ImagePreview({
       images: this.data.imageList,
       startPosition: i,
@@ -288,11 +291,11 @@ export default class App extends Vue {
   }
 
   private onShareText() {
-    console.log("onShareText");
+    console.log('onShareText');
   }
 
   private onSharePoster() {
-    console.log("onSharePoster");
+    console.log('onSharePoster');
   }
 }
 </script>

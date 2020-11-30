@@ -10,7 +10,7 @@
     <div class="page-body">
       <CompItem
         class="body-item"
-        v-for="item in list"
+        v-for="item in hotList"
         :key="item.id"
         :data="item"
       />
@@ -38,6 +38,10 @@
 }
 </style>
 <script>
+import { mapState, mapGetters, mapActions } from 'vuex';
+// 在这里导入模块，而不是在 `store/index.js` 中
+import hotStoreModule from '@/store-vuex/modules/hotList';
+
 import Search from '../components/Search.vue';
 import Menu from '../components/Menu.vue';
 import CompItem from '../components/Hot/Item.vue';
@@ -51,6 +55,22 @@ export default {
     Menu,
     CompItem,
   },
+  asyncData({ store, route }) {
+    console.log('asyncData store', store);
+
+    if (!store.hasModule('hotList')) {
+      console.log('注册store');
+      store.registerModule('hotList', hotStoreModule);
+    }
+
+    // 触发 action 后，会返回 Promise
+    return store.dispatch('hotList/fetchtHotList', { type: 1 });
+  },
+  // 重要信息：当多次访问路由时，
+  // 避免在客户端重复注册模块。
+  destroyed() {
+    // this.$store.unregisterModule('hotList');
+  },
   data() {
     return {
       search: '',
@@ -60,8 +80,18 @@ export default {
       list: [],
     };
   },
+  beforeCreate() {
+    // console.log()
+  },
   beforeMount() {
-    this.fetchtHotList();
+    console.log('this.$store', this.$store);
+    console.log('this.hotList', this.hotList);
+    if (!this.hotList || this.hotList.length === 0) this.fetchtHotList();
+  },
+  computed: {
+    hotList() {
+      return this.$store.state?.hotList?.list || [];
+    },
   },
   methods: {
     onSearch(val) {

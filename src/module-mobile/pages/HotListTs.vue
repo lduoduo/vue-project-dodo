@@ -11,7 +11,12 @@
     </template>
 
     <template>
-      <CompItem class="body-item" v-for="item in list" :key="item.id" :data="item" />
+      <CompItem
+        class="body-item"
+        v-for="item in list"
+        :key="item.id"
+        :data="item"
+      />
     </template>
 
     <template #footer>
@@ -37,17 +42,17 @@
 }
 </style>
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
-import Layout from "@/components/Layout.vue";
+import { Component, Prop, Vue } from 'vue-property-decorator';
+import Layout from '@/components/Layout.vue';
 
-import Search from "../components/Search.vue";
-import Menu from "../components/Menu.vue";
-import CompItem from "../components/HotTs/Item.vue";
+import Search from '../components/Search.vue';
+import Menu from '../components/Menu.vue';
+import CompItem from '../components/HotTs/Item.vue';
 
-import { getHotList } from "@/network/api";
+import { getHotList } from '@/network/api';
 
 @Component({
-  name: "PageHotListTs",
+  name: 'PageHotListTs',
   components: {
     Layout,
     Search,
@@ -56,7 +61,7 @@ import { getHotList } from "@/network/api";
   }
 })
 export default class App extends Vue {
-  private search = "";
+  private search = '';
   private list = [];
   private loading = false;
   private pageNo = 1;
@@ -66,12 +71,12 @@ export default class App extends Vue {
     this.fetchtHotList();
   }
 
-  private onSearch(val) {
-    console.log("onSearch", val);
+  private onSearch(val: string) {
+    console.log('onSearch', val);
   }
 
   private onCancel() {
-    console.log("onCancel");
+    console.log('onCancel');
   }
 
   private fetchtHotList() {

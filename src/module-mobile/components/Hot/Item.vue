@@ -182,7 +182,7 @@ export default {
   },
   computed: {
     activeGoodsId() {
-      console.log("this.$store", this.$store);
+      // console.log("this.$store", this.$store);
       // return this.$store.getters.currGoods.goodsId;
       return this.$store.getters?.currGoods?.goodsId;
     },
@@ -207,7 +207,7 @@ export default {
     // })
   },
   beforeMount() {
-    console.log('this.$store', this.$store);
+    // console.log('this.$store', this.$store);
   },
   filters: {
     formatPrice(e) {

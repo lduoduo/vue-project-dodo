@@ -3,7 +3,7 @@ import {
   Module,
   Mutation,
   Action,
-  getModule,
+  getModule
 } from 'vuex-module-decorators';
 import store from '@/store-vuex-ts';
 
@@ -16,14 +16,16 @@ const fetchData = (d: any) =>
 
 export enum DeviceType { // 定义设备枚举类型
   Mobile,
-  Desktop,
+  Desktop
+}
+
+interface IdataGoods {
+  goodsName: string;
+  goodsId: string;
 }
 
 export interface IstateGoods {
-  data: {
-    goodsName: string;
-    goodsId: string;
-  };
+  data: IdataGoods;
 }
 
 // @Module 标记当前为module
@@ -37,17 +39,17 @@ export interface IstateGoods {
 class App extends VuexModule implements IstateGoods {
   public data = {
     goodsName: '',
-    goodsId: '',
+    goodsId: ''
   };
 
   @Mutation
-  private SET_GOODS(data: object) {
+  private SET_GOODS(data: IdataGoods) {
     this.data = data;
   }
 
   @Action
   public setGoods(d: any) {
-    return fetchData(d).then((e) => {
+    return fetchData(d).then(e => {
       this.SET_GOODS(d);
     });
   }
