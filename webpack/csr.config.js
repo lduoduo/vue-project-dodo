@@ -15,10 +15,10 @@ const isProd = process.env.NODE_ENV === 'production';
 module.exports = merge(baseConfig, {
   mode: isProd ? 'production' : 'development',
   devtool: isProd ? false : 'cheap-module-source-map',
-  entry: resolve('ssr/entry-client-before-page.ts'),
+  entry: resolve('src/main.ts'),
   output: {
     path: resolve('dist-csr'),
-    publicPath: '/dist-csr/',
+    publicPath: '/',
     filename: '[name].[chunkhash].js'
   },
   module: {
@@ -83,7 +83,8 @@ module.exports = merge(baseConfig, {
       Object.assign(
         {
           filename: 'index.html',
-          inject: true
+          inject: true,
+          template: resolve('w-csr/template.html'),
           // chunks: [srcModule, 'vendor', 'common', 'runtime']
         },
         isProd
