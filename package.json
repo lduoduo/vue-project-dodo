@@ -1,6 +1,6 @@
 {
-  "name": "hello-dodo",
-  "version": "0.1.0",
+  "name": "vue-project-dodo",
+  "version": "1.1.0",
   "private": true,
   "scripts": {
     "mock": "json-server --watch ./mock/data.json --port 10002",
@@ -8,7 +8,7 @@
     "build": "vue-cli-service build",
     "build:csr": "rm -rf dist-csr && cross-env NODE_ENV=production webpack --config webpack/csr.config.js --progress",
     "build:ssr": "rm -rf dist && npm run build:ssr:server && npm run build:ssr:client",
-    "build:ssr:client-a": "cross-env NODE_ENV=production webpack --config webpack/client.config.js --json stats.json --progress --hide-modules --analyze",
+    "build:ssr:client-a": "cross-env NODE_ENV=production webpack --config webpack/client.config.js --json stats.json --progress --analyze",
     "build:ssr:client": "cross-env NODE_ENV=production webpack --config webpack/client.config.js --progress",
     "build:ssr:server": "cross-env NODE_ENV=production webpack --config webpack/server.config.js --progress",
     "start:ssr": "cd w-ssr && node app.js",

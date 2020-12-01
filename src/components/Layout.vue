@@ -1,10 +1,3 @@
-/*
- * @Author: lduoduo
- * @Date: 2020-08-01 23:50:32
- * @Last Modified by: lduoduo
- * @Last Modified time: 2020-08-02 00:44:05
- * 布局组件
- */
 <template>
   <div class="page page-layout">
     <header class="page-head">

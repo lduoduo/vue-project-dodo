@@ -13,24 +13,25 @@
 </template>
 
 <script>
-import Search from "../components/Search.vue";
-import Menu from "../components/Menu.vue";
-import Loading from "@/components/Loading.vue";
+import Loading from '@/components/Loading.vue';
+
+import Search from '../components/Search.vue';
+import Menu from '../components/Menu.vue';
 
 export default {
-  name: "HotList",
+  name: 'HotList',
   components: {
     Search,
     Menu,
-    Loading
+    Loading,
   },
   data() {
     return {
-      search: "",
+      search: '',
       pageNo: 1,
       loading: false,
       finished: false,
-      list: []
+      list: [],
     };
   },
   mounted() {
@@ -38,15 +39,15 @@ export default {
   },
   methods: {
     onSearch(val) {
-      console.log("onSearch", val);
-      console.warn("警告!");
-      setTimeout(function() {
-        console.log("dodo", this.dodo());
+      console.log('onSearch', val);
+      console.warn('警告!');
+      setTimeout(function () {
+        console.log('dodo', this.dodo());
       }, 3000);
     },
     onCancel() {
-      console.log("onCancel");
-    }
-  }
+      console.log('onCancel');
+    },
+  },
 };
 </script>

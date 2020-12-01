@@ -84,8 +84,7 @@ module.exports = merge(baseConfig, {
         {
           filename: 'index.html',
           inject: true,
-          template: resolve('w-csr/template.html'),
-          // chunks: [srcModule, 'vendor', 'common', 'runtime']
+          template: resolve('w-csr/template.html')
         },
         isProd
           ? {
@@ -108,9 +107,7 @@ module.exports = merge(baseConfig, {
     new PrerenderSPAPlugin({
       // Required - The path to the webpack-outputted app to prerender.
       staticDir: resolve('dist-csr'),
-      // Required - Routes to render.
-      routes: ['/m', '/m/categorylist', '/m/hotlist'],
-      // routes: [ '/', '/course', '/to-class', '/declare', '/agreement', '/user'],
+      routes: ['/m', '/m/categorylist', '/m/hotlist', '/m/pyqlist', '/m/mine'],
       postProcess(renderedRoute) {
         // add CDN
         // 由于CDN是以"/"结尾的，所以资源开头的“/”去掉
@@ -137,7 +134,7 @@ module.exports = merge(baseConfig, {
         //   ); // 去掉警告弹窗(因为部分调用比较早的ajax会报错导致多出了弹出框)
 
         return renderedRoute;
-      },
+      }
       // renderer: new Renderer({
       //   injectProperty: '__PRERENDER_INJECTED__',
       //   inject: 'prerender',

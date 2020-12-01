@@ -43,6 +43,9 @@
 </style>
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
+
+// import Loading from '@/components/Loading.vue';
+
 import Layout from '@/components/Layout.vue';
 
 import Search from '../components/Search.vue';

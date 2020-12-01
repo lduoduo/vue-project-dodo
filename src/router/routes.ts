@@ -45,4 +45,18 @@ const routes: Array<RouteConfig> = [
   }
 ];
 
+const loopRoute = (basePath: string, e: Array<RouteConfig>) => {
+  let arr: Array<string> = [];
+
+  e.map(d => {
+    const { path: pn, children } = d;
+    if (!children) return arr.push(basePath + pn);
+
+    arr = arr.concat(loopRoute(pn, children));
+  });
+
+  return arr;
+};
+
+export const routeList = loopRoute('', routes);
 export default routes;

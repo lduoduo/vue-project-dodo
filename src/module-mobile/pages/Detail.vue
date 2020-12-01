@@ -13,9 +13,10 @@
 </template>
 
 <script>
+import Loading from '@/components/Loading.vue';
+
 import Search from '../components/Search.vue';
 import Menu from '../components/Menu.vue';
-import Loading from '@/components/Loading.vue';
 
 export default {
   name: "HotList",

@@ -7,13 +7,13 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+import { Component, Prop, Vue } from 'vue-property-decorator';
 
-import HelloWorld from "@/components/HelloWorld.vue";
-import Menu from "@/module-mobile/components/Menu.vue";
+import HelloWorld from '@/components/HelloWorld.vue';
+import Menu from '@/module-mobile/components/Menu.vue';
 
 @Component({
-  name: "Home",
+  name: 'Home',
   components: {
     Menu,
     HelloWorld,

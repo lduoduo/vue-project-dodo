@@ -25,8 +25,10 @@ module.exports = {
   },
   externals: {
     vue: 'Vue',
+    vuex: 'Vuex',
     'vue-router': 'VueRouter',
     vant: 'vant',
+    mobx: 'mobx',
     _: 'lodash'
   },
   module: {

@@ -41,29 +41,29 @@
 }
 </style>
 <script>
-import Layout from "@/components/Layout.vue";
+import Layout from '@/components/Layout.vue';
 
-import Search from "../components/Search.vue";
-import Menu from "../components/Menu.vue";
-import CompItem from "../components/Pyq/Item.vue";
+import Search from '../components/Search.vue';
+import Menu from '../components/Menu.vue';
+import CompItem from '../components/Pyq/Item.vue';
 
-import { getHotList } from "@/network/api";
+import { getHotList } from '@/network/api';
 
 export default {
-  name: "PyqList",
+  name: 'PyqList',
   components: {
     Search,
     Menu,
     CompItem,
-    Layout
+    Layout,
   },
   data() {
     return {
-      search: "",
+      search: '',
       pageNo: 1,
       loading: false,
       finished: false,
-      list: []
+      list: [],
     };
   },
   // beforeCreate() {
@@ -74,26 +74,26 @@ export default {
   },
   methods: {
     onSearch(val) {
-      console.log("onSearch", val);
+      console.log('onSearch', val);
     },
     onCancel() {
-      console.log("onCancel");
+      console.log('onCancel');
     },
     fetchtHotList() {
-      getHotList().then(e => {
+      getHotList().then((e) => {
         const { list = [], totalcount = 0 } = e;
         this.list = list;
       });
     },
     onCompMounted(e) {
-      console.log("onCompMounted", e);
+      console.log('onCompMounted', e);
     },
     onCompBeforeUpdated(e) {
-      console.log("onCompBeforeUpdated", e);
+      console.log('onCompBeforeUpdated', e);
     },
     onCompUpdated(e) {
-      console.log("onCompUpdated", e);
-    }
-  }
+      console.log('onCompUpdated', e);
+    },
+  },
 };
 </script>

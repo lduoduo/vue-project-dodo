@@ -5,9 +5,9 @@ declare module '*.vue' {
   export default Vue
 }
 
-declare module 'vue/types/vue' {
-  interface Vue {
-    $Message: any
-    $Modal: any
-  }
-}
+// declare module 'vue/types/vue' {
+//   interface Vue {
+//     $Message: any
+//     $Modal: any
+//   }
+// }

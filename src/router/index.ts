@@ -14,3 +14,5 @@ export function createRouter() {
     routes
   });
 }
+
+export default createRouter();
