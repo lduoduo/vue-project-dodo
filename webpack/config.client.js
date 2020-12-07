@@ -3,9 +3,10 @@ const webpack = require('webpack');
 const VueSSRClientPlugin = require('vue-server-renderer/client-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const { merge } = require('webpack-merge');
 
-const baseConfig = require('./base.config.js');
+const baseConfig = require('./config.base.js');
 
 const resolve = pn => path.resolve(__dirname, `../${pn}`);
 
@@ -77,7 +78,8 @@ module.exports = merge(baseConfig, {
     new MiniCssExtractPlugin({
       filename: '[name].[chunkhash].css' //设置名称
     }),
-    // new TerserPlugin(),
+    new OptimizeCSSAssetsPlugin({ cssProcessorOptions: { safe: true } }),
+    new TerserPlugin(),
     // 此插件在输出目录中
     // 生成 `vue-ssr-client-manifest.json`。
     new VueSSRClientPlugin()

@@ -75,3 +75,5 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 
 6. CSR https://www.cnblogs.com/chuaWeb/p/prerender-plugin.html
+
+7. Use the latest vue-eslint-parser. See also https://eslint.vuejs.org/user-guide/#what-is-the-use-the-

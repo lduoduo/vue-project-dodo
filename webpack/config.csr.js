@@ -6,7 +6,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { merge } = require('webpack-merge');
 
-const baseConfig = require('./base.config.js');
+const baseConfig = require('./config.base.js');
 
 const resolve = pn => path.resolve(__dirname, `../${pn}`);
 
