@@ -3,6 +3,8 @@ const webpack = require('webpack');
 const VueSSRClientPlugin = require('vue-server-renderer/client-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
 const { merge } = require('webpack-merge');
 
 const baseConfig = require('./config.base.js');
@@ -44,15 +46,24 @@ module.exports = merge(baseConfig, {
   },
   devServer: {
     disableHostCheck: true,
+    publicPath: '/',
     // contentBase: dist,
     host: '0.0.0.0',
     port,
     compress: true,
     hot: true,
-    inline: true
+    inline: true,
+    index: 'index.html',
+    writeToDisk: true,
     // historyApiFallback: true,
     // openPage: getOpenUrl(),
     // useLocalIp: true,
+    // before: function(app, server, compiler) {
+    //   app.get('*', function(req, res) {
+    //     console.log('req', req, res);
+    //     res.render('index', {title: 'dodo'});
+    //   });
+    // }
   },
   plugins: [
     new webpack.DefinePlugin({
@@ -60,9 +71,14 @@ module.exports = merge(baseConfig, {
       __IS_PROD__: false,
       __SERVER__: false
     }),
-    new MiniCssExtractPlugin({
-      filename: '[name].[chunkhash].css' //设置名称
-    })
+    new HtmlWebpackPlugin({
+      template: resolve('w-template/t-dev.html'),
+      filename: 'index.html',
+      inject: true,
+    }),
+    // new MiniCssExtractPlugin({
+    //   filename: '[name].[chunkhash].css' //设置名称
+    // })
   ]
 });
 

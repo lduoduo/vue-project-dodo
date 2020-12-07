@@ -16,8 +16,8 @@ import Menu from '@/module-mobile/components/Menu.vue';
   name: 'Home',
   components: {
     Menu,
-    HelloWorld,
-  },
+    HelloWorld
+  }
 })
 export default class Home extends Vue {
   @Prop() private msg!: string;

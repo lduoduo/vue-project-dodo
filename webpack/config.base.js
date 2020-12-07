@@ -13,6 +13,13 @@ console.log('isProd', isProd);
 module.exports = {
   devtool: isProd ? false : '#cheap-module-source-map',
   stats: 'minimal',
+  bail: true,
+  target: 'web',
+  cache: isProd
+    ? false
+    : {
+        type: 'memory'
+      },
   resolve: {
     alias: {
       public: resolve('public'),
@@ -81,7 +88,11 @@ module.exports = {
   performance: {
     hints: false
   },
-  plugins: isProd
-    ? [new VueLoaderPlugin()]
-    : [new VueLoaderPlugin(), new FriendlyErrorsPlugin()]
+  plugins: [
+    new VueLoaderPlugin(),
+    new webpack.ids.HashedModuleIdsPlugin({
+      hashDigestLength: 20
+    }),
+    !isProd && new FriendlyErrorsPlugin()
+  ]
 };

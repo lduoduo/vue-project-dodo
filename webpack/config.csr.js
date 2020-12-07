@@ -49,6 +49,8 @@ module.exports = merge(baseConfig, {
   // 以便可以在之后正确注入异步 chunk。
   // 这也为你的 应用程序/vendor 代码提供了更好的缓存。
   optimization: {
+    moduleIds: 'deterministic',
+    chunkIds: 'deterministic',
     splitChunks: {
       name: false,
       cacheGroups: {
@@ -64,6 +66,10 @@ module.exports = merge(baseConfig, {
           priority: 10
         }
       }
+    },
+    minSize: {
+      javascript: 30000,
+      style: 30000
     },
     runtimeChunk: {
       name: 'runtime'
@@ -84,7 +90,7 @@ module.exports = merge(baseConfig, {
         {
           filename: 'index.html',
           inject: true,
-          template: resolve('w-csr/template.html')
+          template: resolve('w-template/t-csr.html')
         },
         isProd
           ? {

@@ -11,7 +11,10 @@ const clientManifest = require('../dist/vue-ssr-client-manifest.json');
 
 const resolve = pn => path.resolve(__dirname, pn);
 
-const template = require('fs').readFileSync(resolve('./template.html'), 'utf-8');
+const template = require('fs').readFileSync(
+  resolve('../w-template/t-ssr.html'),
+  'utf-8'
+);
 
 const renderer = createBundleRenderer(serverBundle, {
   runInNewContext: false, // 推荐
@@ -26,14 +29,18 @@ const port = process.env.PORT || 10001;
 
 global.env = process.env.NODE_ENV || 'production';
 
-app.use(staticCache(resolve('../dist'), {
-  prefix: '/dist',
-  maxAge: 365 * 24 * 60 * 60
-}))
+app.use(
+  staticCache(resolve('../dist'), {
+    prefix: '/dist',
+    maxAge: 365 * 24 * 60 * 60
+  })
+);
 
-app.use(staticCache(resolve('../public'), {
-  maxAge: 365 * 24 * 60 * 60
-}))
+app.use(
+  staticCache(resolve('../public'), {
+    maxAge: 365 * 24 * 60 * 60
+  })
+);
 
 //ssr 中间件
 app.use(async (ctx, next) => {
@@ -50,7 +57,7 @@ app.use(async (ctx, next) => {
   // 现在我们的服务器与应用程序已经解耦！
   const stream = renderer.renderToStream(context);
 
-  stream.on('data', (data) => {
+  stream.on('data', data => {
     // console.log('onData', data.toString());
     //全部写完后，结束掉http response
     view.push(data.toString());
@@ -62,7 +69,7 @@ app.use(async (ctx, next) => {
     view.push(null);
   });
 
-  stream.on('error', (err) => {
+  stream.on('error', err => {
     console.log('stream error', err);
     //全部写完后，结束掉http response
     view.push(`<div style="color: red;">${err.message}</div>`);
