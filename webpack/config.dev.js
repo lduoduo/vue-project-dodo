@@ -66,4 +66,4 @@ module.exports = merge(baseConfig, {
   ]
 });
 
-console.log(chalk.green(`开发地址:http://localhost:${port}`));
+console.log(`开发地址:http://localhost:${port}`);
