@@ -55,7 +55,9 @@ module.exports = merge(baseConfig, {
     inline: true,
     index: 'index.html',
     writeToDisk: true,
-    // historyApiFallback: true,
+    historyApiFallback: {
+      rewrites: [{ from: /^\/$/, to: '/index.html' }]
+    },
     // openPage: getOpenUrl(),
     // useLocalIp: true,
     // before: function(app, server, compiler) {
