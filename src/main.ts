@@ -32,13 +32,14 @@ Vue.config.keyCodes = {
   up: [38, 87]
 };
 
-// router.beforeEach((to, from, next) => {
-//   console.log('to', to);
-//   /* 路由发生变化修改页面title */
-//   if (to.meta.title) {
-//     document.title = to.meta.title;
-//   }
-// });
+router.beforeEach((to, from, next) => {
+  console.log('路由导航守卫to', to);
+  /* 路由发生变化修改页面title */
+  if (to.meta.title) {
+    // document.title = to.meta.title;
+  }
+  next();
+});
 
 console.log('router', router);
 
