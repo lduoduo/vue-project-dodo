@@ -1,18 +1,16 @@
 const path = require('path');
 const webpack = require('webpack');
 const PrerenderSPAPlugin = require('prerender-spa-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { merge } = require('webpack-merge');
 
-const getConfig = require('./config.base.js');
+const baseConfig = require('./config.base.js');
 
 const resolve = pn => path.resolve(__dirname, `../${pn}`);
 
-const Renderer = PrerenderSPAPlugin.PuppeteerRenderer;
-
 const isProd = process.env.NODE_ENV === 'production';
-
-const baseConfig = getConfig();
 
 module.exports = merge(baseConfig, {
   mode: isProd ? 'production' : 'development',
@@ -22,6 +20,30 @@ module.exports = merge(baseConfig, {
     path: resolve('dist-csr'),
     publicPath: '/',
     filename: '[name].[chunkhash].js'
+  },
+  module: {
+    rules: [
+      {
+        test: /\.(sa|sc)ss$/,
+        use: [
+          isProd ? MiniCssExtractPlugin.loader : 'vue-style-loader',
+          'css-loader',
+          {
+            loader: 'postcss-loader'
+          },
+          {
+            loader: 'sass-loader'
+          }
+        ]
+      },
+      {
+        test: /\.css$/,
+        use: [
+          isProd ? MiniCssExtractPlugin.loader : 'vue-style-loader',
+          'css-loader'
+        ]
+      }
+    ]
   },
   // 重要信息：这将 webpack 运行时分离到一个引导 chunk 中，
   // 以便可以在之后正确注入异步 chunk。
@@ -43,11 +65,11 @@ module.exports = merge(baseConfig, {
           chunks: 'all',
           priority: 10
         }
-      },
-      minSize: {
-        javascript: 30000,
-        style: 30000
       }
+    },
+    minSize: {
+      javascript: 30000,
+      style: 30000
     },
     runtimeChunk: {
       name: 'runtime'
@@ -59,6 +81,10 @@ module.exports = merge(baseConfig, {
       __IS_PROD__: !!isProd,
       __SERVER__: false
     }),
+    new MiniCssExtractPlugin({
+      filename: '[name].[chunkhash].css' //设置名称
+    }),
+    new TerserPlugin(),
     new HtmlWebpackPlugin(
       Object.assign(
         {
@@ -87,37 +113,39 @@ module.exports = merge(baseConfig, {
     new PrerenderSPAPlugin({
       // Required - The path to the webpack-outputted app to prerender.
       staticDir: resolve('dist-csr'),
-      routes: ['/m/categorylist', '/m/mine'],
+      routes: ['/m', '/m/categorylist', '/m/hotlist', '/m/pyqlist', '/m/mine'],
       postProcess(renderedRoute) {
         // add CDN
         // 由于CDN是以"/"结尾的，所以资源开头的“/”去掉
-        // renderedRoute.html = renderedRoute.html.replace('xxx', 'xxx')
+        // renderedRoute.html = renderedRoute.html
+        //   .replace(
+        //     /(<script[^<>]*src=\")(?!http|https|\/{2})\/([^<>\"]*)(\"[^<>]*>[^<>]*<\/script>)/gi,
+        //     `$1${config[env].assetsPublicPath}$2$3`
+        //   )
+        //   .replace(
+        //     /(<link[^<>]*href=\")(?!http|https|\/{2})\/([^<>\"]*)(\"[^<>]*>)/gi,
+        //     `$1${config[env].assetsPublicPath}$2$3`
+        //   )
+        //   .replace(
+        //     /(<img[^<>]*src=\")(?!http|https|data:image|\/{2})\/([^<>\"]*)(\"[^<>]*>)/gi,
+        //     `$1${config[env].assetsPublicPath}$2$3`
+        //   )
+        //   .replace(
+        //     /(:url\()(?!http|https|data:image|\/{2})\/([^\)]*)(\))/gi, // 样式内联,格式必须是":url(/xxx)"，其他格式都不行【用来剔除js代码中类似的字段】
+        //     `$1${config[env].assetsPublicPath}$2$3`
+        //   )
+        //   .replace(
+        //     /(<div class="dialog_mask_\w+">)[\s\S]*<\/div>(<\/body>)/gi,
+        //     `$2`
+        //   ); // 去掉警告弹窗(因为部分调用比较早的ajax会报错导致多出了弹出框)
 
-        console.log('\nrenderedRoute', renderedRoute.route);
         return renderedRoute;
-      },
-      renderer: new Renderer({
-        // Optional - defaults to 0, no limit.
-        // Routes are rendered asynchronously.
-        // Use this to limit the number of routes rendered in parallel.
-        maxConcurrentRoutes: 5,
-        // Optional - The name of the property to add to the window object with the contents of `inject`.
-        injectProperty: '__PRERENDER_INJECTED',
-        // inject: { prerender: 'domain' },
-        headless: true,
-
-        inject: {
-          title: 'dodo'
-        },
-        // 在 main.js 中 document.dispatchEvent(new Event('render-event'))，vue可能需要使用预渲染何时开始的事件, 两者的事件名称要对应上。
-        renderAfterDocumentEvent: 'render-event',
-        renderAfterTime: 5000, //超时时间
-        timeout: 0,
-        maxConcurrentRoutes: 20, //打包页面的最大数
-        navigationParams: {
-          timeout: 0
-        }
-      })
+      }
+      // renderer: new Renderer({
+      //   injectProperty: '__PRERENDER_INJECTED__',
+      //   inject: 'prerender',
+      //   renderAfterDocumentEvent: 'render-event' // vue可能需要使用预渲染何时开始的事件
+      // })
     })
   ]
 });

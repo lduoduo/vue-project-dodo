@@ -50,17 +50,7 @@ const loopRoute = (basePath: string, e: Array<RouteConfig>) => {
 
   e.map(d => {
     const { path: pn, children } = d;
-
-    console.log('basePath pn', basePath, pn);
-
-    if (!children) {
-      const baseP = basePath === '/' ? '' : basePath;
-      const bPn = pn === '/' ? '' : pn;
-
-      return arr.push(
-        `${baseP}${basePath === '/' || pn === '/' ? '' : '/'}${bPn}`
-      );
-    }
+    if (!children) return arr.push(basePath + pn);
 
     arr = arr.concat(loopRoute(pn, children));
   });
@@ -69,7 +59,4 @@ const loopRoute = (basePath: string, e: Array<RouteConfig>) => {
 };
 
 export const routeList = loopRoute('', routes);
-
-console.log('routeList', routeList);
-
 export default routes;

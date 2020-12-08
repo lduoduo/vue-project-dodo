@@ -43,8 +43,6 @@ import CompItem from '../components/Category/Item.vue';
 
 import { getCategoryList, getCategoryIdList } from '@/network/api';
 
-console.log('category');
-
 export default {
   name: 'CategoryList',
   components: {
