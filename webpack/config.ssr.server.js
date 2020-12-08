@@ -4,9 +4,11 @@ const { merge } = require('webpack-merge');
 const nodeExternals = require('webpack-node-externals');
 const VueSSRServerPlugin = require('vue-server-renderer/server-plugin');
 
-const baseConfig = require('./config.base.js');
+const getConfig = require('./config.base.js');
 
 const resolve = pn => path.resolve(__dirname, `../${pn}`);
+
+const baseConfig = getConfig({ isSSRServer: true });
 
 module.exports = merge(baseConfig, {
   // 将 entry 指向应用程序的 server entry 文件
