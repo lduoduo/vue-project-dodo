@@ -15,7 +15,7 @@ const baseConfig = getConfig();
 module.exports = merge(baseConfig, {
   mode: isProd ? 'production' : 'development',
   devtool: isProd ? false : 'cheap-module-source-map',
-  entry: resolve('ssr/entry-client-before-page.ts'),
+  entry: resolve('w-ssr/entry-client-before-page.ts'),
   output: {
     path: resolve('dist'),
     publicPath: '/dist/',
@@ -41,11 +41,11 @@ module.exports = merge(baseConfig, {
           chunks: 'all',
           priority: 10
         }
-      }
-    },
-    minSize: {
-      javascript: 30000,
-      style: 30000
+      },
+      minSize: {
+        javascript: 30000,
+        style: 30000
+      },
     },
     runtimeChunk: {
       name: 'runtime'

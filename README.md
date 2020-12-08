@@ -87,9 +87,18 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 7. Use the latest vue-eslint-parser. See also https://eslint.vuejs.org/user-guide/#what-is-the-use-the-
 
 8. [prerender-spa-plugin] Unable to prerender all routes!
+-  Navigation failed because browser has disconnected!
+- 错误来源：@prerenderer -> renderer-puppeteer -> es6
 
 9. - configuration has an unknown property 'postcss'. These properties are valid:
 
 - https://stackoverflow.com/questions/40922052/webpack-error-configuration-has-an-unknown-property-postcss
 
 10. [预渲染配合 CDN](https://www.liangzl.com/get-article-detail-182141.html)
+
+11. ssr build BUG：需要改 vue-server-renderer 源码
+
+- server-plugin.js
+- build.dev.js
+
+12. ssr build 成功后，start，文件能正确返回请求内容和资源链接，但是页面并没有加载 CSS/JS 成功

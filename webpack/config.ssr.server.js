@@ -10,13 +10,16 @@ const resolve = pn => path.resolve(__dirname, `../${pn}`);
 
 const baseConfig = getConfig({ isSSRServer: true });
 
-module.exports = merge(baseConfig, {
+const tmp = merge(baseConfig, {
   // 将 entry 指向应用程序的 server entry 文件
-  entry: resolve('ssr/entry-server.ts'),
+  entry: resolve('w-ssr/entry-server.ts'),
+
   output: {
     path: resolve('dist'),
     publicPath: '/dist/',
-    filename: '[name].[chunkhash].js'
+    filename: '[name].[chunkhash].js',
+    // 此处告知 server bundle 使用 Node 风格导出模块(Node-style exports)
+    libraryTarget: 'commonjs2'
   },
 
   // 这允许 webpack 以 Node 适用方式(Node-appropriate fashion)处理动态导入(dynamic import)，
@@ -26,11 +29,6 @@ module.exports = merge(baseConfig, {
 
   // 对 bundle renderer 提供 source map 支持
   devtool: 'source-map',
-
-  // 此处告知 server bundle 使用 Node 风格导出模块(Node-style exports)
-  output: {
-    libraryTarget: 'commonjs2'
-  },
 
   // https://webpack.js.org/configuration/externals/#function
   // https://github.com/liady/webpack-node-externals
@@ -69,3 +67,6 @@ module.exports = merge(baseConfig, {
     })
   ]
 });
+
+// console.log('tmp', tmp)
+module.exports = tmp;

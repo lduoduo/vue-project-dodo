@@ -87,7 +87,7 @@ module.exports = merge(baseConfig, {
     new PrerenderSPAPlugin({
       // Required - The path to the webpack-outputted app to prerender.
       staticDir: resolve('dist-csr'),
-      routes: ['/m/categorylist', '/m/mine'],
+      routes: ['/about', '/'],
       postProcess(renderedRoute) {
         // add CDN
         // 由于CDN是以"/"结尾的，所以资源开头的“/”去掉
@@ -104,7 +104,7 @@ module.exports = merge(baseConfig, {
         // Optional - The name of the property to add to the window object with the contents of `inject`.
         injectProperty: '__PRERENDER_INJECTED',
         // inject: { prerender: 'domain' },
-        headless: true,
+        headless: false,
 
         inject: {
           title: 'dodo'

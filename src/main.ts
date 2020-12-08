@@ -49,7 +49,6 @@ new Vue({
   mounted() {
     // csr预编译
     document.dispatchEvent(new Event('render-event'));
-    console.log('mounted');
   },
   // store: storeTs,
   render: h => h(App)
