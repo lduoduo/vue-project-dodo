@@ -2,7 +2,7 @@
  * @Author: zouhuan
  * @Date: 2020-12-08 15:13:38
  * @Last Modified by: zouhuan
- * @Last Modified time: 2020-12-08 17:58:14
+ * @Last Modified time: 2020-12-08 19:37:06
  * 编译模式：
  * 1. dev-server 开发环境
  * 2. dev build client环境
@@ -29,7 +29,7 @@ module.exports = function(opts = {}) {
   const { isDevServer = false, isSSRServer = false } = opts;
 
   const config = {
-    devtool: isProd ? false : '#cheap-module-source-map',
+    devtool: isProd ? false : 'cheap-module-source-map',
     stats: 'minimal',
     bail: true,
     target: 'web',
@@ -40,8 +40,8 @@ module.exports = function(opts = {}) {
         },
     resolve: {
       alias: {
-        public: resolve('public'),
         '@': resolve('src'),
+        public: resolve('public'),
         assets: resolve('src/assets'),
         components: resolve('src/components'),
         utils: resolve('src/utils'),
@@ -119,7 +119,6 @@ module.exports = function(opts = {}) {
       new webpack.ids.HashedModuleIdsPlugin({
         hashDigestLength: 20
       })
-      // new FriendlyErrorsPlugin()
     ]
   };
 
@@ -178,6 +177,8 @@ module.exports = function(opts = {}) {
       );
 
       config.plugins.push(new TerserPlugin());
+    } else {
+      config.plugins.push(new FriendlyErrorsPlugin());
     }
   }
 

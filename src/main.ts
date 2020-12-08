@@ -33,10 +33,11 @@ Vue.config.keyCodes = {
 };
 
 router.beforeEach((to, from, next) => {
+  console.log('to', to);
   /* 路由发生变化修改页面title */
-  // if (to.meta.title) {
-  //   document.title = to.meta.title;
-  // }
+  if (to.meta.title) {
+    document.title = to.meta.title;
+  }
 });
 
 console.log('router', router);
@@ -48,6 +49,7 @@ new Vue({
   render: h => h(App),
   mounted() {
     // csr预编译
-    // document.dispatchEvent(new Event('render-event'));
+    document.dispatchEvent(new Event('render-event'));
+    console.log('mounted');
   }
 }).$mount('#app');

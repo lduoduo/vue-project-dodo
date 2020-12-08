@@ -18,7 +18,6 @@ const baseConfig = getConfig({ isDevServer: true });
 module.exports = merge(baseConfig, {
   stats: 'errors-warnings',
   mode: 'development',
-  devtool: 'cheap-module-source-map',
   entry: resolve('src/main.ts'),
   output: {
     path: resolve('dist'),
