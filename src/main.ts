@@ -32,24 +32,24 @@ Vue.config.keyCodes = {
   up: [38, 87]
 };
 
-router.beforeEach((to, from, next) => {
-  console.log('to', to);
-  /* 路由发生变化修改页面title */
-  if (to.meta.title) {
-    document.title = to.meta.title;
-  }
-});
+// router.beforeEach((to, from, next) => {
+//   console.log('to', to);
+//   /* 路由发生变化修改页面title */
+//   if (to.meta.title) {
+//     document.title = to.meta.title;
+//   }
+// });
 
 console.log('router', router);
 
 new Vue({
   router,
   store,
-  // store: storeTs,
-  render: h => h(App),
   mounted() {
     // csr预编译
     document.dispatchEvent(new Event('render-event'));
     console.log('mounted');
-  }
+  },
+  // store: storeTs,
+  render: h => h(App)
 }).$mount('#app');
