@@ -1,7 +1,5 @@
 # vue-project
-## vue2 + webpack4 支持功能
-
-## vue2 + webpack5 支持功能
+## vue2 + webpack5 支持功能, [vue2+webpack4在这里](https://github.com/lduoduo/vue-project-dodo/tree/ft-webpack4)
 - CSR预渲染
 - SSR同构
 - TS
