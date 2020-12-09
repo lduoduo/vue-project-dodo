@@ -50,6 +50,9 @@ new Vue({
     // csr预编译
     document.dispatchEvent(new Event('render-event'));
   },
-  // store: storeTs,
-  render: h => h(App)
+  render: (h) => h(App),
+  mounted() {
+    // csr预编译
+    document.dispatchEvent(new Event('render-event'));
+  },
 }).$mount('#app');

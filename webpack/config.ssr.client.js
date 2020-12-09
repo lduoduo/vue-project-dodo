@@ -14,7 +14,6 @@ const baseConfig = getConfig();
 
 module.exports = merge(baseConfig, {
   mode: isProd ? 'production' : 'development',
-  devtool: isProd ? false : 'cheap-module-source-map',
   entry: resolve('w-ssr/entry-client-before-page.ts'),
   output: {
     path: resolve('dist'),

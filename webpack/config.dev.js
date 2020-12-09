@@ -1,8 +1,8 @@
 const path = require('path');
 const webpack = require('webpack');
-const VueSSRClientPlugin = require('vue-server-renderer/client-plugin');
-const TerserPlugin = require('terser-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+// const VueSSRClientPlugin = require('vue-server-renderer/client-plugin');
+// const TerserPlugin = require('terser-webpack-plugin');
+// const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const { merge } = require('webpack-merge');

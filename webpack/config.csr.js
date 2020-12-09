@@ -16,7 +16,6 @@ const baseConfig = getConfig();
 
 module.exports = merge(baseConfig, {
   mode: isProd ? 'production' : 'development',
-  devtool: isProd ? false : 'cheap-module-source-map',
   entry: resolve('src/main.ts'),
   output: {
     path: resolve('dist-csr'),
@@ -98,9 +97,7 @@ module.exports = merge(baseConfig, {
       postProcess(renderedRoute) {
         // add CDN
         // 由于CDN是以"/"结尾的，所以资源开头的“/”去掉
-        // renderedRoute.html = renderedRoute.html.replace('xxx', 'xxx')
-
-        console.log('\nrenderedRoute', renderedRoute.route);
+        // renderedRoute.html = renderedRoute.html.replace('xxx', 'xx')
         return renderedRoute;
       },
       renderer: new Renderer({

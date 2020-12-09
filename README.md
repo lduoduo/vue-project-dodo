@@ -1,10 +1,15 @@
 # vue-project
+## vue2 + webpack4 支持功能
 
 ## vue2 + webpack5 支持功能
 - CSR预渲染
 - SSR同构
 - TS
 - 三种状态管理写法：vuex / vuex-ts写法 / mobx写法
+
+各种写法都有demo
+
+## node >= 12+
 
 各种写法都有demo
 
@@ -97,11 +102,12 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 8. CSR 预渲染报错 [prerender-spa-plugin] Unable to prerender all routes!
   [已提PR](https://github.com/chrisvfritz/prerender-spa-plugin/pull/415)
 
-9. configuration has an unknown property 'postcss'. These properties are valid:
+9. SSR build BUG：需要改 vue-server-renderer 源码
+  [已提PR](https://github.com/vuejs/vue/pull/11814)
+
+10. configuration has an unknown property 'postcss'. These properties are valid:
 
 - https://stackoverflow.com/questions/40922052/webpack-error-configuration-has-an-unknown-property-postcss
 
-10. [预渲染配合 CDN](https://www.liangzl.com/get-article-detail-182141.html)
+11. [预渲染配合 CDN](https://www.liangzl.com/get-article-detail-182141.html)
 
-11. ssr build BUG：需要改 vue-server-renderer 源码
-  [已提PR](https://github.com/vuejs/vue/pull/11814)
