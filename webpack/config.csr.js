@@ -60,7 +60,7 @@ module.exports = merge(baseConfig, {
         {
           filename: 'index.html',
           inject: true,
-          template: resolve('w-csr/template.html')
+          template: resolve('w-template/t-csr.html')
         },
         isProd
           ? {

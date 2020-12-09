@@ -15,7 +15,7 @@ const baseConfig = getConfig();
 
 module.exports = merge(baseConfig, {
   mode: isProd ? 'production' : 'development',
-  entry: resolve('ssr/entry-client-before-page.ts'),
+  entry: resolve('w-ssr/entry-client-before-page.ts'),
   output: {
     path: resolve('dist'),
     publicPath: '/dist/',

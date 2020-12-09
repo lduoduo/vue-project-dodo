@@ -1,5 +1,4 @@
 const path = require('path');
-const Vue = require('vue');
 const Koa = require('koa2');
 const staticCache = require('koa-static-cache');
 const Readable = require('stream').Readable;
@@ -11,7 +10,7 @@ const clientManifest = require('../dist/vue-ssr-client-manifest.json');
 
 const resolve = pn => path.resolve(__dirname, pn);
 
-const template = require('fs').readFileSync(resolve('./template.html'), 'utf-8');
+const template = require('fs').readFileSync(resolve('../w-template/t-ssr.html'), 'utf-8');
 
 const renderer = createBundleRenderer(serverBundle, {
   runInNewContext: false, // 推荐
