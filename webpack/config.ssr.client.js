@@ -25,7 +25,7 @@ module.exports = merge(baseConfig, {
   // 以便可以在之后正确注入异步 chunk。
   // 这也为你的 应用程序/vendor 代码提供了更好的缓存。
   optimization: {
-    moduleIds: 'deterministic',
+    moduleIds: 'named',
     chunkIds: 'deterministic',
     splitChunks: {
       name: false,

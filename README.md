@@ -1,8 +1,16 @@
 # vue-project
 
-## node >= 10.13.0
+## vue2 + webpack5 支持功能
+- CSR预渲染
+- SSR同构
+- TS
+- 三种状态管理写法：vuex / vuex-ts写法 / mobx写法
 
-## Project setup
+各种写法都有demo
+
+### node >= 12+
+
+### Project setup
 
 ```
 yarn install
@@ -11,8 +19,8 @@ yarn install
 ### Compiles and hot-reloads for development
 
 ```
-- yarn mock
-- yarn serve
+- yarn mock （mock数据接口）
+- yarn dev
 ```
 
 ### Compiles and minifies for production
@@ -86,19 +94,14 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 7. Use the latest vue-eslint-parser. See also https://eslint.vuejs.org/user-guide/#what-is-the-use-the-
 
-8. [prerender-spa-plugin] Unable to prerender all routes!
--  Navigation failed because browser has disconnected!
-- 错误来源：@prerenderer -> renderer-puppeteer -> es6
+8. CSR 预渲染报错 [prerender-spa-plugin] Unable to prerender all routes!
+  [已提PR](https://github.com/chrisvfritz/prerender-spa-plugin/pull/415)
 
-9. - configuration has an unknown property 'postcss'. These properties are valid:
+9. configuration has an unknown property 'postcss'. These properties are valid:
 
 - https://stackoverflow.com/questions/40922052/webpack-error-configuration-has-an-unknown-property-postcss
 
 10. [预渲染配合 CDN](https://www.liangzl.com/get-article-detail-182141.html)
 
 11. ssr build BUG：需要改 vue-server-renderer 源码
-
-- server-plugin.js
-- build.dev.js
-
-12. ssr build 成功后，start，文件能正确返回请求内容和资源链接，但是页面并没有加载 CSS/JS 成功
+  [已提PR](https://github.com/vuejs/vue/pull/11814)

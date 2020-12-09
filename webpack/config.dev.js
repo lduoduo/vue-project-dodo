@@ -16,7 +16,7 @@ const port = process.env.PORT || 10001;
 const baseConfig = getConfig({ isDevServer: true });
 
 module.exports = merge(baseConfig, {
-  stats: 'errors-warnings',
+  stats: 'errors-only',
   mode: 'development',
   entry: resolve('src/main.ts'),
   output: {
@@ -62,5 +62,3 @@ module.exports = merge(baseConfig, {
     })
   ]
 });
-
-console.log(`开发地址:http://localhost:${port}`);

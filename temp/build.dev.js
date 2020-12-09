@@ -9083,8 +9083,6 @@ TemplateRenderer.prototype.renderScripts = function renderScripts (context) {
 
     var needed = [].concat(initial[0] ? [initial[0]] : [], async, initial.slice(1));
 
-    console.log('needed', needed);
-
     return needed.map(function (ref) {
 
 

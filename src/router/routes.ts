@@ -3,6 +3,8 @@ import VueRouter, { RouteConfig } from 'vue-router';
 import routeMobile from '../module-mobile/router';
 // import routePc from '../module-pc/router';
 
+import ComApp from '@/components/ComApp.vue';
+
 import Home from '../views/Home.vue';
 import Other from '../views/Other.vue';
 import Person from '../views/Person.vue';
@@ -11,7 +13,10 @@ const routes: Array<RouteConfig> = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: Home,
+    meta: {
+      title: 'VUE首页'
+    }
   },
   {
     path: '/about',
@@ -20,7 +25,10 @@ const routes: Array<RouteConfig> = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () =>
-      import(/* webpackChunkName: "about" */ '../views/About.vue')
+      import(/* webpackChunkName: "about" */ '../views/About.vue'),
+    meta: {
+      title: '关于',
+    }
   },
   routeMobile,
   {
@@ -31,15 +39,15 @@ const routes: Array<RouteConfig> = [
   {
     path: '/o',
     name: 'other',
-    // component: Home,
+    component: ComApp,
     children: [
       {
-        path: 'dodo',
+        path: 'todo',
         component: Other
       },
       {
         path: '',
-        component: Home
+        component: Other
       }
     ]
   }

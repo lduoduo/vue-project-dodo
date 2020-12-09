@@ -32,4 +32,4 @@ export function createStore() {
   });
 }
 
-export default createStore;
+export default createStore();

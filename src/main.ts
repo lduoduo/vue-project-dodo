@@ -1,8 +1,10 @@
 import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
-import store from './store-vuex';
-// import storeTs from './store-vuex-ts';
+
+// 以下两种都可以使用
+// import store from './store-vuex';
+import store from './store-vuex-ts';
 
 // 设置为 false 以阻止 vue 在启动时生成生产提示
 Vue.config.productionTip = false;
@@ -36,12 +38,10 @@ router.beforeEach((to, from, next) => {
   console.log('路由导航守卫to', to);
   /* 路由发生变化修改页面title */
   if (to.meta.title) {
-    // document.title = to.meta.title;
+    document.title = to.meta.title;
   }
   next();
 });
-
-console.log('router', router);
 
 new Vue({
   router,

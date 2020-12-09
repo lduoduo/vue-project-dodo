@@ -57,17 +57,17 @@ VueSSRServerPlugin.prototype.apply = function apply (compiler) {
     var entryName = Object.keys(stats.entrypoints)[0];
     var entryInfo = stats.entrypoints[entryName];
 
-    console.log('\nstats', stats.entrypoints[entryName], entryName);
-
     if (!entryInfo) {
       // #5553
       return cb()
     }
 
-    var entryAssets = entryInfo.assets.filter(d => {
-      if(typeof d === 'string') return isJS(d);
-      return isJS(d.name);
-    });
+    var entryAssets = entryInfo.assets
+     .map(function(file) {
+        if (typeof file === 'string') return file;
+        if (Object.prototype.toString.call(file) === '[object Object]' && file.name) return file.name;
+      })
+      .filter(isJS);
 
     if (entryAssets.length > 1) {
       throw new Error(
@@ -77,25 +77,33 @@ VueSSRServerPlugin.prototype.apply = function apply (compiler) {
     }
 
     var entry = entryAssets[0];
-    var entryPath = typeof entry === 'string' ? entry : entry.name;
 
-    console.log('entry', entry, entryAssets);
+    console.log('\n entry', entry);
+    console.log('\n entryAssets', entryAssets);
+    console.log('\n entryInfo.assets', entryInfo.assets);
 
-    if (!entry || typeof entryPath !== 'string') {
+    if (!entry || typeof entry !== 'string') {
+
       throw new Error(
         ("Entry \"" + entryName + "\" not found. Did you specify the correct entry option?")
       )
     }
 
     var bundle = {
-      entry: entryPath,
+      entry: entry,
       files: {},
       maps: {}
     };
 
     stats.assets.forEach(function (asset) {
+
+      console.log('assets', asset);
       if (isJS(asset.name)) {
         bundle.files[asset.name] = compilation.assets[asset.name].source();
+        // LDODO
+        if (asset.info && asset.info.related && asset.info.related.sourceMap) {
+          bundle.maps[asset.info.related.sourceMap.replace(/\.map$/, '')] = JSON.parse(compilation.assets[asset.info.related.sourceMap].source());
+        }
       } else if (asset.name.match(/\.js\.map$/)) {
         bundle.maps[asset.name.replace(/\.map$/, '')] = JSON.parse(compilation.assets[asset.name].source());
       }

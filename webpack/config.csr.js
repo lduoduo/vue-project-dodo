@@ -27,7 +27,7 @@ module.exports = merge(baseConfig, {
   // 以便可以在之后正确注入异步 chunk。
   // 这也为你的 应用程序/vendor 代码提供了更好的缓存。
   optimization: {
-    moduleIds: 'deterministic',
+    moduleIds: 'named',
     chunkIds: 'deterministic',
     splitChunks: {
       name: false,
@@ -87,7 +87,14 @@ module.exports = merge(baseConfig, {
     new PrerenderSPAPlugin({
       // Required - The path to the webpack-outputted app to prerender.
       staticDir: resolve('dist-csr'),
-      routes: ['/about', '/'],
+      routes: [
+        '/about',
+        '/',
+        '/m/categorylist',
+        '/m/hotlist',
+        '/m/pyqlist',
+        '/m/mine'
+      ],
       postProcess(renderedRoute) {
         // add CDN
         // 由于CDN是以"/"结尾的，所以资源开头的“/”去掉
