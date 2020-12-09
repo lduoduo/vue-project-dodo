@@ -5,44 +5,21 @@ const TerserPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { merge } = require('webpack-merge');
 
-const baseConfig = require('./base.config.js');
+const getConfig = require('./config.base.js');
 
 const resolve = pn => path.resolve(__dirname, `../${pn}`);
 
 const isProd = process.env.NODE_ENV === 'production';
 
+const baseConfig = getConfig();
+
 module.exports = merge(baseConfig, {
   mode: isProd ? 'production' : 'development',
-  devtool: isProd ? false : 'cheap-module-source-map',
   entry: resolve('ssr/entry-client-before-page.ts'),
   output: {
     path: resolve('dist'),
     publicPath: '/dist/',
     filename: '[name].[chunkhash].js'
-  },
-  module: {
-    rules: [
-      {
-        test: /\.(sa|sc)ss$/,
-        use: [
-          isProd ? MiniCssExtractPlugin.loader : 'vue-style-loader',
-          'css-loader',
-          {
-            loader: 'postcss-loader'
-          },
-          {
-            loader: 'sass-loader'
-          }
-        ]
-      },
-      {
-        test: /\.css$/,
-        use: [
-          isProd ? MiniCssExtractPlugin.loader : 'vue-style-loader',
-          'css-loader'
-        ]
-      }
-    ]
   },
   // 重要信息：这将 webpack 运行时分离到一个引导 chunk 中，
   // 以便可以在之后正确注入异步 chunk。
@@ -74,10 +51,7 @@ module.exports = merge(baseConfig, {
       __IS_PROD__: !!isProd,
       __SERVER__: false
     }),
-    new MiniCssExtractPlugin({
-      filename: '[name].[chunkhash].css' //设置名称
-    }),
-    // new TerserPlugin(),
+    new TerserPlugin(),
     // 此插件在输出目录中
     // 生成 `vue-ssr-client-manifest.json`。
     new VueSSRClientPlugin()

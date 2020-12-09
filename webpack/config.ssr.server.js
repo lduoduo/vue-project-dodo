@@ -4,18 +4,15 @@ const { merge } = require('webpack-merge');
 const nodeExternals = require('webpack-node-externals');
 const VueSSRServerPlugin = require('vue-server-renderer/server-plugin');
 
-const baseConfig = require('./base.config.js');
+const getConfig = require('./config.base.js');
 
 const resolve = pn => path.resolve(__dirname, `../${pn}`);
 
+const baseConfig = getConfig({ isSSRServer: true });
+
 module.exports = merge(baseConfig, {
   // 将 entry 指向应用程序的 server entry 文件
-  entry: resolve('ssr/entry-server.ts'),
-  output: {
-    path: resolve('dist'),
-    publicPath: '/dist/',
-    filename: '[name].[chunkhash].js'
-  },
+  entry: resolve('w-ssr/entry-server.ts'),
 
   // 这允许 webpack 以 Node 适用方式(Node-appropriate fashion)处理动态导入(dynamic import)，
   // 并且还会在编译 Vue 组件时，
@@ -27,6 +24,9 @@ module.exports = merge(baseConfig, {
 
   // 此处告知 server bundle 使用 Node 风格导出模块(Node-style exports)
   output: {
+    path: resolve('dist'),
+    publicPath: '/dist/',
+    filename: '[name].[chunkhash].js',
     libraryTarget: 'commonjs2'
   },
 
@@ -40,19 +40,6 @@ module.exports = merge(baseConfig, {
     // 你还应该将修改 `global`（例如 polyfill）的依赖模块列入白名单
     allowlist: /\.css$/
   }),
-
-  module: {
-    rules: [
-      {
-        test: /\.(sa|sc)ss$/,
-        use: ['vue-style-loader', 'css-loader', 'postcss-loader', 'sass-loader']
-      },
-      {
-        test: /\.css$/,
-        use: ['vue-style-loader', 'css-loader']
-      }
-    ]
-  },
   // 这是将服务器的整个输出
   // 构建为单个 JSON 文件的插件。
   // 默认文件名为 `vue-ssr-server-bundle.json`
