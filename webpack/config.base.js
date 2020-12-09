@@ -1,8 +1,8 @@
 /*
  * @Author: zouhuan
  * @Date: 2020-12-08 15:13:38
- * @Last Modified by: lduoduo
- * @Last Modified time: 2020-12-08 22:18:41
+ * @Last Modified by: zouhuan
+ * @Last Modified time: 2020-12-09 11:08:06
  * 编译模式：
  * 1. dev-server 开发环境
  * 2. dev build client环境
@@ -24,6 +24,14 @@ const isProd = process.env.NODE_ENV === 'production';
 const resolve = pn => path.resolve(__dirname, `../${pn}`);
 
 console.log('isProd', isProd);
+
+function getStyleLoader(opts = {}) {
+  const { isDevServer = false, isSSRServer = false } = opts;
+  if (isSSRServer) return 'vue-style-loader';
+  if (isProd) return MiniCssExtractPlugin.loader;
+  if (isDevServer) return 'style-loader';
+  return 'vue-style-loader';
+}
 
 module.exports = function(opts = {}) {
   const { isDevServer = false, isSSRServer = false } = opts;
@@ -115,40 +123,27 @@ module.exports = function(opts = {}) {
       hints: false
     },
     plugins: [
-      new VueLoaderPlugin(),
-      new webpack.ids.HashedModuleIdsPlugin({
-        hashDigestLength: 20
-      })
+      new VueLoaderPlugin()
+      // new webpack.ids.HashedModuleIdsPlugin({
+      //   hashDigestLength: 20
+      // })
     ]
   };
 
+  const styleLoader = getStyleLoader(opts);
+
+  config.module.rules = config.module.rules.concat([
+    {
+      test: /\.(sa|sc)ss$/,
+      use: [styleLoader, 'css-loader', 'postcss-loader', 'sass-loader']
+    },
+    {
+      test: /\.css$/,
+      use: [styleLoader, 'css-loader']
+    }
+  ]);
+
   if (!isSSRServer) {
-    const styleLoader = isProd
-      ? MiniCssExtractPlugin.loader
-      : isDevServer
-      ? 'style-loader'
-      : 'vue-style-loader';
-
-    config.module.rules = config.module.rules.concat([
-      {
-        test: /\.(sa|sc)ss$/,
-        use: [
-          styleLoader,
-          'css-loader',
-          {
-            loader: 'postcss-loader'
-          },
-          {
-            loader: 'sass-loader'
-          }
-        ]
-      },
-      {
-        test: /\.css$/,
-        use: [styleLoader, 'css-loader']
-      }
-    ]);
-
     config.plugins.push(
       new webpack.LoaderOptionsPlugin({
         options: {
