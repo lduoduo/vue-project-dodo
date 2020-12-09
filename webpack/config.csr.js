@@ -1,8 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
 const PrerenderSPAPlugin = require('prerender-spa-plugin');
-const TerserPlugin = require('terser-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { merge } = require('webpack-merge');
 
@@ -28,6 +26,8 @@ module.exports = merge(baseConfig, {
   // 以便可以在之后正确注入异步 chunk。
   // 这也为你的 应用程序/vendor 代码提供了更好的缓存。
   optimization: {
+    moduleIds: 'named',
+    chunkIds: 'deterministic',
     splitChunks: {
       name: false,
       cacheGroups: {
@@ -42,6 +42,10 @@ module.exports = merge(baseConfig, {
           chunks: 'all',
           priority: 10
         }
+      },
+      minSize: {
+        javascript: 30000,
+        style: 30000
       }
     },
     runtimeChunk: {
@@ -54,7 +58,6 @@ module.exports = merge(baseConfig, {
       __IS_PROD__: !!isProd,
       __SERVER__: false
     }),
-    new TerserPlugin(),
     new HtmlWebpackPlugin(
       Object.assign(
         {
@@ -83,7 +86,14 @@ module.exports = merge(baseConfig, {
     new PrerenderSPAPlugin({
       // Required - The path to the webpack-outputted app to prerender.
       staticDir: resolve('dist-csr'),
-      routes: ['/m', '/m/categorylist', '/m/hotlist', '/m/pyqlist', '/m/mine'],
+      routes: [
+        '/about',
+        '/',
+        '/m/categorylist',
+        '/m/hotlist',
+        '/m/pyqlist',
+        '/m/mine'
+      ],
       postProcess(renderedRoute) {
         // add CDN
         // 由于CDN是以"/"结尾的，所以资源开头的“/”去掉

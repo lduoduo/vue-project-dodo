@@ -10,7 +10,7 @@ export function createRouter() {
     mode: 'history',
     base: process.env.BASE_URL,
     fallback: false,
-    // scrollBehavior: () => ({ y: 0 }),
+    scrollBehavior: () => ({ y: 0 }),
     routes
   });
 }
