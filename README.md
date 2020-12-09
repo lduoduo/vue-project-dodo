@@ -1,6 +1,14 @@
 # vue-project
+## vue2 + webpack4 支持功能
 
-## node >= 10.13.0
+- CSR预渲染
+- SSR同构
+- TS
+- 三种状态管理写法：vuex / vuex-ts写法 / mobx写法
+
+各种写法都有demo
+
+## node >= 12+
 
 ## Project setup
 
@@ -11,7 +19,7 @@ yarn install
 ### Compiles and hot-reloads for development
 
 ```
-- yarn mock
+- yarn mock （mock数据接口）
 - yarn serve
 ```
 
