@@ -10,6 +10,8 @@ const getConfig = require('./config.base.js');
 
 const resolve = pn => path.resolve(__dirname, `../${pn}`);
 
+const Renderer = PrerenderSPAPlugin.PuppeteerRenderer;
+
 const isProd = process.env.NODE_ENV === 'production';
 
 const baseConfig = getConfig();
@@ -85,35 +87,31 @@ module.exports = merge(baseConfig, {
       postProcess(renderedRoute) {
         // add CDN
         // 由于CDN是以"/"结尾的，所以资源开头的“/”去掉
-        // renderedRoute.html = renderedRoute.html
-        //   .replace(
-        //     /(<script[^<>]*src=\")(?!http|https|\/{2})\/([^<>\"]*)(\"[^<>]*>[^<>]*<\/script>)/gi,
-        //     `$1${config[env].assetsPublicPath}$2$3`
-        //   )
-        //   .replace(
-        //     /(<link[^<>]*href=\")(?!http|https|\/{2})\/([^<>\"]*)(\"[^<>]*>)/gi,
-        //     `$1${config[env].assetsPublicPath}$2$3`
-        //   )
-        //   .replace(
-        //     /(<img[^<>]*src=\")(?!http|https|data:image|\/{2})\/([^<>\"]*)(\"[^<>]*>)/gi,
-        //     `$1${config[env].assetsPublicPath}$2$3`
-        //   )
-        //   .replace(
-        //     /(:url\()(?!http|https|data:image|\/{2})\/([^\)]*)(\))/gi, // 样式内联,格式必须是":url(/xxx)"，其他格式都不行【用来剔除js代码中类似的字段】
-        //     `$1${config[env].assetsPublicPath}$2$3`
-        //   )
-        //   .replace(
-        //     /(<div class="dialog_mask_\w+">)[\s\S]*<\/div>(<\/body>)/gi,
-        //     `$2`
-        //   ); // 去掉警告弹窗(因为部分调用比较早的ajax会报错导致多出了弹出框)
-
+        // renderedRoute.html = renderedRoute.html.replace('xxx', 'xx')
         return renderedRoute;
-      }
-      // renderer: new Renderer({
-      //   injectProperty: '__PRERENDER_INJECTED__',
-      //   inject: 'prerender',
-      //   renderAfterDocumentEvent: 'render-event' // vue可能需要使用预渲染何时开始的事件
-      // })
+      },
+      renderer: new Renderer({
+        // Optional - defaults to 0, no limit.
+        // Routes are rendered asynchronously.
+        // Use this to limit the number of routes rendered in parallel.
+        maxConcurrentRoutes: 5,
+        // Optional - The name of the property to add to the window object with the contents of `inject`.
+        injectProperty: '__PRERENDER_INJECTED',
+        // inject: { prerender: 'domain' },
+        headless: false,
+
+        inject: {
+          title: 'dodo'
+        },
+        // 在 main.js 中 document.dispatchEvent(new Event('render-event'))，vue可能需要使用预渲染何时开始的事件, 两者的事件名称要对应上。
+        renderAfterDocumentEvent: 'render-event',
+        renderAfterTime: 5000, //超时时间
+        timeout: 0,
+        maxConcurrentRoutes: 20, //打包页面的最大数
+        navigationParams: {
+          timeout: 0
+        }
+      })
     })
   ]
 });
