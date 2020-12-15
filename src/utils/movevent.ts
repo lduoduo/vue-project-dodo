@@ -1,7 +1,7 @@
 /*
  * @Author: lduoduo
  * @Date: 2020-07-29 22:32:53
- * @Last Modified by: zouhuan
+ * @Last Modified by: duoduo
  * @Last Modified time: 2020-11-30 18:12:43
  * 拖拽事件发布订阅总线H5端用MOVE
  */
