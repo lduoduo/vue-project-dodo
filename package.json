@@ -18,7 +18,7 @@
     "lint": "eslint src"
   },
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "json-bigint": "^1.0.0",
     "koa-body": "^4.2.0",
     "koa-compress": "^5.0.1",
